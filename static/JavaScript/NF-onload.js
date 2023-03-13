@@ -91,11 +91,11 @@ function calculateresult(band, sea, seg, crp) {          //計算結果
     }
 }
 function back_click(element) {
-    window.location.replace('https://nfsepsisanalysis-xiglc7mhia-uc.a.run.app/NFchoice?id=' + id);
+    window.location.replace('https://analyzeproject-xrttnigg7q-de.a.run.app/NFchoice?id=' + id);
 }
 
 function backlist(element) {
-    window.location.replace('https://nfsepsisanalysis-xiglc7mhia-uc.a.run.app/patientlist');
+    window.location.replace('https://analyzeproject-xrttnigg7q-de.a.run.app/patientlist');
 }
 
 function show() {
@@ -112,7 +112,7 @@ function show() {
 }
 
 function detail(element) {
-    window.open('https://nfsepsisanalysis-xiglc7mhia-uc.a.run.app/NFbodyvalue' + '?sea=' + sea + '&wbc=' + wbc + '&crp=' + crp + '&seg=' + seg + '&band=' + band)
+    window.open('https://analyzeproject-xrttnigg7q-de.a.run.app/NFbodyvalue' + '?sea=' + sea + '&wbc=' + wbc + '&crp=' + crp + '&seg=' + seg + '&band=' + band)
 }
 
 function sheet() {
