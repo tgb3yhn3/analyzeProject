@@ -1,6 +1,6 @@
 function getPatient(token) {
   return new Promise((resolve, reject) => {
-    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/nfsepsisanalysis/locations/us-central1/datasets/my-dataset/fhirStores/new-fhir-store/fhir/Patient";
+    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/crack-will-380312/locations/asia-east1/datasets/patient/fhirStores/Test/fhir/Patient";
     var xhr = new XMLHttpRequest(); // XMLHttpRequest物件(以此物件的方法進行資料請求)
     xhr.open('GET', dataUrl, true); // 以GET方法開啟一個請求 //open('Method',API的URL,預設值為true非同步進行)
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
@@ -16,7 +16,7 @@ function getPatient(token) {
 
 function getPatientById(token, id) {
   return new Promise((resolve, reject) => {
-    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/nfsepsisanalysis/locations/us-central1/datasets/my-dataset/fhirStores/new-fhir-store/fhir/Patient/" + id;
+    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/crack-will-380312/locations/asia-east1/datasets/patient/fhirStores/Test/fhir/Patient/" + id;
     var xhr = new XMLHttpRequest(); // XMLHttpRequest物件(以此物件的方法進行資料請求)
     xhr.open('GET', dataUrl, true); // 以GET方法開啟一個請求 //open('Method',API的URL,預設值為true非同步進行)
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
@@ -32,7 +32,7 @@ function getPatientById(token, id) {
 
 function getHeightById(token, id) {
   return new Promise((resolve, reject) => {
-    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/nfsepsisanalysis/locations/us-central1/datasets/my-dataset/fhirStores/new-fhir-store/fhir/Observation?subject=" + id + "&code=http://loinc.org|8302-2" + "&_sort=-date";
+    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/crack-will-380312/locations/asia-east1/datasets/patient/fhirStores/Test/fhir/Observation?subject=" + id + "&code=http://loinc.org|8302-2" + "&_sort=-date";
     var xhr = new XMLHttpRequest();
     xhr.open('GET', dataUrl, true);
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
@@ -47,7 +47,7 @@ function getHeightById(token, id) {
 
 function getWeightById(token, id) {
   return new Promise((resolve, reject) => {
-    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/nfsepsisanalysis/locations/us-central1/datasets/my-dataset/fhirStores/new-fhir-store/fhir/Observation?subject=" + id + "&code=http://loinc.org|29463-7" + "&_sort=-date";
+    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/crack-will-380312/locations/asia-east1/datasets/patient/fhirStores/Test/fhir/Observation?subject=" + id + "&code=http://loinc.org|29463-7" + "&_sort=-date";
     var xhr = new XMLHttpRequest();
     xhr.open('GET', dataUrl, true);
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
@@ -62,7 +62,7 @@ function getWeightById(token, id) {
 
 function getObservationById(token, id) {
   return new Promise((resolve, reject) => {
-    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/nfsepsisanalysis/locations/us-central1/datasets/my-dataset/fhirStores/new-fhir-store/fhir/Observation?subject=Patient/" + id;
+    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/crack-will-380312/locations/asia-east1/datasets/patient/fhirStores/Test/fhir/Observation?subject=Patient/" + id;
     var xhr = new XMLHttpRequest();
     xhr.open('GET', dataUrl, true);
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
@@ -77,7 +77,7 @@ function getObservationById(token, id) {
 
 function getObservationByCode(token, id, code) {
   return new Promise((resolve, reject) => {
-    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/nfsepsisanalysis/locations/us-central1/datasets/my-dataset/fhirStores/new-fhir-store/fhir/Observation?subject=" + id + "&code=http://loinc.org|" + code + "&_sort=-date";
+    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/crack-will-380312/locations/asia-east1/datasets/patient/fhirStores/Test/fhir/Observation?subject=" + id + "&code=http://loinc.org|" + code + "&_sort=-date";
     var xhr = new XMLHttpRequest();
     xhr.open('GET', dataUrl, true);
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
