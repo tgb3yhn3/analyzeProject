@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>NFchoice</title>
+	<link rel="stylesheet" href="static/CSS/sepsischoiceLayout.css">
+	<link rel="shortcut icon" href="static/images/ccass.ico" type="image/x-icon">
+	<link rel="stylesheet" href="static/CSS/load-moduleChoice.css">
+	<!-- jQuery Plugin -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+	<div class="loading-wrapper">
+		<div class="loading-grid">
+			<div class="loading">
+				<img src="static/gif/block.gif" height="35%">
+				<div class="containerForText">
+					<div class="Text text-background">預測模型...</div>
+					<div class="Text text-color">預測模型...</div>
+				</div>
+				<div class="progress">
+					<div class="progress-value"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="lego">
+		<div class="block">
+			<h1 class="title"><strong>敗血症風險分析系統</strong></h1>
+		</div>
+		<div class="blockText">
+			<h1 class="text"><strong>請選擇以何種模型預測</strong></h1>
+		</div>
+		<div class="model">
+			<div class="option">
+				<img class="pic" src="static/images/NFchoice2.png" onClick="checkImg1()" value="0"><img>
+				<br>
+				<input type="checkbox" id="choice1_s" style="width:3vmin; height:3vmin;" checked>
+			</div>
+			<div class="option">
+				<img class="pic" src="static/images/NFchoice3.png" onClick="checkImg2()" value="0"><img>
+				<br>
+				<input type="checkbox" id="choice2_s" style="width:3vmin; height:3vmin;" checked>
+			</div>
+			<div class="option">
+				<img class="pic" src="static/images/NFchoice5.png" onClick="checkImg3()" value="0"><img>
+				<br>
+				<input type="checkbox" id="choice3_s" style="width:3vmin; height:3vmin;" checked>
+			</div>
+			<script src="static/JavaScript/sepsischoice-model.js"></script>
+		</div>
+		<div class="btn">
+			<img src="static/images/return.png" id="back" width="auto" height="85%" onClick="back_click(this)"
+				title="返回"></img>
+			<img src="static/images/send.png" id="sure" width="auto" height="85%" onClick="sure_click(this)"
+				title="確認送出"></img>
+			<script src="static/JavaScript/sepsischoice-choice.js"></script>
+		</div>
+	</div>
+	<script src="static/JavaScript/load-moduleChoice.js"></script>
+</body>
+
+</html>

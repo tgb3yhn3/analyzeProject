@@ -1,0 +1,45 @@
+@media only screen and (max-width: 770px) {
+	body{
+		background-image: linear-gradient(to top,rgba(34,34,59,1.00)10% ,rgba(93, 93, 118, 1.00)45%, rgba(146,147,186,1.00) 80%, rgba(242,233,228,0.5)),url("images/titleBG2.jpg");
+		background-repeat: no-repeat;
+		background-size: contain;
+		text-align: center;
+	}
+}
+
+@media screen and (min-width: 770px){
+	body{
+		background-image: linear-gradient(to top,rgba(34,34,59,1.00)8% ,rgba(93, 93, 118, 1.00)45%, rgba(146,147,186,1.00) 70%, rgba(242,233,228,0.5)),url("images/titleBG.jpg");
+		background-repeat: no-repeat;
+		background-size: contain;
+		text-align: center;
+	}
+}
+
+nav > ul {
+    list-style: none;   /* 移除項目符號 */
+    margin: 0;
+    padding: 0;
+}
+nav a{
+    position:fixed;
+    left: 0%;
+    top:0;
+    width:100%;
+    border-color:whitesmoke;
+    border-width: 1px;
+    border-style: solid;
+    white-space:nowrap;
+    display: flex;
+    align-content: center;
+    background-color: rgb(230, 230, 230);
+    color: inherit;         /* 移除超連結顏色 */
+    width: 100%;
+    text-decoration: none;  /* 移除超連結底線 */
+    font-size: 1.7vw;
+    font-weight: bold;
+}
+nav a:hover {
+    background-color: #9A8C98;
+    color: white;
+}

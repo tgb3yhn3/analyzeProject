@@ -1,0 +1,66 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>急重症風險分析支援系統</title>
+	<link rel="stylesheet" href="static/CSS/load-others.css">
+	<link rel="stylesheet" href="static/CSS/PatientprofileLayout.css">
+	<link rel="shortcut icon" href="static/images/ccass.ico" type="image/x-icon">
+	<!-- jQuery Plugin -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+	<div class="loading-wrapper">
+		<div class="loading-grid">
+			<div class="loading">
+				<img src="static/gif/walking_people.gif" height="35%">
+				<div class="containerForText">
+					<div class="Text text-background">病患資料讀取中...</div>
+					<div class="Text text-color">病患資料讀取中...</div>
+				</div>
+				<div class="progress">
+					<div class="progress-value"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="lego">
+		<div class="block">
+			<h1 class="title"><strong>病患資料</strong></h1>
+		</div>
+		<div class="blockText">
+			<div>
+				<p class="textL" id="names"></p>
+				<p class="textL" id="sex"></p>
+				<p class="textL" id="birth"></p>
+				<p class="textL" id="age"></p>
+				<p class="textL" id="height"></p>
+				<p class="textL" id="weight"></p>
+				<script src="static/JavaScript/connectAPI.js"></script>
+				<script src="static/JavaScript/patientprofile-insertData.js"></script>
+			</div>
+			<div class="flexbox">
+				<div class="pic">
+					<img src="static/images/sepsis.png" id="sepsis" width="100%" onClick="sepsis_click(this)" 
+					title="敗血症風險分析"></img>
+				</div>
+				<div class="pic">
+					<img src="static/images/nf.png" id="NF" width="100%" onClick="NF_click(this)"
+					title="壞死筋膜炎分析"></img>
+				</div>
+			</div>
+		</div>
+		<div class="blockButton">
+			<img src="static/images/return.png" id="back" height="85%" onClick="back_click(this)"
+				title="返回"></img>
+		</div>
+		<script src="static/JavaScript/patientprofile-choice.js"></script>
+	</div>
+	<script src="static/JavaScript/load-others.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+@charset "utf-8";
+/* CSS Document */
+
+.title{
+	font-family:"微軟正黑體";
+	font-size: 6vmin;
+
+}
+
+.text{
+	font-family:"微軟正黑體";
+	font-size: 3.5vmin;
+	text-align:center;
+}
+
+.textL{
+	font-family:"微軟正黑體";
+	font-size: 3.5vmin;
+	text-align:left;
+}
+
+.textR{
+	font-family:"微軟正黑體";
+	font-size: 3.5vmin;
+	text-align:right;
+}

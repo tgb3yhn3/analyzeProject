@@ -1,0 +1,161 @@
+@charset "utf-8";
+/* CSS Document */
+@media only screen and (max-width: 770px) {
+	body{
+		background-image: linear-gradient(to top,rgba(34,34,59,1.00)10% ,rgba(93, 93, 118, 1.00)45%, rgba(146,147,186,1.00) 80%, rgba(242,233,228,0.5)),url("images/titleBG2.jpg");
+		background-repeat: no-repeat;
+		background-size: contain;
+		text-align: center;
+	}
+    .lego{
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 7.5% 10% 65% 10% 7.5%;
+        grid-template-rows: 7.5% 10% 67.5% 7.5% 7.5%;
+    }
+	.icon{
+		grid-column: 2/5;
+		grid-row: 3/4;
+		overflow: auto;
+		width: 100%;
+		height:100%;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+	}
+    .title{
+        font-family:"微軟正黑體";
+        font-size: 7vmin;
+    }
+    .text{
+        font-family:"微軟正黑體";
+        font-size: 3.5vmin;
+        text-align:center;
+    }
+	table {
+		display: inline-block;
+		max-height: 100%;
+		max-width: 100%;
+		width: auto;
+		height: auto;
+		border-collapse: collapse;
+		border-spacing: 0;
+		font-size: 1vmin;
+	}
+}
+
+@media screen and (min-width: 770px){
+	body{
+		background-image: linear-gradient(to top,rgba(34,34,59,1.00)8% ,rgba(93, 93, 118, 1.00)45%, rgba(146,147,186,1.00) 70%, rgba(242,233,228,0.5)),url("images/titleBG.jpg");
+		background-repeat: no-repeat;
+		background-size: contain;
+		text-align: center;
+	}
+    .lego{
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 7.5% 10% 65% 10% 7.5%;
+        grid-template-rows: 7.5% 12.5% 65% 7.5% 7.5%;
+    }
+	.icon{
+		grid-column: 2/5;
+		grid-row: 3/4;
+		overflow: auto;
+		width: 100%;
+		height:100%;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+	}
+    .title{
+        font-family:"微軟正黑體";
+        font-size: 6vmin;
+    }
+    .text{
+        font-family:"微軟正黑體";
+        font-size: 3.5vmin;
+        text-align:center;
+    }
+	table {
+		max-height: 100%;
+		max-width: 100%;
+		width: auto;
+		height: auto;
+		margin-left: 5px;
+		border-collapse: collapse;
+		border-spacing: 0;
+		font-size: 1.5vmin;
+	}
+}
+
+.block{
+	grid-column: 2/5;
+	grid-row: 2/5;
+	background-color: #F2E9E4;
+	text-align: center;
+}
+
+.blockButton {
+    grid-row: 4/5;
+    grid-column: 3/4;
+    display: inline-flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #F2E9E4;
+}
+
+
+.pic{
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
+}
+
+.model {
+	width: 100%;
+	height: auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-content: center;
+}
+
+.option {
+	text-align: center;
+	display: inline-block;
+	width: 24vmin;
+	height: auto;
+	margin:5px;
+	height: 30vmin;
+}
+
+.blockSheet {
+	height: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	background-color: #F2E9E4;
+	font-family: "微軟正黑體";
+}
+.sheetdata {
+	text-align: center;
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
+}
+
+th,td {
+	text-align: center;
+	overflow-wrap: break-word;
+	border: 1px solid #000;
+}

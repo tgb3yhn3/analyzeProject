@@ -1,0 +1,110 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>壞死性筋膜炎分析支援系統</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.2/chart.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<link rel="stylesheet" href="static/CSS/NFLayout.css">
+	<link rel="stylesheet" href="static/CSS/background.css">
+	<link rel="stylesheet" href="static/CSS/load-NF.css">
+	<link rel="shortcut icon" href="static/images/ccass.ico" type="image/x-icon">
+	<!-- jQuery Plugin -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+	<div class="loading-wrapper">
+		<div class="loading-grid">
+			<div class="loading">
+				<img src="static/gif/heartBeat.gif" height="35%">
+				<div class="containerForText">
+					<div class="Text text-background">NF模型預測中...</div>
+					<div class="Text text-color">NF模型預測中...</div>
+				</div>
+				<div class="progress">
+					<div class="progress-value"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="lego">
+		<div class="block">
+		</div>
+		<div style="grid-column:2/5; grid-row: 2/3;">
+			<h1 class="title"><strong>壞死性筋膜炎風險分析支援系統</strong></h1>
+		</div>
+		<div class="list">
+			<div class="blockResult">
+				<div class="model" id="DTpic">
+					<img id="choice1-0" src="static/images/Dt1.png" width="40%" height="auto"
+						style="display:none;"></img>
+				</div>
+				<div class="model">
+					<div id="choice1" class="option">
+						<p id="decisionTree_proba" style="font-size: 2.5vmin; margin-bottom: 0px;">信心度%</p>
+						<input type="checkbox" id="DTchk" style="display:none;">
+						<img id="choice1-1" src="static/images/NFchoice1.png" class="pic" onclick="show()"
+							title="點擊查看DecisionTree完整圖示"></img>
+						<p id="choice1-2" style="font-size: 2.5vmin;  background-color:whitesmoke; margin-top: 0px;"
+							height="4vmin"></p>
+					</div>
+					<div id="choice2" class="option">
+						<p id="randomForest_proba" style="font-size: 2.5vmin; margin-bottom: 0px;" height="4vmin">信心度%
+						</p>
+						<img id="choice2-1" src="static/images/NFchoice2.png" class="pic"></img>
+						<p id="choice2-2" style="font-size: 2.5vmin;  background-color:whitesmoke; margin-top: 0px;"
+							height="4vmin"></p>
+					</div>
+					<div id="choice3" class="option">
+						<p id="logisticregression_proba" style="font-size: 2.5vmin; margin-bottom: 0px;" height="4vmin">
+							信心度%</p>
+						<img id="choice3-1" src="static/images/NFchoice3.png" class="pic"></img>
+						<p id="choice3-2" style="font-size: 2.5vmin; background-color:whitesmoke; margin-top: 0px;"
+							height="4vmin"></p>
+					</div>
+					<div id="choice4" class="option">
+						<p id="neuralNetwork_proba" style="font-size: 2.5vmin; margin-bottom: 0px;" height="4vmin">信心度%
+						</p>
+						<img id="choice4-1" src="static/images/NFchoice4.png" class="pic"></img>
+						<p id="choice4-2" style="font-size: 2.5vmin; background-color:whitesmoke; margin-top: 0px;"
+							height="4vmin"></p>
+					</div>
+					<div id="choice5" class="option">
+						<p id="supportVectorMachine_proba" style="font-size: 2.5vmin; margin-bottom: 0px;"
+							height="4vmin">信心度%</p>
+						<img id="choice5-1" src="static/images/NFchoice5.png" class="pic"></img>
+						<p id="choice5-2" style="font-size: 2.5vmin; background-color:whitesmoke; margin-top: 0px;"
+							height="4vmin"></p>
+					</div>
+				</div>
+			</div>
+			<div class="blockSheet" style="margin-top: 5vmin;">
+				<h1 class="text"><strong>病患詳細身體數值</strong></h1>
+				<div class="sheetdata" id="sheet"></div>
+			</div>
+			<div class="blockChart" style="margin-top: 4vmin;">
+				<div>
+					<canvas id="radarChart"></canvas>
+				</div>
+			</div>
+		</div>
+		<div class="btn">
+			<img src="static/images/return.png" id="back" width="auto" height="85%" onclick="back_click(this)"
+				title="返回上頁">
+			<img src="static/images/returnlist.png" id="backlist" width="auto" height="85%" onclick="backlist(this)"
+				title="返回清單">
+		</div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script src="static/JavaScript/connectAPI.js"></script>
+		<script src="static/JavaScript/NF-onload.js"></script>
+		<script src="static/JavaScript/NF-radar.js"></script>
+	</div>
+	<script src="static/JavaScript/load-NF.js"></script>
+</body>
+
+</html>

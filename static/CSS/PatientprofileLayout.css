@@ -1,0 +1,105 @@
+@media only screen and (max-width: 770px) {
+	body{
+		background-image: linear-gradient(to top,rgba(34,34,59,1.00)10% ,rgba(93, 93, 118, 1.00)45%, rgba(146,147,186,1.00) 80%, rgba(242,233,228,0.5)),url("images/titleBG2.jpg");
+		background-repeat: no-repeat;
+		background-size: contain;
+		text-align: center;
+	}
+    .lego{
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 7.5% 10% 65% 10% 7.5%;
+        grid-template-rows: 7.5% 12.5% 62.5% 7.5% 10%;
+    }
+    .flexbox {
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+    }
+    .blockText {
+        grid-row: 3/4;
+        grid-column: 3/4;
+        overflow: auto;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-content: space-around;
+        background-color: #F2E9E4;
+    }
+    .title{
+        font-family:"微軟正黑體";
+        font-size: 7vmin;
+    }
+    .textL{
+        font-family:"微軟正黑體";
+        font-size: 4vmin;
+        text-align:left;
+    }
+    .pic{
+        width: 30vmin;
+        height: 20vmin;
+    }
+}
+
+@media screen and (min-width: 770px){
+	body{
+		background-image: linear-gradient(to top,rgba(34,34,59,1.00)8% ,rgba(93, 93, 118, 1.00)45%, rgba(146,147,186,1.00) 70%, rgba(242,233,228,0.5)),url("images/titleBG.jpg");
+		background-repeat: no-repeat;
+		background-size: contain;
+		text-align: center;
+	}
+    .lego{
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 7.5% 10% 65% 10% 7.5%;
+        grid-template-rows: 7.5% 15% 60% 10% 7.5%;
+    }
+    .flexbox {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+    }
+    .blockText {
+        grid-row: 3/4;
+        grid-column: 3/4;
+        overflow: auto;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+        align-content: center;
+        background-color: #F2E9E4;
+    }
+    .title{
+        font-family:"微軟正黑體";
+        font-size: 6vmin;
+    }
+    .textL{
+        font-family:"微軟正黑體";
+        font-size: 3.5vmin;
+        text-align:left;
+    }
+    .pic{
+        width: 33vmin;
+        height: 28vmin;
+    }
+}
+
+
+.block{
+	grid-column: 2/5;
+	grid-row: 2/5;
+	background-color: #F2E9E4;
+}
+
+.blockButton {
+    grid-row: 4/5;
+    grid-column: 3/4;
+    display: inline-flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #F2E9E4;
+}
+
