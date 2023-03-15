@@ -8,7 +8,7 @@ function getPatient(token) {
 
     xhr.onload = function () {
       APIresult = JSON.parse(this.responseText);
-      console.log(data);
+      //console.log(data);
       resolve(APIresult);
     }
   });
@@ -24,7 +24,7 @@ function getPatientById(token, id) {
 
     xhr.onload = function () {
       APIresult = JSON.parse(this.responseText);
-      console.log(data);
+      //console.log(data);
       resolve(APIresult);
     }
   });
@@ -145,7 +145,7 @@ function getToken_fhir() {
 
     xhr.onload = function () {
       APIresult = JSON.parse(this.responseText);
-      console.log(data);
+      //console.log(data);
       resolve(APIresult);
     }
   });
