@@ -227,7 +227,10 @@ async function get_data() {
     document.getElementById("sepans2").className = CoagulationColor.class;
     document.getElementById("sepans3").innerHTML = Bilirubin;
     document.getElementById("sepans3").className = LiverColor.class;
-    document.getElementById("sepans4").innerHTML = "<div id=sepans4_0>平均動脈壓 " + MAP + "</div><div id=sepans4_1>Dopamine " + Dopamine + "</div><div id=sepans4_2>epinephrine " + epinephrine + "</div><div id=sepans4_3>norepinephrine " + norepinephrine + "</div>";
+    document.getElementById("sepans4_0").innerHTML = "平均動脈壓 "+MAP
+    document.getElementById("sepans4_1").innerHTML ="Dopamine "+ Dopamine
+    document.getElementById("sepans4_2").innerHTML ="epinephrine "+epinephrine
+    document.getElementById("sepans4_3").innerHTML = "norepinephrine "+norepinephrine
     for (var i = 0; i < CirculatoryColor.length; i++) {
         try {
             document.getElementById(CirculatoryColor[i].idc).className = CirculatoryColor[i].class;
@@ -290,7 +293,7 @@ function sheet() {
     let row_2_data_1 = document.createElement('td');
     row_2_data_1.innerHTML = "呼吸PaO<sub>2</sub>/FiO<sub>2</sub>，<br>mmHg";
     let row_2_data_0 = document.createElement('td');
-    row_2_data_0.innerHTML = "<div id=sepans1></div>";
+    row_2_data_0.innerHTML = "<div data-resource-type='PFratio' id=sepans1></div>";
     let row_2_data_2 = document.createElement('td');
     row_2_data_2.innerHTML = "<div id=Respiratory_0>≧ 400</div>";
     let row_2_data_3 = document.createElement('td');
@@ -318,7 +321,7 @@ function sheet() {
     let row_3_data_1 = document.createElement('td');
     row_3_data_1.innerHTML = "凝血<br>血小板 ×10<sup>3</sup>3/uL";
     let row_3_data_0 = document.createElement('td');
-    row_3_data_0.innerHTML = "<div id=sepans2></div>";
+    row_3_data_0.innerHTML = "<div data-resource-type='Platelets in Blood' id=sepans2></div>";
     let row_3_data_2 = document.createElement('td');
     row_3_data_2.innerHTML = "<div id=Coagulation_0>≧ 150</div>";
     let row_3_data_3 = document.createElement('td');
@@ -345,7 +348,7 @@ function sheet() {
     let row_4_data_1 = document.createElement('td');
     row_4_data_1.innerHTML = "肝臟<br>膽紅素，mg/dL";
     let row_4_data_0 = document.createElement('td');
-    row_4_data_0.innerHTML = "<div id=sepans3></div>";
+    row_4_data_0.innerHTML = "<div data-resource-type='Bilirubin.total in Serum or Plasma' id=sepans3></div>";
     let row_4_data_2 = document.createElement('td');
     row_4_data_2.innerHTML = "<div id=Liver_0>＜ 1.2</div>";
     let row_4_data_3 = document.createElement('td');
@@ -373,6 +376,12 @@ function sheet() {
     row_5_data_1.innerHTML = "心血管";
     let row_5_data_0 = document.createElement('td');
     row_5_data_0.innerHTML = "<div id=sepans4></div>";
+    let row_5_data_0_1 = document.createElement('div');
+    row_5_data_0_1.innerHTML="    <div data-resource-type='Mean blood pressure' data-resource-prefix='平均動脈壓 ' id=sepans4_0> "  + 
+    "</div><div data-resource-type='DOPamine in Serum or Plasma' data-resource-prefix='Dopamine ' id=sepans4_1> " + 
+    "</div><div data-resource-type='EPINEPHrine in Urine'  data-resource-prefix='epinephrine ' id=sepans4_2> "  + 
+    "</div><div data-resource-type='Norepinephrine in Urine' data-resource-prefix='norepinephrine ' id=sepans4_3> "  + "</div>";
+    row_5_data_0.appendChild(row_5_data_0_1)
     let row_5_data_2 = document.createElement('td');
     row_5_data_2.innerHTML = "<div id=Map_0 style=\"white-space: pre;\">平均動脈壓<br>≧ 70mmHg</div>";
     let row_5_data_3 = document.createElement('td');
@@ -398,7 +407,7 @@ function sheet() {
     let row_6_data_1 = document.createElement('td');
     row_6_data_1.innerHTML = "中樞神經<br>昏迷指數";
     let row_6_data_0 = document.createElement('td');
-    row_6_data_0.innerHTML = "<div id=sepans5></div>";
+    row_6_data_0.innerHTML = "<div data-resource-type='Glasgow coma score total' id=sepans5></div>";
     let row_6_data_2 = document.createElement('td');
     row_6_data_2.innerHTML = "<div id=CentralNervousSystem_0>15</div>";
     let row_6_data_3 = document.createElement('td');
@@ -423,8 +432,9 @@ function sheet() {
     let row_7 = document.createElement('tr');
     let row_7_data_1 = document.createElement('td');
     row_7_data_1.innerHTML = "<div style=\"white-space: pre;\">腎臟<br>Creatinine,mg/dL</div>";
+    
     let row_7_data_0 = document.createElement('td');
-    row_7_data_0.innerHTML = "<div id=sepans6></div>";
+    row_7_data_0.innerHTML = "<div data-resource-type='Creatinine in Serum or Plasma' id=sepans6></div>";
     let row_7_data_2 = document.createElement('td');
     row_7_data_2.innerHTML = "<div id=Renal_0>＜ 1.2</div>";
     let row_7_data_3 = document.createElement('td');
@@ -450,7 +460,7 @@ function sheet() {
     let row_8_data_1 = document.createElement('td');
     row_8_data_1.innerHTML = "<div style=\"white-space: pre;\">腎臟<br>小便量，mL/day</div>";
     let row_8_data_0 = document.createElement('td');
-    row_8_data_0.innerHTML = "<div id=sepans7></div>";
+    row_8_data_0.innerHTML = "<div data-resource-type='Urine output 24 hour' id=sepans7></div>";
     let row_8_data_2 = document.createElement('td');
     row_8_data_2.innerHTML = "";
     let row_8_data_3 = document.createElement('td');
@@ -475,12 +485,35 @@ function sheet() {
 
 //返回至病人資料頁
 function back_click(element) {
-    window.location.replace('https://analyzeproject-xrttnigg7q-de.a.run.app/sepsischoice?id=' + id);
+    window.location.replace('http://localhost:5000/sepsischoice?id=' + id);
 }
 
 function backlist(element) {
-    window.location.replace('https://analyzeproject-xrttnigg7q-de.a.run.app/patientlist');
+    window.location.replace('http://localhost:5000/patientlist');
 }
 
 get_data();
 sheet();
+$(document).ready(()=>{
+    console.log("in")
+    for(let i=1;i<=7;i++){
+        console.log(i)
+        if(i==4){
+          
+            for(let j=0;j<4;j++){
+                let now=String(i)+"_"+String(j)
+                console.log("sepans"+now)
+                document.getElementById("sepans"+now).addEventListener('click',()=>{
+                    let resourceType=document.getElementById("sepans"+now).getAttribute("data-resource-type")
+                     update_Observation("請輸入更新數值",resourceType,document.getElementById("sepans"+now).getAttribute("data-resource-prefix"),"sepans"+now,false)
+                })
+            }
+            continue
+        }
+        let now=String(i)
+        document.getElementById("sepans"+now).addEventListener('click',()=>{
+            let resourceType=document.getElementById("sepans"+now).getAttribute("data-resource-type")
+             update_Observation("請輸入更新數值",resourceType,"","sepans"+now)
+        })
+    }
+})

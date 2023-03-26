@@ -4,7 +4,7 @@ import numpy as np
 # from tensorflow.keras.models import Sequential
 # from tensorflow.keras.layers import Dense
 # from tensorflow.keras.layers import Dropout
-
+import tensorflow as tf
 randomForest_mean = {'sea': 2.64367816e-01, 'wbc': 1.29186782e+04,
                      'crp': 1.02275316e+02, 'seg': 7.77652299e+01, 'band': 2.15287356e+00}
 randomForest_std = {'sea': 4.40996002e-01, 'wbc': 6.87577970e+03,
@@ -87,6 +87,8 @@ def NFPredict(sea, wbc, crp, seg, band):
 
     # neuralNetwork
     model_file_name = 'tools/model/NF_neuralNetwork.pickle'
+    # with tf.device('/job:localhost'):
+    #     model4 = tf.keras.models.load_model(model_file_name)
     with open(model_file_name, 'rb') as f:
         model4 = pickle.load(f)
         pred4 = model4.predict(np.array(

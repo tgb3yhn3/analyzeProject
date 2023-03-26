@@ -36,7 +36,18 @@ async function get_data() {
             band = data1.entry[i].resource.valueQuantity.value
         }
     }
-    sheet();
+    sheet()
+
+			
+        resource_list=['WBC','CRP','SEG','Band']
+       for(const element of resource_list){
+        console.log(element)
+            document.getElementById(element).addEventListener('click',()=>{
+                update_Observation("請輸入更新數值",element,"",element,false)
+            })
+       }
+    
+    
     var result3 = await getModelResult_NF(sea, wbc, crp, seg, band).then((res3) => {
         data2 = res3;
         //確認選擇哪些模型呈現分析
@@ -91,11 +102,11 @@ function calculateresult(band, sea, seg, crp) {          //計算結果
     }
 }
 function back_click(element) {
-    window.location.replace('https://analyzeproject-xrttnigg7q-de.a.run.app/NFchoice?id=' + id);
+    window.location.replace('http://localhost:5000/NFchoice?id=' + id);
 }
 
 function backlist(element) {
-    window.location.replace('https://analyzeproject-xrttnigg7q-de.a.run.app/patientlist');
+    window.location.replace('http://localhost:5000/patientlist');
 }
 
 function show() {
@@ -112,7 +123,7 @@ function show() {
 }
 
 function detail(element) {
-    window.open('https://analyzeproject-xrttnigg7q-de.a.run.app/NFbodyvalue' + '?sea=' + sea + '&wbc=' + wbc + '&crp=' + crp + '&seg=' + seg + '&band=' + band)
+    window.open('http://localhost:5000/NFbodyvalue' + '?sea=' + sea + '&wbc=' + wbc + '&crp=' + crp + '&seg=' + seg + '&band=' + band)
 }
 
 function sheet() {
@@ -260,15 +271,15 @@ function decideWBCColor(wbc) {
     //NF:14000; non-NF:9700
     if (wbc >= 14000) {
         //變紅色
-        return '<div title ="大於NF中位數" class ="red">' + wbc + '</div>';
+        return '<div id="WBC" title ="大於NF中位數" class ="red">' + wbc + '</div>';
     }
     else if (wbc <= 9700) {
         //變綠色
-        return '<div title ="小於non-NF中位數" class ="green">' + wbc + '</div>';
+        return '<div id="WBC" title ="小於non-NF中位數" class ="green">' + wbc + '</div>';
     }
     else {
         //變黃色
-        return '<div title ="介於中間" class ="yellow">' + wbc + '</div>';
+        return '<div id="WBC" title ="介於中間" class ="yellow">' + wbc + '</div>';
     }
 }
 
@@ -277,15 +288,15 @@ function decideCRPColor(crp) {
     //NF:127.37; non-NF:29.65
     if (crp >= 127.37) {
         //變紅色
-        return '<div title ="大於NF中位數" class ="red">' + crp + '</div>';
+        return '<div id="CRP" title ="大於NF中位數" class ="red">' + crp + '</div>';
     }
     else if (crp <= 29.65) {
         //變綠色
-        return '<div title ="小於non-NF中位數" class ="green">' + crp + '</div>';
+        return '<div id="CRP" title ="小於non-NF中位數" class ="green">' + crp + '</div>';
     }
     else {
         //變黃色
-        return '<div title ="介於中間" class ="yellow">' + crp + '</div>';
+        return '<div id="CRP" title ="介於中間" class ="yellow">' + crp + '</div>';
     }
 }
 
@@ -294,15 +305,15 @@ function decideSEGColor(seg) {
     //NF:82.95; non-NF:76
     if (seg >= 82.95) {
         //變紅色
-        return '<div title ="大於NF中位數" class ="red">' + seg + '</div>';
+        return '<div id="SEG" title ="大於NF中位數" class ="red">' + seg + '</div>';
     }
     else if (seg <= 76) {
         //變綠色
-        return '<div title ="小於non-NF中位數" class ="green">' + seg + '</div>';
+        return '<div id="SEG" title ="小於non-NF中位數" class ="green">' + seg + '</div>';
     }
     else {
         //變黃色
-        return '<div title ="介於中間" class ="yellow">' + seg + '</div>';
+        return '<div id="SEG" title ="介於中間" class ="yellow">' + seg + '</div>';
     }
 
 }
@@ -312,16 +323,18 @@ function decideBandColor(band) {
     //NF:0.5; non-NF:0
     if (band >= 0.5) {
         //變紅色
-        return '<div title ="大於NF中位數" class ="red">' + band + '</div>';
+        return '<div id="Band" title ="大於NF中位數" class ="red">' + band + '</div>';
     }
     else if (band <= 0) {
         //變綠色
-        return '<div title ="小於non-NF中位數" class ="green">' + band + '</div>';
+        return '<div id="Band" title ="小於non-NF中位數" class ="green">' + band + '</div>';
     }
     else {
         //變黃色
-        return '<div title ="介於中間" class ="yellow">' + band + '</div>';
+        return '<div id="Band" title ="介於中間" class ="yellow">' + band + '</div>';
     }
 }
 
 get_data();
+
+

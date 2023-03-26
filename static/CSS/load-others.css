@@ -48,7 +48,7 @@
 	left: 0;
 	top: 0;
 	color: #2d3e4f;
-	animation: widthChange 3.5s infinite;
+	animation: widthChange 1.5s infinite;
 }
   
 .text-background {
@@ -90,7 +90,7 @@ body {
 }
   
 .progress-value {
-	animation: load 4.5s normal forwards;
+	animation: load 0.5s normal forwards;
 	box-shadow: 0 10px 40px -10px #fff;
 	border-radius: 100px;
 	background: #fff;

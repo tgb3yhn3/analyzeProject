@@ -17,8 +17,13 @@ async function get_data() {
     var url = document.URL;
     var getvalue = url.split("?")[1];
     id = url.split("=")[1];
+    // if(id==undefined){
+    //     id="a0917f1f-b1b9-4656-a48e-851bf15fede3"
+    // }
     var result1 = await getToken_fhir().then((res1) => {
+
         token_fhir = res1;
+        console.log("token= " + token_fhir)
     });
     var result2 = await getPatientById(token_fhir, id).then((res2) => {
         data1 = res2;
@@ -35,4 +40,43 @@ async function get_data() {
     age.innerText = "年齡：" + Math.ceil((new Date - new Date(data1.birthDate)) / 31536000000);
     height.innerText = "身高：" + Math.round(data2.entry[0].resource.valueQuantity.value * 100) / 100 + " " + data2.entry[0].resource.valueQuantity.unit;
     weight.innerText = "體重：" + Math.round(data3.entry[0].resource.valueQuantity.value * 100) / 100 + " " + data3.entry[0].resource.valueQuantity.unit;
+}
+
+async function update_name() {
+    await update(
+        "請輸入新的姓名",
+        (data, newData) => {
+            data['name'][0]["given"][0] = newData
+            return data
+        },
+        'names',
+        '姓名：')
+}
+async function update_sex() {
+    await update(
+        "請輸入新的性別",
+        (data, newData) => {
+            data['gender'] = newData
+            return data
+        },
+        'sex',
+        '性別：')
+}
+async function update_birth() {
+    await update(
+        "請輸入新的生日",
+        (data, newData) => {
+            data['birthDate'] = newData
+            age.innerText = "年齡：" + Math.ceil((new Date - new Date(newData)) / 31536000000);
+            return data
+        },
+        'birth',
+        '生日：').catch(error => console.log(error))
+
+}
+async function update_height() {
+    await update_Observation("請輸入身高", "Body Height", "身高：", "height")
+}
+async function update_weight() {
+    await update_Observation("請輸入體重", "Body Weight", "體重：", "weight")
 }

@@ -196,7 +196,9 @@ def predict_sepsis():
         print(insertdata)
         print(new_result)
         return jsonify(new_result)
-
-
+    
+@app.route('/edit')
+def edit():
+     return render_template('edit.html')
 if __name__ == '__main__':
     app.run(debug=True)
