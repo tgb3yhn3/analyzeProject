@@ -49,7 +49,7 @@ function list_update() {
 
 function create_href() {
 	for (var i = 0; i < arr_id.length; i++) {
-		href.push('http://localhost:5000/patientprofile?id=' + arr_id[i]);
+		href.push('https://analyzeproject-xrttnigg7q-de.a.run.app/patientprofile?id=' + arr_id[i]);
 		document.getElementById('op' + i).setAttribute('value', href[i]);
 		document.getElementById('op' + i).onclick = function (event) {
 			window.location.replace(event.target.getAttribute('value'));

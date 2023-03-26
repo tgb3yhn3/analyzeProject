@@ -95,7 +95,7 @@ function getObservationByCode(token, id, code) {
 
 function getModelResult_NF(sea, wbc, crp, seg, band) {
   return new Promise((resolve, reject) => {
-    var dataUrl = "http://localhost:5000/GET/predict/NF";
+    var dataUrl = "https://analyzeproject-xrttnigg7q-de.a.run.app/GET/predict/NF";
     var xhr = new XMLHttpRequest();
     xhr.open('POST', dataUrl, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -120,7 +120,7 @@ function getModelResult_NF(sea, wbc, crp, seg, band) {
 function getModelResult_sepsis(gcs, meds_ams15b, meds_plt150b, sofa_res, sofa_ner, sofa_liver,
   sofa_coag, sofa_renal, bun, cre, plt, FIO2_percent, PF_ratio, fio2_per, fio2_cb) {
   return new Promise((resolve, reject) => {
-    var dataUrl = "http://localhost:5000/GET/predict/sepsis";
+    var dataUrl = "https://analyzeproject-xrttnigg7q-de.a.run.app/GET/predict/sepsis";
     var xhr = new XMLHttpRequest();
     xhr.open('POST', dataUrl, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -141,7 +141,7 @@ function getModelResult_sepsis(gcs, meds_ams15b, meds_plt150b, sofa_res, sofa_ne
 
 function getToken_fhir() {
   return new Promise((resolve, reject) => {
-    var dataUrl = "http://localhost:5000/GET/token_fhir";
+    var dataUrl = "https://analyzeproject-xrttnigg7q-de.a.run.app/GET/token_fhir";
     var xhr = new XMLHttpRequest();
     xhr.open('GET', dataUrl, true);
     xhr.send();
