@@ -159,7 +159,15 @@ def token_fhir():
 @app.route('/GET/predict/NF', methods=['POST'])
 def predict_NF():
     if request.method == 'POST':
-        insertdata = request.get_json()
+        try:
+            insertdata = request.get_json()
+        except:
+            insertdata={'sea':float(request.values['sea']),
+                        'wbc':float(request.form['wbc']),
+                        'crp':float(request.form['crp']),
+                        'seg':float(request.form['seg']),
+                        'band':float(request.form['band']),
+                        }
         result = NFPredict(insertdata['sea'], insertdata['wbc'],
                            insertdata['crp'], insertdata['seg'], insertdata['band'])
         new_result = {
@@ -196,7 +204,17 @@ def predict_sepsis():
         print(insertdata)
         print(new_result)
         return jsonify(new_result)
-    
+@app.route('/realTimeNF', methods=['GET'])
+def realTimeNF():
+    return render_template('realTimePredict_NF.html')
+
+@app.route('/realTimeSpesis', methods=['GET'])
+def realTimeSpesis():
+    return render_template('realTimePredict_spesis.html')
+
+@app.route('/addPatient',methods=['GET'])
+def addPatient():
+    return render_template('addPatient.html')
 @app.route('/edit')
 def edit():
      return render_template('edit.html')

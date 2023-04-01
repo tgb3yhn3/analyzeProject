@@ -1,0 +1,53 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>急重症風險分析支援系統</title>
+	<link rel="stylesheet" href="static/CSS/load-others.css">
+	<link rel="stylesheet" href="static/CSS/PatientprofileLayout.css">
+	<link rel="shortcut icon" href="static/images/ccass.ico" type="image/x-icon">
+	<!-- jQuery Plugin -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="blockText">
+        <div>
+            <p class="textL" id="names"></p>
+            <p class="textL" id="sex"></p>
+            <p class="textL" id="birth"></p>
+            <p class="textL" id="age"></p>
+            <p class="textL" id="height"></p>
+            <p class="textL" id="weight"></p>
+            <!-- <button><a href="edit.html">修改</a></button> -->
+            <script src="static/JavaScript/connectAPI.js"></script>
+            <script src="static/JavaScript/patientprofile-insertData.js"></script>
+        </div>
+    <form method="POST" action="">
+        <label for="token" >token</label>
+        <input id="token" type="text" name="token"/>
+        <label for="id" >id</label>
+        <input id="id" type="text" name="id"/>
+        <label for="source_type" >source_type</label>
+        <input id="source_type" type="text" name="source_type"/>
+        <label for="data_type" >data_type</label>
+        <input id="data_type" type="text" name="data_type"/>
+        <label for="data" >data</label>
+        <input id="data" type="text" name="data"/>
+        <button type="button" onclick="click_update()">更新</button>
+      </form>
+      <!-- <script src="../static/JavaScript/connectAPI.js"></script> -->
+      <script>
+        function click_update(){
+            let token=await getToken_fhir()
+            let id=document.getElementById('id').value
+            let source_type=document.getElementById('source_type').value
+            let data=document.getElementById('data').value
+            update_data(token,id,source_type,data)
+        }
+        
+      </script>
+      </body>   
+</html>

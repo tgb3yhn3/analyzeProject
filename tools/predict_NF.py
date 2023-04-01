@@ -5,6 +5,7 @@ import numpy as np
 # from tensorflow.keras.layers import Dense
 # from tensorflow.keras.layers import Dropout
 import tensorflow as tf
+from tensorflow.keras.models import load_model
 randomForest_mean = {'sea': 2.64367816e-01, 'wbc': 1.29186782e+04,
                      'crp': 1.02275316e+02, 'seg': 7.77652299e+01, 'band': 2.15287356e+00}
 randomForest_std = {'sea': 4.40996002e-01, 'wbc': 6.87577970e+03,
@@ -86,13 +87,13 @@ def NFPredict(sea, wbc, crp, seg, band):
         pred['logisticregression'] = 1
 
     # neuralNetwork
-    model_file_name = 'tools/model/NF_neuralNetwork.pickle'
-    # with tf.device('/job:localhost'):
-    #     model4 = tf.keras.models.load_model(model_file_name)
-    with open(model_file_name, 'rb') as f:
-        model4 = pickle.load(f)
-        pred4 = model4.predict(np.array(
-            [[neuralNetwork_transform['sea'], neuralNetwork_transform['wbc'], neuralNetwork_transform['crp'], neuralNetwork_transform['seg'], neuralNetwork_transform['band']]]))
+    # model_file_name = 'tools/model/NF_neuralNetwork.pickle'
+    # # with tf.device('/job:localhost'):
+    # #     model4 = tf.keras.models.load_model(model_file_name)
+    # with open(model_file_name, 'rb') as f:
+    model4 = load_model('tools/model/NF_neuralNetwork.h5')
+    pred4 = model4.predict(np.array(
+        [[neuralNetwork_transform['sea'], neuralNetwork_transform['wbc'], neuralNetwork_transform['crp'], neuralNetwork_transform['seg'], neuralNetwork_transform['band']]]))
     pred4 = pred4[0][0]
     if (pred4 > 0.5):
         pred['neuralNetwork'] = 1

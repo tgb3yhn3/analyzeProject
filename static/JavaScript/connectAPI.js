@@ -101,11 +101,11 @@ function getModelResult_NF(sea, wbc, crp, seg, band) {
     xhr.setRequestHeader('Content-Type', 'application/json');
     // xhr.setRequestHeader('Authorization', 'Bearer ' + token)
     var value = {
-      "sea": sea,
-      "wbc": wbc,
-      "crp": crp,
-      "seg": seg,
-      "band": band
+      "sea": Number(sea),
+      "wbc": Number(wbc),
+      "crp": Number(crp),
+      "seg": Number(seg),
+      "band": Number(band)
     }
     var value_data = JSON.stringify(value);
     xhr.send(value_data);

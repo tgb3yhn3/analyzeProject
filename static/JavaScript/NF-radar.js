@@ -1,8 +1,13 @@
-function radar_test() {
+function radar_test(wbc=0,crp=0,seg=0,band=0) {
+       let chartStatus = Chart.getChart("radarChart"); // <canvas> id
+if (chartStatus != undefined) {
+  chartStatus.destroy();
+}
        var radarChart = document.getElementById("radarChart");
        var value_max = [108000, 709.31, 96.6, 31.5, 1]
        var value_min = [1100, 0.5, 5.3, 0, 0]
        // setup 
+       console.log(crp)
        const data = {
               labels: ['WBC(0-22000)', 'CRP(0-240)', 'SEG(0-100)', 'Band(0-2)', 'Sea Water(0、1)'],
               datasets: [{
@@ -49,19 +54,19 @@ function radar_test() {
                      (seg - value_min[2]) / (value_max[2] - value_min[2]),
                      (band - value_min[3]) / (value_max[3] - value_min[3]),
                      (sea - value_min[4]) / (value_max[4] - value_min[4])],
-                     backgroundColor: 'rgba(238,50,30,0)',             //不填滿 全透明
+                     backgroundColor: 'rgba(238,50,30,100)',             //不填滿 全透明
                      pointBackgroundColor: "rgba(255,255,255,1)",     //座標點的顏色，白色
                      borderColor: "rgba(56,99,186,1)",                //邊框藍色不透明
                      borderWidth: 1,
                      pointHoverBackgroundColor: "#FBED37",            //滑鼠經過時座標點時 鵝黃色
-                     pointBorderWidth: 0.5,                           //座標點的邊框粗細
+                     pointBorderWidth: 1,                           //座標點的邊框粗細
                      pointRadius: 3,                                  //座標點的半徑
                      pointHoverRadius: 5,                             //滑鼠經過時座標點的半徑，動態變大
                      pointStyle: 'circle',                            //座標點的圖形樣式-圓形
                      hidden: false,
               }]
        };
-
+       
        var chartRadarOptions = {
               scales: {            //刻度控制項目
                      r: {          //r軸，只要繞一圈的都適用r，折線圖長條圖則適用x軸、y軸
@@ -128,9 +133,11 @@ function radar_test() {
                      fontSize: "4vmin"
               }
        };
+       
        var radarChart = new Chart(radarChart, {
               type: 'radar',
               data: data,
               options: chartRadarOptions
        });
+      
 }

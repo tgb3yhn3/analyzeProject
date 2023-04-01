@@ -14,8 +14,11 @@ std = [2.45809506, 0.81116207, 1.34222891, 1.07728126, 0.9925559,  0.56376965, 0
 def sepsisPredict(gcs, meds_ams15b, meds_plt150b, sofa_res, sofa_ner, sofa_liver,
                   sofa_coag, sofa_renal, bun, cre, plt, FIO2_percent, PF_ratio, fio2_per, fio2_cb):
     pred = {}
-    transform = [gcs, meds_ams15b, meds_plt150b, sofa_res, sofa_ner, sofa_liver,
-                 sofa_coag, sofa_renal, bun, cre, plt, FIO2_percent, PF_ratio, fio2_per, fio2_cb]
+    transform = [gcs, meds_ams15b, meds_plt150b, sofa_res, sofa_ner, 
+                 sofa_liver,sofa_coag, sofa_renal, bun, cre,
+                 plt, FIO2_percent, PF_ratio, fio2_per, fio2_cb]
+    
+    transform=list(map(float,transform))
     print(transform)
     for i in range(0, 15):
         transform[i] = ((transform[i] - mean[i]) / std[i])

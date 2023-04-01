@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>NF預測</title>
+    <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/assets/css/Inter.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.2/chart.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-md bg-white shadow-sm py-2" id="mainNav">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span class="bs-icon-sm bs-icon-circle bs-icon-primary shadow d-flex justify-content-center align-items-center me-2 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor" style="font-size: 41px;">
+                        <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
+                        <path d="M352 128C352 198.7 294.7 256 223.1 256C153.3 256 95.1 198.7 95.1 128C95.1 57.31 153.3 0 223.1 0C294.7 0 352 57.31 352 128zM287.1 362C260.4 369.1 239.1 394.2 239.1 424V448C239.1 452.2 241.7 456.3 244.7 459.3L260.7 475.3C266.9 481.6 277.1 481.6 283.3 475.3C289.6 469.1 289.6 458.9 283.3 452.7L271.1 441.4V424C271.1 406.3 286.3 392 303.1 392C321.7 392 336 406.3 336 424V441.4L324.7 452.7C318.4 458.9 318.4 469.1 324.7 475.3C330.9 481.6 341.1 481.6 347.3 475.3L363.3 459.3C366.3 456.3 368 452.2 368 448V424C368 394.2 347.6 369.1 320 362V308.8C393.5 326.7 448 392.1 448 472V480C448 497.7 433.7 512 416 512H32C14.33 512 0 497.7 0 480V472C0 393 54.53 326.7 128 308.8V370.3C104.9 377.2 88 398.6 88 424C88 454.9 113.1 480 144 480C174.9 480 200 454.9 200 424C200 398.6 183.1 377.2 160 370.3V304.2C162.7 304.1 165.3 304 168 304H280C282.7 304 285.3 304.1 288 304.2L287.1 362zM167.1 424C167.1 437.3 157.3 448 143.1 448C130.7 448 119.1 437.3 119.1 424C119.1 410.7 130.7 400 143.1 400C157.3 400 167.1 410.7 167.1 424z"></path>
+                    </svg></span><span class="text-body">&nbsp;<strong>壞死性筋膜炎風險分析支援系統</strong></span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="a.html"></a></li>
+                </ul>
+                <a class="btn btn-dark link-light shadow" role="button" href="/realTimeSpesis">Spesis預測</a>
+                &nbsp;
+                <a class="btn btn-dark link-light shadow" role="button" href="/patientlist">Back</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container py-1" style="padding-top: 32px;">
+        <div class="row mb-4 mb-lg-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <p class="fw-bold text-success mb-2">FHIR</p>
+                <h2 class="fw-bold">即時預測系統-NF</h2>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6 col-xl-4">
+                <div class="card">
+                    <div class="card-body text-center d-flex flex-column align-items-center">
+                        <form action="/GET/predict/NF" method="post" id="form">
+                            <div class="mb-3"><label class="form-label">Sea Water</label><select class="form-select" name="sea">
+                                    <optgroup label="This is a group">
+                                        <option value="0" selected="">無接觸海水</option>
+                                        <option value="1">有接觸海水</option>
+                                    </optgroup>
+                                </select></div>
+                            <div class="mb-3"><label class="form-label" for="WBC">WBC</label><input class="form-control" type="text" name="wbc" placeholder="WBC"></div>
+                            <div class="mb-3"><label class="form-label" for="CRP">CRP</label><input class="form-control" type="text" name="crp" placeholder="CRP"></div>
+                            <div class="mb-3"><label class="form-label" for="SEG">SEG</label><input class="form-control" type="text"  name="seg"placeholder="seg"></div>
+                            <div class="mb-3"><label class="form-label" for="Band">Band</label><input class="form-control" type="text"  name="band" placeholder="Band"></div>
+                            <div class="mb-3"><button class="btn btn-dark shadow" type="button" onclick="doPredict()">Start Predict</button></div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card"></div>
+            </div>
+            <div class="col text-center">
+                <div class="row">
+                    <div class="col">
+                        <div class="card-group">
+                            <div class="card"><img class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image.png">
+                                <div class="card-body text-center">
+                                    <h3 class="card-title" id="DT">信心度</h3>
+                                </div>
+                            </div>
+                            <div class="card"><img class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-1.png">
+                                <div class="card-body text-center">
+                                    <h3 class="card-title" id="RF">信心度</h3>
+                                </div>
+                            </div>
+                            <div class="card"><img class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-2.png">
+                                <div class="card-body text-center">
+                                    <h3 class="card-title" id="LR">信心度</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-group">
+                            <div class="card"><img class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-6.png">
+                                <div class="card-body text-center">
+                                    <h3 class="card-title" id="NN">信心度</h3>
+                                </div>
+                            </div>
+                            <div class="card"><img class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-7.png">
+                                <div class="card-body text-center">
+                                    <h3 class="card-title" id="SVC">信心度</h3>
+                                </div>
+                            </div>
+                            <div class="card"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="blockChart" style="margin-top: 4vmin;">
+            <div>
+                <canvas id="radarChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <script>
+        var sea
+        var wbc
+        var crp
+        var seg
+        var band
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="static/assets/js/bold-and-bright.js"></script>
+    
+    <script src="static/JavaScript/connectAPI.js"></script>
+    <script src="static/JavaScript/NF-radar.js"></script>
+    <script>
+     
+     
+        async function doPredict(){
+            var formData= new FormData(document.querySelector('form'))
+            sea=formData.get('sea')
+            wbc= formData.get('wbc')
+            crp=  formData.get('crp')
+            seg=formData.get('seg')
+            band= formData.get('band')
+            if(sea==""||wbc==""||crp==""||seg==""||band==""){
+                alert("請輸入資料")
+            }
+            console.log( formData.get('sea'),
+            formData.get('wbc'),
+            formData.get('crp'),
+            formData.get('seg'),
+            formData.get('band'))
+            let result=await getModelResult_NF(
+                formData.get('sea'),
+                formData.get('wbc'),
+                formData.get('crp'),
+                formData.get('seg'),
+                formData.get('band')
+            ).then((res)=>{
+                document.getElementById("DT").innerHTML="信心度 "+res.decisionTree_proba+" %"
+                document.getElementById("RF").innerHTML="信心度 "+res.randomForest_proba+" %"
+                document.getElementById("LR").innerHTML="信心度 "+res.logisticregression_proba+" %"
+                document.getElementById("NN").innerHTML="信心度 "+res.decisionTree_proba+" %"
+                document.getElementById("SVC").innerHTML="信心度 "+res.supportVectorMachine_proba+" %"
+                console.log(res)
+                radar_test(wbc,crp,seg,band)
+            })
+           
+        }
+        
+    </script>
+</body>
+
+</html>
