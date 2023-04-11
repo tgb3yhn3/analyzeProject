@@ -234,7 +234,7 @@ def plot():
     df.drop('ID',axis=1,inplace=True)
     x_col = request.form.get('x')
     y_col = request.form.get('y')
-    
+    choose=[x_col,y_col]
     # 產生散佈圖
     plot_data = df[[x_col, y_col]].dropna()
     
