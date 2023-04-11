@@ -121,7 +121,7 @@
     <script src="static/JavaScript/sepsis-determine.js"></script>
     <script> 
         async function predict(){
-        var formData= new FormData(document.querySelector('form'))
+  var formData= new FormData(document.querySelector('form'))
         var formData2= new FormData(document.getElementById('form1'))
         var formData3= new FormData(document.getElementById('form2'))
         let respiratoryRate=formData.get('respiratoryRate')
@@ -162,20 +162,9 @@
         }
         else {
             meds_plt150b = 0
-        }
+        }      
         //判斷結果
-        result = getResult(scoreOfqSOFA, lastSOFA, infusion, MAP, Lactate);
-    
-        //sepsisChangeColor(SOFA[1], SOFA[2], SOFA[3], SOFA[4], SOFA[5], SOFA[6]);
-    
-        var result4 = await getModelResult_sepsis(gcs, meds_ams15b, meds_plt150b, sofa_res = SOFA[1], sofa_ner = SOFA[5], sofa_liver = SOFA[3],
-            sofa_coag = SOFA[2], sofa_renal = SOFA[6], bun, cre = Creatinine, plt = Platelet, FIO2_percent, PF_ratio, fio2_per = FIO2_percent * 100, fio2_cb = FIO2_percent * 100).then((res4) => {
-                data3 = res4;
-                document.getElementById("rf").innerHTML="信心度 "+res4.randomForest_proba+" %"
-                document.getElementById("lr").innerHTML="信心度 "+res4.logisticregression_proba+" %"
-                document.getElementById("svc").innerHTML="信心度 "+res4.supportVectorMachine_proba+" %"
-            })
-            location.href="#hint"
+       
         }
     </script>
 </body>

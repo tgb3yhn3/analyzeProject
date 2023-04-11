@@ -61,8 +61,8 @@
 			<div class="loading">
 				<img src="static/gif/book.gif" height="35%">
 				<div class="containerForText">
-					<div class="Text text-background">載入病患資料中...</div>
-					<div class="Text text-color">載入病患資料中...</div>
+					<div class="Text text-background">載入中...</div>
+					<div class="Text text-color">載入中...</div>
 				</div>
 				<div class="progress">
 					<div class="progress-value"></div>
@@ -74,14 +74,22 @@
 	<div class="lego text">
 		<div class="block"> </div>
 		<div class="titleBlock">
-			<h1 class="title"><strong>病患清單</strong></h1>
+			<h1 class="title"><strong>病患與功能清單</strong></h1>
 		</div>
 		<div class="list" id="listDiv">
 			<script src="static/JavaScript/connectAPI.js"></script>
 			<script src="static/JavaScript/patientlist-list.js"></script>
+			
+			功能清單
+			<br>
 			<a class="btn btn-outline-dark  " role="button" href="/addPatient">新增病患</a>
-			<a class="btn btn-outline-dark t " role="button" href="/realTimeNF">NF預測</a>
+			<a class="btn btn-outline-dark  " role="button" href="/realTimeNF">NF預測</a>
 			<a class="btn btn-outline-dark  " role="button" href="/realTimeSpesis">Spesis預測</a>
+			<a class="btn btn-outline-dark  " role="button" href="/plot">雙危險因子分析</a>
+			<br>
+			病患清單
+			<br>
+			
 		</div>
 		
 	</div>

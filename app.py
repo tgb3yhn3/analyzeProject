@@ -2,7 +2,7 @@ from distutils.command.config import config
 from pickle import FALSE
 from urllib import response
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify,render_template_string
 from flask_cors import CORS
 import pymongo
 from tools.jwtcreate import *
@@ -10,7 +10,10 @@ from tools.mongoDB import *
 from tools.predict_NF import *
 from tools.predict_sepsis import *
 from tools.session import *
-
+import seaborn as sns
+import matplotlib.pyplot as plt
+import io
+import base64
 load_dotenv()
 DATABASE_URL = 'mongodb+srv://admin:admin@personal.2p0d6yh.mongodb.net/?retryWrites=true&w=majority'
 client = pymongo.MongoClient(DATABASE_URL)
@@ -217,6 +220,36 @@ def addPatient():
     return render_template('addPatient.html')
 @app.route('/edit')
 def edit():
-     return render_template('edit.html')
+     return render_template('patientBodyData_NF.html')
+@app.route('/plot',methods=['get'])
+def before_plot():
+    df = pd.read_csv('.\\危險因子分析\\spesis.csv')
+    # 傳遞參數到 HTML 畫面
+    return render_template('analyze_double.html', columns=df.columns,img="")
+@app.route('/plot',methods=['post'])
+def plot():
+    # 從 request 取得使用者選擇的參數
+    df = pd.read_csv('危險因子分析\\spesis.csv')
+    x_col = request.form.get('x')
+    y_col = request.form.get('y')
+    
+    # 產生散佈圖
+    plot_data = df[[x_col, y_col]].dropna()
+    
+    fig = plot_data.plot.scatter(x=x_col, y=y_col).get_figure()
+    buffer = io.BytesIO()
+    fig.savefig(buffer, format='png')
+    buffer.seek(0)
+    image_png = buffer.getvalue()
+    buffer.close()
+    graphic = base64.b64encode(image_png).decode()
+    # 傳回圖片
+    # html = '''
+    #     <div>
+    #         <img src="data:image/png;base64,{}">
+    #     </div>
+    # '''
+    img="data:image/png;base64,{}".format(graphic)
+    return render_template('analyze_double.html',columns=df.columns,img=graphic)
 if __name__ == '__main__':
     app.run(debug=True)
