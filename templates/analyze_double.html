@@ -45,7 +45,10 @@
                             {% endif %}
                             
                             <form action="/plot" method="post"><select name="x" class="form-select">
-                                    <optgroup label="This is a group">
+                                <optgroup label="請選擇參數">
+                                        {% if choose!="" %}
+                                        <option value="{{ choose[0] }}">{{ choose[0] }}</option>
+                                        {% endif%}
                                         {% for col in columns %}
                                         <option value="{{ col }}">{{ col }}</option>
                                         {% endfor %}
@@ -53,7 +56,10 @@
                                 </select>
                                 <br>
                                 <select class="form-select" name="y">
-                                    <optgroup label="This is a group">
+                                    <optgroup label="請選擇參數">
+                                        {% if choose!="" %}
+                                        <option value="{{ choose[1] }}">{{ choose[1] }}</option>
+                                        {% endif %}
                                         {% for col in columns %}
                                         <option value="{{ col }}">{{ col }}</option>
                                         {% endfor %}

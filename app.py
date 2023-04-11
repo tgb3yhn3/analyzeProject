@@ -223,13 +223,15 @@ def edit():
      return render_template('patientBodyData_NF.html')
 @app.route('/plot',methods=['get'])
 def before_plot():
-    df = pd.read_csv('.\\危險因子分析\\spesis.csv')
+    df = pd.read_csv('危險因子分析\spesis.csv')
+    df.drop('ID',axis=1,inplace=True)
     # 傳遞參數到 HTML 畫面
-    return render_template('analyze_double.html', columns=df.columns,img="")
+    return render_template('analyze_double.html', columns=df.columns,img="",choose="")
 @app.route('/plot',methods=['post'])
 def plot():
     # 從 request 取得使用者選擇的參數
-    df = pd.read_csv('危險因子分析\\spesis.csv')
+    df = pd.read_csv('危險因子分析\spesis.csv')
+    df.drop('ID',axis=1,inplace=True)
     x_col = request.form.get('x')
     y_col = request.form.get('y')
     
@@ -250,6 +252,6 @@ def plot():
     #     </div>
     # '''
     img="data:image/png;base64,{}".format(graphic)
-    return render_template('analyze_double.html',columns=df.columns,img=graphic)
+    return render_template('analyze_double.html',columns=df.columns,img=graphic,choose=choose)
 if __name__ == '__main__':
     app.run(debug=True)
