@@ -45,7 +45,9 @@
                             {% endif %}
                             
                             <form action="/plot" method="post"><select name="x" class="form-select">
+
                                     <optgroup label="請選擇參數">
+
                                         {% if choose!="" %}
                                         <option value="{{ choose[0] }}">{{ choose[0] }}</option>
                                         {% endif%}

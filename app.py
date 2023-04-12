@@ -211,6 +211,7 @@ def addPatient():
 @app.route('/edit')
 def edit():
      return render_template('patientBodyData_NF.html')
+
 @app.route('/singlePlot',methods=['get'])
 def get_singlePlot():
     df = pd.read_csv('危險因子分析/Fdata1415.csv')
@@ -268,11 +269,12 @@ def singlePlot():
     buffer.close()
     graphic = base64.b64encode(image_png).decode()
     return render_template('analyze_single.html', columns=df.columns,img=graphic,choose=["nf",request.form.get('y')])
+
 @app.route('/plot',methods=['get'])
 def before_plot():
     df = pd.read_csv('危險因子分析/spesis.csv')
     df.drop('ID',axis=1,inplace=True)
-    # print(df.columns)
+
     # 傳遞參數到 HTML 畫面
     return render_template('analyze_double.html', columns=df.columns,img="",choose="")
 @app.route('/plot',methods=['post'])
