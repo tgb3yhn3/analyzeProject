@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>NF預測</title>
+    <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/assets/css/Inter.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.2/chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-md bg-white shadow-sm py-2" id="mainNav">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span
+                    class="bs-icon-sm bs-icon-circle bs-icon-primary shadow d-flex justify-content-center align-items-center me-2 bs-icon"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em"
+                        fill="currentColor" style="font-size: 41px;">
+                        <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
+                        <path
+                            d="M352 128C352 198.7 294.7 256 223.1 256C153.3 256 95.1 198.7 95.1 128C95.1 57.31 153.3 0 223.1 0C294.7 0 352 57.31 352 128zM287.1 362C260.4 369.1 239.1 394.2 239.1 424V448C239.1 452.2 241.7 456.3 244.7 459.3L260.7 475.3C266.9 481.6 277.1 481.6 283.3 475.3C289.6 469.1 289.6 458.9 283.3 452.7L271.1 441.4V424C271.1 406.3 286.3 392 303.1 392C321.7 392 336 406.3 336 424V441.4L324.7 452.7C318.4 458.9 318.4 469.1 324.7 475.3C330.9 481.6 341.1 481.6 347.3 475.3L363.3 459.3C366.3 456.3 368 452.2 368 448V424C368 394.2 347.6 369.1 320 362V308.8C393.5 326.7 448 392.1 448 472V480C448 497.7 433.7 512 416 512H32C14.33 512 0 497.7 0 480V472C0 393 54.53 326.7 128 308.8V370.3C104.9 377.2 88 398.6 88 424C88 454.9 113.1 480 144 480C174.9 480 200 454.9 200 424C200 398.6 183.1 377.2 160 370.3V304.2C162.7 304.1 165.3 304 168 304H280C282.7 304 285.3 304.1 288 304.2L287.1 362zM167.1 424C167.1 437.3 157.3 448 143.1 448C130.7 448 119.1 437.3 119.1 424C119.1 410.7 130.7 400 143.1 400C157.3 400 167.1 410.7 167.1 424z">
+                        </path>
+                    </svg></span><span class="text-body">&nbsp;<strong>壞死性筋膜炎風險分析支援系統</strong></span></a><button
+                data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span
+                    class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="a.html"></a></li>
+                </ul>
+
+                &nbsp;
+                <a class="btn btn-dark link-light shadow" role="button" href="/patientlist">Back</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container py-1" style="padding-top: 32px;">
+        <div class="row mb-4 mb-lg-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <p class="fw-bold text-success mb-2">FHIR</p>
+                <h2 class="fw-bold">病患資料修改</h2>
+            </div>
+        </div>
+        <!-- ----------------------------------------------------- -->
+        <div class="row" style="text-align:center;">
+            <div class="col" style="margin: 0 auto;"><button id="spesis_show" class="btn btn-dark">切換資料頁面</button>
+            </div>
+
+        </div>
+        <div id="top">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6 col-xl-4">
+                    <div class="card">
+                        <div class="card-body text-center d-flex flex-column align-items-center">
+                            <form id="form">
+                                <!-- <div class="mb-3"><label class="form-label">Sea Water</label><select class="form-select"
+                                        name="sea">
+                                        <optgroup label="This is a group">
+                                            <option value="0" selected="">無接觸海水</option>
+                                            <option value="1">有接觸海水</option>
+                                        </optgroup>
+                                    </select></div> -->
+                                <div class="mb-3"><label class="form-label" for="WBC">WBC</label><input
+                                        class="form-control" type="text" name="wbc" placeholder="WBC"></div>
+                                <div class="mb-3"><label class="form-label" for="CRP">CRP</label><input
+                                        class="form-control" type="text" name="crp" placeholder="CRP"></div>
+                                <div class="mb-3"><label class="form-label" for="SEG">SEG</label><input
+                                        class="form-control" type="text" name="seg" placeholder="seg"></div>
+                                <div class="mb-3"><label class="form-label" for="Band">Band</label><input
+                                        class="form-control" type="text" name="band" placeholder="Band"></div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card"></div>
+                </div>
+            </div>
+        </div>
+        <!-- ----------------------------------------------------- -->
+        <!-- <hr> -->
+        <div id="down" style="display:none ;">
+            <div class="row d-flex justify-content-center">
+                <div class="col-auto col-md-6 col-xl-3" style="width: 330px;">
+                    <div class="card">
+                        <div class="card-body text-center d-flex flex-column align-items-center">
+                            <form id="form_1" method="post">
+                                <div class="mb-3"><label class="form-label"
+                                        for="respiratoryRate">respiratoryRate</label><input value=19
+                                        class="form-control" type="text" name="respiratoryRate"
+                                        placeholder="respiratoryRate" value="16"></div>
+                                <div class="mb-3"><label class="form-label"
+                                        for="consciousness">consciousness</label><input value=100 class="form-control"
+                                        type="password" name="consciousness" placeholder="consciousness"></div>
+                                <div class="mb-3"><label class="form-label"
+                                        for="systolicPressure">systolicPressure</label><input value=124
+                                        class="form-control" type="text" name="systolicPressure"
+                                        placeholder="systolicPressure"></div>
+                                <div class="mb-3"><label class="form-label" for="PF_ratio">PF_ratio</label><input
+                                        value=360 class="form-control" type="text" placeholder="PF_ratio"
+                                        name="PF_ratio"></div>
+                                <div class="mb-3"><label class="form-label" for="Platelet">Platelet</label><input
+                                        value=156 class="form-control" type="text" placeholder="Platelet"
+                                        name="Platelet"></div>
+                                <div class="mb-3"><label class="form-label" for="Bilirubin">Bilirubin</label><input
+                                        value=7 class="form-control" type="text" placeholder="Bilirubin"
+                                        name="Bilirubin"></div>
+                                <div class="mb-3"><label class="form-label" for="MAP">MAP</label><input value=68
+                                        class="form-control" type="text" placeholder="MAP" name="MAP"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="card">
+                        <div class="card-body text-center d-flex flex-column align-items-center">
+                            <form id="form1" name="form1">
+                                <div class="mb-3"><label class="form-label" for="Dopamine">Dopamine</label><input
+                                        value=13 class="form-control" type="text" name="Dopamine"
+                                        placeholder="Dopamine"></div>
+                                <div class="mb-3"><label class="form-label" for="epinephrine">epinephrine</label><input
+                                        value=0 class="form-control" type="text" name="epinephrine"
+                                        placeholder="epinephrine"></div>
+                                <div class="mb-3"><label class="form-label"
+                                        for="norepinephrine">norepinephrine</label><input value=0 class="form-control"
+                                        type="text" name="norepinephrine" placeholder="norepinephrine"></div>
+                                <div class="mb-3"><label class="form-label" for="Dobutamine">Dobutamine</label><input
+                                        value=0 class="form-control" type="text" placeholder="Dobutamine"
+                                        name="Dobutamine"></div>
+                                <div class="mb-3"><label class="form-label" for="ComaScale">ComaScale</label><input
+                                        value=16 class="form-control" type="text" placeholder="ComaScale"
+                                        name="ComaScale"></div>
+                                <div class="mb-3"><label class="form-label" for="Creatinine">Creatinine</label><input
+                                        value=0.9 class="form-control" type="text" placeholder="Creatinine"
+                                        name="Creatinine"></div>
+                                <div class="mb-3"><label class="form-label" for="urineVolume">urineVolume</label><input
+                                        value=822 class="form-control" type="text" placeholder="urineVolume"
+                                        name="urineVolume"></div>
+                                <div class="mb-3"><label class="form-label" for="Respiratory mask">Respiratory
+                                        mask</label><select class="form-select" name="respirator">
+                                        <optgroup label="Respiratory">
+                                            <option value="0" selected>not use</option>
+
+                                            <option value="1"> use</option>
+                                        </optgroup>
+                                    </select></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="card">
+                        <div class="card-body text-center d-flex flex-column align-items-center">
+                            <form id="form2" name="form2">
+                                <div class="mb-3"><label class="form-label" for="lastSOFA">lastSOFA</label><input
+                                        value=0 class="form-control" type="text" name="lastSOFA" placeholder="lastSOFA">
+                                </div>
+                                <div class="mb-3"><label class="form-label" for="infusion">infusion</label><input
+                                        value=0 class="form-control" type="text" name="infusion" placeholder="infusion">
+                                </div>
+                                <div class="mb-3"><label class="form-label" for="Lactate">Lactate</label><input value=2
+                                        class="form-control" type="text" name="Lactate" placeholder="Lactate"></div>
+                                <div class="mb-3"><label class="form-label" for="gcs">gcs</label><input value=16
+                                        class="form-control" type="text" placeholder="gcs" name="gcs"></div>
+                                <div class="mb-3"><label class="form-label" for="bun">bun</label><input value=15.5
+                                        class="form-control" type="text" placeholder="bun" name="bun"></div>
+                                <div class="mb-3"><label class="form-label"
+                                        for="FIO2_percent">FIO2_percent</label><input value=0.33 class="form-control"
+                                        type="text" placeholder="FIO2_percent" name="FIO2_percent"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="send" style="display:block;margin:0 auto;" class="btn btn-dark" onclick="send()">送出</button>
+    <script>
+        var sea
+        var wbc
+        var crp
+        var seg
+        var band
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="static/assets/js/bold-and-bright.js"></script>
+    <script src="static/JavaScript/Patient.js"></script>
+    <script src="static/JavaScript/connectAPI.js"></script>
+    <!-- <script src="static/JavaScript/NF-radar.js"></script> -->
+    <!-- <script src="static/JavaScript/patientprofile-insertData.js"></script> -->
+    <script>
+        $().ready(async function () {
+            // $("#down").toggle()
+            var url = document.URL;
+            var getvalue = url.split("?")[1];
+            id = url.split("=")[1];
+            var result1 = await getToken_fhir().then((res1) => {
+                token_fhir = res1;
+            });
+            var result2 = await getObservationById(token_fhir, id).then((res2) => {
+                data1 = res2;
+            })
+            let formData = new FormData(document.querySelector('form'))
+
+            for (var i = 0; i < data1.entry.length; i++) {
+                if (data1.entry[i].resource.code.text == 'WBC') {
+                    let wbc = data1.entry[i].resource.valueQuantity.value
+                    document.getElementsByName("wbc")[0].value = wbc
+                }
+                if (data1.entry[i].resource.code.text == 'CRP') {
+                    let crp = data1.entry[i].resource.valueQuantity.value
+                    document.getElementsByName("crp")[0].value = crp
+                }
+                if (data1.entry[i].resource.code.text == 'Seg') {
+                    let seg = data1.entry[i].resource.valueQuantity.value
+                    document.getElementsByName("seg")[0].value = seg
+                }
+                if (data1.entry[i].resource.code.text == 'Band') {
+                    let band = data1.entry[i].resource.valueQuantity.value
+                    document.getElementsByName("band")[0].value = band
+                }
+            }
+        })
+        $("#spesis_show").click(() => {
+            //console.log("click")
+            $("#down").toggle()
+            $("#top").toggle()
+        })
+
+        async function send() {
+            console.log("click")
+            var formData = new FormData(document.querySelector('form'))
+            wbc = formData.get('wbc')
+            crp = formData.get('crp')
+            seg = formData.get('seg')
+            band = formData.get('band')
+            if ( wbc == "" || crp == "" || seg == "" || band == "") {
+                alert("請輸入資料")
+                return
+            } else {
+                if (!(wbc >= 4570 && wbc <= 21300)){
+                    alert("wbc超出範圍")
+                    return
+                }
+                if (!(crp >= 1.204 && crp <= 249.736)) {
+                    alert("crp超出範圍")
+                    return
+                }
+                if (!(seg >= 54.37 && seg <= 90.6)) {
+                    alert("seg超出範圍")
+                    return
+                }
+                if (!(band >= 0 && band <= 4)) {
+                    alert("band超出範圍")
+                    return
+                }
+            }
+            //debugger
+            var new_id=document.URL.split("=")[1]
+            /*var formData = new FormData(document.querySelector('form'))
+            var formData2 = new FormData(document.getElementById('form1'))
+            var formData3 = new FormData(document.getElementById('form2'))
+            let respiratoryRate = formData.get('respiratoryRate')
+
+            let consciousness = formData.get('consciousness')
+            let systolicPressure = formData.get('systolicPressure')
+            let PF_ratio = formData.get('PF_ratio')
+            let Platelet = formData.get('Platelet')
+            let Bilirubin = formData.get('Bilirubin')
+            let MAP = formData.get('MAP')
+            let Dopamine = formData2.get('Dopamine')
+            let epinephrine = formData2.get('epinephrine')
+            let norepinephrine = formData2.get('norepinephrine')
+            let Dobutamine = formData2.get('Dobutamine')
+            let ComaScale = formData2.get('ComaScale')
+            let Creatinine = formData2.get('Creatinine')
+            let urineVolume = formData2.get('urineVolume')
+            let lastSOFA = formData3.get('lastSOFA')
+            let infusion = formData3.get('infusion')
+            let Lactate = formData3.get('Lactate')
+            let gcs = formData3.get('gcs')
+            let bun = formData3.get('bun')
+            let FIO2_percent = formData3.get('FIO2_percent')
+            let respirator = formData3.get('respirator')
+            if (consciousness < 0 && consciousness > 1) {
+                errMsg += "consciousness超出範圍\n"
+            }
+            if (systolicPressure < 0 && systolicPressure > 1) {
+                errMsg += "systolicPressure超出範圍\n"
+            }
+            if (PF_ratio < 0 && PF_ratio > 1) {
+                errMsg += "PF_ratio超出範圍\n"
+            }
+            if (Platelet < 0 && Platelet > 1) {
+                errMsg += "Platelet超出範圍\n"
+            }
+            if (Bilirubin < 0 && Bilirubin > 1) {
+                errMsg += "Bilirubin超出範圍\n"
+            }
+            if (MAP < 0 && MAP > 1) {
+                errMsg += "MAP超出範圍\n"
+            }
+            if (Dopamine < 0 && Dopamine > 1) {
+                errMsg += "Dopamine超出範圍\n"
+            }
+            if (epinephrine < 0 && epinephrine > 1) {
+                errMsg += "epinephrine超出範圍\n"
+            }
+            if (norepinephrine < 0 && norepinephrine > 1) {
+                errMsg += "norepinephrine超出範圍\n"
+            }
+            if (Dobutamine < 0 && Dobutamine > 1) {
+                errMsg += "Dobutamine超出範圍\n"
+            }
+            if (ComaScale < 0 && ComaScale > 1) {
+                errMsg += "ComaScale超出範圍\n"
+            }
+            if (Creatinine < 0 && Creatinine > 1) {
+                errMsg += "Creatinine超出範圍\n"
+            }
+            if (urineVolume < 0 && urineVolume > 1) {
+                errMsg += "urineVolume超出範圍\n"
+            }
+            if (lastSOFA < 0 && lastSOFA > 1) {
+                errMsg += "lastSOFA超出範圍\n"
+            }
+            if (infusion < 0 && infusion > 1) {
+                errMsg += "infusion超出範圍\n"
+            }
+            if (Lactate < 0 && Lactate > 1) {
+                errMsg += "Lactate超出範圍\n"
+            }
+            if (gcs < 0 && gcs > 1) {
+                errMsg += "gcs超出範圍\n"
+            }
+            if (bun < 0 && bun > 1) {
+                errMsg += "bun超出範圍\n"
+            }
+            if (FIO2_percent < 0 && FIO2_percent > 1) {
+                errMsg += "FIO2_percent超出範圍\n"
+            }
+            if (respirator < 0 && respirator > 1) {
+                errMsg += "respirator超出範圍\n"
+            }
+            scoreOfqSOFA = caculateqSOFA(respiratoryRate, consciousness, systolicPressure)
+            SOFA = caculateSOFA(PF_ratio, respirator, Platelet, Bilirubin, MAP, Dopamine, epinephrine, norepinephrine, Dobutamine, ComaScale, Creatinine, urineVolume);
+            scoreOfSOFA = SOFA[0];
+            var meds_ams15b
+            var meds_plt150b
+            if (gcs < 15) {
+                meds_ams15b = 2
+            }
+            else {
+                meds_ams15b = 0
+            }
+            if (Platelet < 150) {
+                meds_plt150b = 3
+            }
+            else {
+                meds_plt150b = 0
+            }*/
+            
+            let WBC_add_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "26464-8",
+                            "display": "Leukocytes in Blood",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "WBC"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/1c48a667-9e77-4e02-80fb-ab4b310e046b"
+                },
+                "id": "8c072d3e-6b82-42d0-9b9a-c081d662c24f",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:13.666059+00:00",
+                    "versionId": "MTY3ODg3MzU3MzY2NjA1OTAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "10*3/μL",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "10*3/μL",
+                    "value": Number(wbc)
+                }
+            }
+            let CRP_add_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "1988-5",
+                            "display": "C reactive protein in Serum or Plasma",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "CRP"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/41837dda-0080-4664-90d8-e70a9ce512dd"
+                },
+                "id": "2262a284-34c5-442f-aa79-b09f2185574c",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:12.975402+00:00",
+                    "versionId": "MTY3ODg3MzU3Mjk3NTQwMjAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "mg/dL",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "mg/dL",
+                    "value": Number(crp)
+                }
+            }
+            let Seg_add_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "26505-8",
+                            "display": "Segmented neutrophils/100 leukocytes in Blood",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "Seg"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/6d6c07f8-0521-48f6-860b-953a6cd0aa2c"
+                },
+                "id": "10fd6d1d-37c2-4f7c-b7f0-ec278aabefb4",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:13.790456+00:00",
+                    "versionId": "MTY3ODg3MzU3Mzc5MDQ1NjAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "%",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "%",
+                    "value": Number(seg)
+                }
+            }
+            let Band_add_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "26508-2",
+                            "display": "Band form neutrophils/100 leukocytes in Blood",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "Band"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/62857701-5d87-424b-b5b1-c10cf4be8ddb"
+                },
+                "id": "d37f224e-a511-42e6-af6e-d7b759c152f2",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:10.016993+00:00",
+                    "versionId": "MTY3ODg3MzU3MDAxNjk5MzAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "%",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "%",
+                    "value": Number(band)
+                }
+            }
+           /*
+           let respiratoryRate_add_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "9279-1",
+                            "display": "Respiratory rate",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "Respiratory rate"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/323528e6-1ebb-469b-8a0b-3bd4e03be6b5"
+                },
+                "id": "a26487f6-13e3-4ee4-91a2-a1074cb9eb52",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:19.830439+00:00",
+                    "versionId": "MTY3ODg3MzU3OTgzMDQzOTAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "times/min",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "times/min",
+                    "value": Number(respiratoryRate)
+                }
+            }
+            let consciousness_add_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "80288-4",
+                            "display": "Level of consciousness",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "Level of consciousness"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/1c48a667-9e77-4e02-80fb-ab4b310e046b"
+                },
+                "id": "4b480ace-6294-49f7-a9a3-32e557d7276e",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:20.175597+00:00",
+                    "versionId": "MTY3ODg3MzU4MDE3NTU5NzAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "{score}",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "{score}",
+                    "value": Number(consciousness)
+                }
+            }
+            let systolicPressure_add_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "55284-4",
+                            "display": "Blood Pressure",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "Blood Pressure"
+                },
+                "component": [
+                    {
+                        "code": {
+                            "coding": [
+                                {
+                                    "code": "8462-4",
+                                    "display": "Diastolic Blood Pressure",
+                                    "system": "http://loinc.org"
+                                }
+                            ],
+                            "text": "Diastolic Blood Pressure"
+                        },
+                        "valueQuantity": {
+                            "code": "mm[Hg]",
+                            "system": "http://unitsofmeasure.org",
+                            "unit": "mm[Hg]",
+                            "value": 71.40576225472539
+                        }
+                    },
+                    {
+                        "code": {
+                            "coding": [
+                                {
+                                    "code": "8480-6",
+                                    "display": "Systolic Blood Pressure",
+                                    "system": "http://loinc.org"
+                                }
+                            ],
+                            "text": "Systolic Blood Pressure"
+                        },
+                        "valueQuantity": {
+                            "code": "mm[Hg]",
+                            "system": "http://unitsofmeasure.org",
+                            "unit": "mm[Hg]",
+                            "value": Number(systolicPressure)
+                        }
+                    }
+                ],
+                "effectiveDateTime": "2016-11-08T18:14:24-05:00",
+                "encounter": {
+                    "reference": "Encounter/b7f1fe7d-def2-49c1-ba65-e7b289bcb08a"
+                },
+                "id": "25c8a7b7-d3e2-4471-b165-f97a00be192f",
+                "issued": "2016-11-08T18:14:24.746-05:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:20.343729+00:00",
+                    "versionId": "MTY3ODg3MzU4MDM0MzcyOTAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                }
+            }
+
+           let PF_ratio_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "50984-4",
+                            "display": "Horowitz index in Arterial blood",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "PFratio"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/1c48a667-9e77-4e02-80fb-ab4b310e046b"
+                },
+                "id": "70baa700-9b12-4d85-9b5c-d6ffb0ca68d7",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:20.265882+00:00",
+                    "versionId": "MTY3ODg3MzU4MDI2NTg4MjAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "mmHg",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "mmHg",
+                    "value": Number(PF_ratio)
+                }
+            }
+            let Platelet_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "26515-7",
+                            "display": "Platelets in Blood",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "Platelets in Blood"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/59d20c39-3a0c-4750-ace3-8c22a0c91d0c"
+                },
+                "id": "42fbae86-cfd9-47b3-a35a-33aa6cdf47fb",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:20.370074+00:00",
+                    "versionId": "MTY3ODg3MzU4MDM3MDA3NDAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "10*3/μL",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "10*3/μL",
+                    "value": Number(Platelet)
+                }
+            }
+            let Bilirubin_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "1975-2",
+                            "display": "Bilirubin.total in Serum or Plasma",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "Bilirubin.total in Serum or Plasma"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/cd07956e-0239-462f-9549-dda9f4335cfe"
+                },
+                "id": "8c13f3a4-0a39-47e7-8577-3cf7d783f42f",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:19.587379+00:00",
+                    "versionId": "MTY3ODg3MzU3OTU4NzM3OTAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "mg/dL",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "mg/dL",
+                    "value": Number(Bilirubin)
+                }
+            }
+            let MAP_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "8478-0",
+                            "display": "Mean blood pressure",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "Mean blood pressure"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/6d6c07f8-0521-48f6-860b-953a6cd0aa2c"
+                },
+                "id": "dd31724b-0c7b-472c-92b9-e7e49a62fcf8",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-25T15:05:47.904361+00:00",
+                    "versionId": "MTY3OTc1Njc0NzkwNDM2MTAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "mmHg",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "mmHg",
+                    "value": Number(MAP)
+                }
+            }
+            let Dopamine_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "14703-3",
+                            "display": "DOPamine in Serum or Plasma",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "DOPamine in Serum or Plasma"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/6d6c07f8-0521-48f6-860b-953a6cd0aa2c"
+                },
+                "id": "5da1c078-89da-4583-8deb-da3a5f47226c",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-25T17:23:22.406892+00:00",
+                    "versionId": "MTY3OTc2NTAwMjQwNjg5MjAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "ug/kg/min",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "ug/kg/min",
+                    "value": Number(Dopamine)
+                }
+            }
+            let epinephrine_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "11046-0",
+                            "display": "EPINEPHrine in Urine",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "EPINEPHrine in Urine"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/6d6c07f8-0521-48f6-860b-953a6cd0aa2c"
+                },
+                "id": "fa7c382d-5e07-4f04-b7f7-c10a19e14fcd",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-25T17:21:35.205745+00:00",
+                    "versionId": "MTY3OTc2NDg5NTIwNTc0NTAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "ug/kg/min",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "ug/kg/min",
+                    "value": Number(epinephrine)
+                }
+            }
+            let norepinephrine_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "2666-6",
+                            "display": "Norepinephrine in Urine",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "Norepinephrine in Urine"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/6d6c07f8-0521-48f6-860b-953a6cd0aa2c"
+                },
+                "id": "b5ad5851-f731-4fff-a84e-cf7885d9ddde",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-25T17:23:07.751826+00:00",
+                    "versionId": "MTY3OTc2NDk4Nzc1MTgyNjAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "ug/kg/min",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "ug/kg/min",
+                    "value": Number(norepinephrine)
+                }
+            }
+            let ComaScale_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "35088-4",
+                            "display": "Glasgow coma score total",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "Glasgow coma score total"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/6d6c07f8-0521-48f6-860b-953a6cd0aa2c"
+                },
+                "id": "2fde8de7-8053-4888-8141-3448bc40bfec",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-25T17:07:17.966733+00:00",
+                    "versionId": "MTY3OTc2NDAzNzk2NjczMzAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "{score}",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "{score}",
+                    "value": Number(ComaScale)
+                }
+            }
+            let Creatinine_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "2160-0",
+                            "display": "Creatinine in Serum or Plasma",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "Creatinine in Serum or Plasma"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/323528e6-1ebb-469b-8a0b-3bd4e03be6b5"
+                },
+                "id": "d7a052c1-b515-4902-825d-fd32a6649f20",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:16.571641+00:00",
+                    "versionId": "MTY3ODg3MzU3NjU3MTY0MTAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "mg/dL",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "mg/dL",
+                    "value": Number(Creatinine)
+                }
+            }
+            let urineVolume_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "9192-6",
+                            "display": "Urine output 24 hour",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "Urine output 24 hour"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/323528e6-1ebb-469b-8a0b-3bd4e03be6b5"
+                },
+                "id": "dd9ab5f2-0f85-407c-b8ae-d4abf9cb4034",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:19.409180+00:00",
+                    "versionId": "MTY3ODg3MzU3OTQwOTE4MDAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "mL/day",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "mL/day",
+                    "value": Number(urineVolume)
+                }
+            }
+            let lastSOFA_add_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "96790-1",
+                            "display": "SOFA Total Score",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "SOFA Total Score"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/41837dda-0080-4664-90d8-e70a9ce512dd"
+                },
+                "id": "943b04d5-13d2-4733-afd8-b8a2b416858a",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:20.008457+00:00",
+                    "versionId": "MTY3ODg3MzU4MDAwODQ1NzAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "{score}",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "{score}",
+                    "value": lastSOFA
+                }
+            }
+            let infusion_add_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "76310-2",
+                            "display": "Infusion volume.programmed Procedure Infusion pump",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "Infusion"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/62857701-5d87-424b-b5b1-c10cf4be8ddb"
+                },
+                "id": "aa7ab4e5-2dc9-41ce-97fc-3606a432b7d0",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:16.940278+00:00",
+                    "versionId": "MTY3ODg3MzU3Njk0MDI3ODAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "ml",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "ml",
+                    "value": Number(infusion)
+                }
+            }
+            let Lactate_add_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "2524-7",
+                            "display": "Lactate in Serum or Plasma",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "Lactate in Serum or Plasma"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/6d6c07f8-0521-48f6-860b-953a6cd0aa2c"
+                },
+                "id": "06a498b7-1d0b-41ff-8c51-d0befb8606af",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:20.020071+00:00",
+                    "versionId": "MTY3ODg3MzU4MDAyMDA3MTAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "mmole/L",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "mmole/L",
+                    "value": Number(Lactate)
+                }
+            }
+            let gcs_add_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "35088-4",
+                            "display": "Glasgow coma score total",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "Glasgow coma score total"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/6d6c07f8-0521-48f6-860b-953a6cd0aa2c"
+                },
+                "id": "fa383ced-c26d-4ac6-b690-acfa8b48e79b",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-26T02:45:16.977732+00:00",
+                    "versionId": "MTY3OTc5ODcxNjk3NzczMjAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "{score}",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "{score}",
+                    "value": Number(gcs)
+                }
+            }
+            let bun_add_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "3094-0",
+                            "display": "Urea nitrogen [Mass/volume] in Blood",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "bun"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/41837dda-0080-4664-90d8-e70a9ce512dd"
+                },
+                "id": "3320d394-4b75-4ab2-be3c-b8ea70d5e92c",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:20.311543+00:00",
+                    "versionId": "MTY3ODg3MzU4MDMxMTU0MzAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "mg/dL",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "mg/dL",
+                    "value": Number(bun)
+                }
+            }
+            let FIO2_percent_add_obj = {
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "code": "vital-signs",
+                                "display": "vital-signs",
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "code": "3150-0",
+                            "display": "Inhaled oxygen concentration",
+                            "system": "http://loinc.org"
+                        }
+                    ],
+                    "text": "FIO2_percent"
+                },
+                "effectiveDateTime": "2011-08-08T23:24:58-04:00",
+                "encounter": {
+                    "reference": "Encounter/41837dda-0080-4664-90d8-e70a9ce512dd"
+                },
+                "id": "e6533e65-97ca-4754-9a6d-64ab045d750f",
+                "issued": "2011-08-08T23:24:58.908-04:00",
+                "meta": {
+                    "lastUpdated": "2023-03-15T09:46:16.757736+00:00",
+                    "versionId": "MTY3ODg3MzU3Njc1NzczNjAwMA"
+                },
+                "resourceType": "Observation",
+                "status": "final",
+                "subject": {
+                    "reference": "Patient/" + new_id
+                },
+                "valueQuantity": {
+                    "code": "%",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "%",
+                    "value": Number(FIO2_percent)
+                }
+            }
+*/
+            /* await add_data(respiratoryRate_add_obj, false).then(
+                 await add_data(consciousness_add_obj, false)).then(
+                    await add_data(systolicPressure_add_obj, false)).then(*/
+            await add_data(WBC_add_obj, false).then(
+                await add_data(CRP_add_obj, false)).then(
+                    await add_data(Seg_add_obj, false)).then(
+                        await add_data(Band_add_obj, false)).then(
+                            /* await add_data(PF_ratio_obj, false)).then(
+                                 await add_data(Platelet_obj, false)).then(
+                                     await add_data(Bilirubin_obj, false)).then(
+                                         await add_data(MAP_obj, false)).then(
+                                             await add_data(Dopamine_obj, false)).then(
+                                                 await add_data(epinephrine_obj, false)).then(
+                                                     await add_data(norepinephrine_obj, false)).then(
+                                                         await add_data(ComaScale_obj, false)).then(
+                                                             await add_data(Creatinine_obj, false)).then(
+                                                                 await add_data(urineVolume_obj, false)).then(
+                                                                     await add_data(lastSOFA_add_obj, false)).then(
+                                                                         await add_data(infusion_add_obj, false)).then(
+                                                                             await add_data(Lactate_add_obj, false)).then(
+                                                                                 await add_data(gcs_add_obj, false)).then(
+                                                                                     await add_data(bun_add_obj, false)).then(
+                                                                                         await add_data(FIO2_percent_add_obj, false)).then(*/
+                            alert("更新成功")
+                        )
+
+
+        }
+
+    </script>
+</body>
+
+</html>

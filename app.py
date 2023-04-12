@@ -2,7 +2,7 @@ from distutils.command.config import config
 from pickle import FALSE
 from urllib import response
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify,render_template_string
 from flask_cors import CORS
 import pymongo
 from tools.jwtcreate import *
@@ -10,7 +10,10 @@ from tools.mongoDB import *
 from tools.predict_NF import *
 from tools.predict_sepsis import *
 from tools.session import *
-
+import seaborn as sns
+import matplotlib.pyplot as plt
+import io
+import base64
 load_dotenv()
 DATABASE_URL = 'mongodb+srv://admin:admin@personal.2p0d6yh.mongodb.net/?retryWrites=true&w=majority'
 client = pymongo.MongoClient(DATABASE_URL)
@@ -30,11 +33,9 @@ app.config['SESSION_USE_SIGNER'] = True
 app.config['SESSION_TYPE'] = 'filesystem'
 CORS(app)
 
-
 @app.route('/', methods=['POST', 'GET'])
 def main():
     return redirect(url_for('login'))
-
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -56,7 +57,6 @@ def login():
         response = redirect(url_for('patientlist'))
         return response
 
-
 @app.route('/patientlist')
 def patientlist():
     template_name = 'patientlist.html'
@@ -68,7 +68,6 @@ def patientlist():
     if verifyJWT_user(username, token_user):
         return render_template(template_name)
     return render_template('error.html', error_msg='使用者未登入！[SessionTokenError]')
-
 
 @app.route('/patientprofile')
 def patientprofile():
@@ -82,7 +81,6 @@ def patientprofile():
         return render_template(template_name)
     return render_template('error.html', error_msg='使用者未登入！[SessionTokenError]')
 
-
 @app.route('/NFchoice')
 def NFchoice():
     template_name = 'NFchoice.html'
@@ -94,7 +92,6 @@ def NFchoice():
     if verifyJWT_user(username, token_user):
         return render_template(template_name)
     return render_template('error.html', error_msg='使用者未登入！[SessionTokenError]')
-
 
 @app.route('/NF')
 def NF():
@@ -108,7 +105,6 @@ def NF():
         return render_template(template_name)
     return render_template('error.html', error_msg='使用者未登入！[SessionTokenError]')
 
-
 @app.route('/sepsischoice')
 def sepsischoice():
     template_name = 'sepsischoice.html'
@@ -120,7 +116,6 @@ def sepsischoice():
     if verifyJWT_user(username, token_user):
         return render_template(template_name)
     return render_template('error.html', error_msg='使用者未登入！[SessionTokenError]')
-
 
 @app.route('/sepsis')
 def sepsis():
@@ -134,13 +129,9 @@ def sepsis():
         return render_template(template_name)
     return render_template('error.html', error_msg='使用者未登入！[SessionTokenError]')
 
-
 @app.route('/mapping')
 def mapping():
     return render_template('mapping.html')
-
-# value api
-
 
 @app.route('/GET/token_fhir', methods=['GET'])
 def token_fhir():
@@ -204,6 +195,7 @@ def predict_sepsis():
         print(insertdata)
         print(new_result)
         return jsonify(new_result)
+
 @app.route('/realTimeNF', methods=['GET'])
 def realTimeNF():
     return render_template('realTimePredict_NF.html')
@@ -215,8 +207,99 @@ def realTimeSpesis():
 @app.route('/addPatient',methods=['GET'])
 def addPatient():
     return render_template('addPatient.html')
+
 @app.route('/edit')
 def edit():
-     return render_template('edit.html')
+     return render_template('patientBodyData_NF.html')
+@app.route('/singlePlot',methods=['get'])
+def get_singlePlot():
+    df = pd.read_csv('危險因子分析/Fdata1415.csv')
+    df.drop('nf',axis=1,inplace=True)
+    return render_template('analyze_single.html', columns=df.columns,img="",choose="")
+@app.route('/singlePlot',methods=['post'])
+def singlePlot():
+    df_ori = pd.read_csv('危險因子分析/Fdata1415.csv')
+   # column_headers = list(df_ori.columns)
+    max_values=[]
+    name_list=[request.form.get('y'),request.form.get('y')]
+    
+    fig = plt.figure(figsize=(16, 9))
+    
+    ax = fig.subplots(1, 2)
+    # mgr = plt.get_current_fig_manager()
+
+    # 切換至全螢幕模式
+    # mgr.full_screen_toggle()        
+    for index,i in enumerate(name_list):
+        # column_headers=df[i]
+        df=df_ori[df_ori['nf']==index%2]
+        df.sort_values(by=name_list[index])
+        sns.boxplot(x='nf', y=i, data=df,ax=ax[index])
+        #ax[index].tick_params(axis='x', labelleft=False, labelright=True)
+        q1, q2, q3 = df[i].quantile(q=[0.25, 0.5, 0.75])
+        max_val=df[i].max()
+        # 繪製平均值、中位數和四分位數
+        ax[index].axhline(df[i].mean(), color='r', linestyle='--', label='mean')
+        ax[index].annotate("mean: {:.2f}".format(df[i].mean()), xy=(-0.5, df[i].mean()), xytext=(-0.6, df[i].mean()), ha='right', color='red', fontsize=8, arrowprops=dict(facecolor='red', shrink=0.05))
+        ax[index].axhline(q1, color='g', linestyle='--', label='q1')
+        ax[index].axhline(q2, color='b', linestyle='--', label='q2')
+        ax[index].axhline(q3, color='g', linestyle='--', label='q3')
+        ax[index].annotate("25%: {:.2f}".format(q1), xy=(0.5, q1), xytext=(0.7, q1), ha='right', color='green', fontsize=8, arrowprops=dict(facecolor='green', shrink=0.05))
+        ax[index].annotate("50%: {:.2f}".format(q2), xy=(0.5, q2), xytext=(0.7,q2), ha='right', color='blue', fontsize=8, arrowprops=dict(facecolor='blue', shrink=0.05))
+        ax[index].annotate("75%: {:.2f}".format(q3), xy=(0.5, q3), xytext=(0.7, q3), ha='right', color='green', fontsize=8, arrowprops=dict(facecolor='green', shrink=0.05))
+        
+        
+            # 將最大值添加到列表中
+        max_values.append(max_val)
+        
+        largest_values = df.nlargest(5, name_list[index])[name_list[index]].tolist()
+        for max_index,max_val in enumerate(largest_values):
+            f=lambda x: 'left' if x else 'right'
+            ax[index].annotate("the {}  : {:.2f}".format(max_index,max_val), xy=(0, max_val), xytext=(0, max_val+0.1), ha=f(max_index%2), color='red' , fontsize=8, arrowprops=dict(facecolor='red', shrink=0.05))
+            ax[index].annotate("the {}  : {:.2f}".format(max_index,max_val), xy=(1, max_val), xytext=(1, max_val+0.1), ha=f(max_index%2), color='red', fontsize=8, arrowprops=dict(facecolor='red', shrink=0.05))
+    # plt.tight_layout()
+        ax[index].set_xlabel(name_list[index]+" when nf is "+str(index%2==0))
+        ax[index].set_ylabel("")
+    fig=fig.get_figure()
+    buffer = io.BytesIO()
+    fig.savefig(buffer, format='png')
+    buffer.seek(0)
+    image_png = buffer.getvalue()
+    buffer.close()
+    graphic = base64.b64encode(image_png).decode()
+    return render_template('analyze_single.html', columns=df.columns,img=graphic,choose=["nf",request.form.get('y')])
+@app.route('/plot',methods=['get'])
+def before_plot():
+    df = pd.read_csv('危險因子分析/spesis.csv')
+    df.drop('ID',axis=1,inplace=True)
+    # print(df.columns)
+    # 傳遞參數到 HTML 畫面
+    return render_template('analyze_double.html', columns=df.columns,img="",choose="")
+@app.route('/plot',methods=['post'])
+def plot():
+    # 從 request 取得使用者選擇的參數
+    df = pd.read_csv('危險因子分析/spesis.csv')
+    df.drop('ID',axis=1,inplace=True)
+    x_col = request.form.get('x')
+    y_col = request.form.get('y')
+    choose=[x_col,y_col]
+    # 產生散佈圖
+    plot_data = df[[x_col, y_col]].dropna()
+    
+    fig = plot_data.plot.scatter(x=x_col, y=y_col).get_figure()
+    buffer = io.BytesIO()
+    fig.savefig(buffer, format='png')
+    buffer.seek(0)
+    image_png = buffer.getvalue()
+    buffer.close()
+    graphic = base64.b64encode(image_png).decode()
+    # 傳回圖片
+    # html = '''
+    #     <div>
+    #         <img src="data:image/png;base64,{}">
+    #     </div>
+    # '''
+    img="data:image/png;base64,{}".format(graphic)
+    return render_template('analyze_double.html',columns=df.columns,img=graphic,choose=choose)
 if __name__ == '__main__':
     app.run(debug=True)

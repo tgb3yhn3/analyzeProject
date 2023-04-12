@@ -20,7 +20,7 @@
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link" href="a.html"></a></li>
                 </ul>
-                <a class="btn btn-dark link-light shadow" role="button" href="/realTimeSpesis">Spesis預測</a>
+                <a class="btn btn-dark link-light shadow" role="button" href="/realTimeSpesis">NF預測</a>
                 &nbsp;
                 <a class="btn btn-dark link-light shadow" role="button" href="/patientlist">Back</a>
             </div>
@@ -121,6 +121,23 @@
             band= formData.get('band')
             if(sea==""||wbc==""||crp==""||seg==""||band==""){
                 alert("請輸入資料")
+                return
+            }else{
+                if(!(wbc>=4570&&wbc<=21300))
+                    alert("wbc超出範圍")
+                    return
+                if(!(crp>=1.204&&crp<=249.736)){
+                    alert("crp超出範圍")
+                    return
+                }
+                if(!(notseg>=54.37&&seg<=90.6)){
+                    alert("seg超出範圍")
+                    return
+                }
+                if(!(band>=0&&band<=4)){
+                    alert("band超出範圍")
+                    return
+                }
             }
             console.log( formData.get('sea'),
             formData.get('wbc'),

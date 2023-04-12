@@ -8,7 +8,7 @@ function getPatient(token) {
 
     xhr.onload = function () {
       APIresult = JSON.parse(this.responseText);
-      console.log(this.responseText);
+      // console.log(this.responseText);
       resolve(APIresult);
     }
   });
@@ -24,7 +24,7 @@ function getPatientById(token, id) {
 
     xhr.onload = function () {
       APIresult = JSON.parse(this.responseText);
-      console.log(this.responseText);
+      // console.log(this.responseText);
       resolve(APIresult);
     }
   });
@@ -72,7 +72,7 @@ function getObservationById(token, id) {
     xhr.onload = function () {
       //console.log(this.responseText)
       APIresult = JSON.parse(this.responseText);
-      console.log(this.responseText);
+      // console.log(this.responseText);
       resolve(APIresult);
     }
   });
@@ -205,7 +205,7 @@ function getToken_fhir() {
       )
       .then(data => () => {
 
-          console.log(data)
+          // console.log(data)
 
       }).then(() => {
 
