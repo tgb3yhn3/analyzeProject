@@ -25,7 +25,7 @@ def sepsisPredict(gcs, meds_ams15b, meds_plt150b, sofa_res, sofa_ner, sofa_liver
     print(transform)
 
     # randomForest
-    model_file_name = 'tools/model/sepsis_randomForest.pickle'
+    model_file_name = 'static/model/sepsis_randomForest.pickle'
     with open(model_file_name, 'rb') as f:
         model1 = pickle.load(f)
         pred1 = model1.predict(np.array([transform]))
@@ -38,7 +38,7 @@ def sepsisPredict(gcs, meds_ams15b, meds_plt150b, sofa_res, sofa_ner, sofa_liver
         pred['randomForest_proba'] = np.round(score1[1]*100, 2)
 
     # logisticregression
-    model_file_name = 'tools/model/sepsis_logisticregression.pickle'
+    model_file_name = 'static/model/sepsis_logisticregression.pickle'
     with open(model_file_name, 'rb') as f:
         model2 = pickle.load(f)
         pred2 = model2.predict(np.array(
@@ -52,7 +52,7 @@ def sepsisPredict(gcs, meds_ams15b, meds_plt150b, sofa_res, sofa_ner, sofa_liver
         pred['logisticregression_proba'] = np.round(score2[1]*100, 2)
 
     # supportVectorMachine
-    model_file_name = 'tools/model/sepsis_supportVectorMachine.pickle'
+    model_file_name = 'static/model/sepsis_supportVectorMachine.pickle'
     with open(model_file_name, 'rb') as f:
         model3 = pickle.load(f)
         pred3 = model3.predict(np.array(

@@ -10,6 +10,7 @@ from tools.mongoDB import *
 from tools.predict_NF import *
 from tools.predict_sepsis import *
 from tools.session import *
+from tools.modelTraining import *
 import seaborn as sns
 import matplotlib.pyplot as plt
 import io
@@ -22,15 +23,17 @@ collection = db.user
 
 # sercet_key = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for x in range(10))
 sercet_key = 'u6IaMSFpafX_LVXCJZekenhIZ3KV9Ra1JA5vlDCkj'
-
+UPLOAD_FOLDER='/uploadFile'
 # app setting
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = sercet_key
 app.config['PERMANENT_SESSION_LIFETIME'] = 60*60
 app.config['SESSION_COOKIE_NAME'] = 'my_session'
 app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_USE_SIGNER'] = True
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB
 CORS(app)
 
 @app.route('/', methods=['POST', 'GET'])
@@ -303,5 +306,35 @@ def plot():
     # '''
     img="data:image/png;base64,{}".format(graphic)
     return render_template('analyze_double.html',columns=df.columns,img=graphic,choose=choose)
+@app.route('/upload',methods=['GET','POST'])
+def uploadCSV():
+    if request.method == 'POST':
+        print("POST")
+        # 檢查是否有上傳檔案
+        for i in request.files:
+            print(i)
+        if 'file' not in request.files:
+            return '沒有上傳檔案'
+        
+        # 取得上傳的檔案
+        #print(request.files)
+        file = request.files['file']
+        #print("GET FILE")
+        # 檢查檔案是否符合條件
+        if file.filename == '':
+            return '沒有選擇檔案'
+        
+        # 讀取 CSV 檔案
+        df = pd.read_csv(file)
+        
+        try:
+            print("SUCCESS")
+            training(df=df)
+            
+        except Exception as e:
+            return "500 internal error"
+        return render_template("upload.html",success=True)
+        # 將檔案內容印出來
+    return render_template("upload.html",success=False)
 if __name__ == '__main__':
     app.run(debug=True)

@@ -48,7 +48,7 @@ def NFPredict(sea, wbc, crp, seg, band):
                                       'band': ((band - supportVectorMachine_mean['band']) / supportVectorMachine_std['band'])}
 
     # decisionTree
-    model_file_name = 'tools/model/NF_decisionTree.pickle'
+    model_file_name = 'static/model/NF_decisionTree.pickle'
     with open(model_file_name, 'rb') as f:
         model1 = pickle.load(f)
         score1 = model1.predict_proba(
@@ -61,7 +61,7 @@ def NFPredict(sea, wbc, crp, seg, band):
         pred['decisionTree'] = 1
 
     # randomForest
-    model_file_name = 'tools/model/NF_randomForest.pickle'
+    model_file_name = 'static/model/NF_randomForest.pickle'
     with open(model_file_name, 'rb') as f:
         model2 = pickle.load(f)
         score2 = model2.predict_proba(
@@ -74,7 +74,7 @@ def NFPredict(sea, wbc, crp, seg, band):
         pred['randomForest'] = 1
 
     # logisticregression
-    model_file_name = 'tools/model/NF_logisticregression.pickle'
+    model_file_name = 'static/model/NF_logisticregression.pickle'
     with open(model_file_name, 'rb') as f:
         model3 = pickle.load(f)
         score3 = model3.predict_proba(np.array(
@@ -87,11 +87,11 @@ def NFPredict(sea, wbc, crp, seg, band):
         pred['logisticregression'] = 1
 
     # neuralNetwork
-    # model_file_name = 'tools/model/NF_neuralNetwork.pickle'
+    # model_file_name = 'static/model/NF_neuralNetwork.pickle'
     # # with tf.device('/job:localhost'):
     # #     model4 = tf.keras.models.load_model(model_file_name)
     # with open(model_file_name, 'rb') as f:
-    model4 = load_model('tools/model/NF_neuralNetwork.h5')
+    model4 = load_model('static/model/NF_neuralNetwork.h5')
     pred4 = model4.predict(np.array(
         [[neuralNetwork_transform['sea'], neuralNetwork_transform['wbc'], neuralNetwork_transform['crp'], neuralNetwork_transform['seg'], neuralNetwork_transform['band']]]))
     pred4 = pred4[0][0]
@@ -103,7 +103,7 @@ def NFPredict(sea, wbc, crp, seg, band):
         pred['neuralNetwork_proba'] = 100 - np.round(pred4*100, 2)
 
     # supportVectorMachine
-    model_file_name = 'tools/model/NF_supportVectorMachine.pickle'
+    model_file_name = 'static/model/NF_supportVectorMachine.pickle'
     with open(model_file_name, 'rb') as f:
         model5 = pickle.load(f)
         score5 = model5.predict_proba(np.array(

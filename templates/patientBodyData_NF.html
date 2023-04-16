@@ -136,7 +136,7 @@
                                         value=822 class="form-control" type="text" placeholder="urineVolume"
                                         name="Urine output 24 hour"></div>
                                 <div class="mb-3"><label class="form-label" for="Respiratory mask">Respiratory
-                                        mask</label><select class="form-select" name="respirator">
+                                        mask</label><select class="form-select" name="Respiratory mask">
                                         <optgroup label="Respiratory">
                                             <option value="0" selected>not use</option>
 
@@ -184,6 +184,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="static/assets/js/bold-and-bright.js"></script>
     <script src="static/JavaScript/Patient.js"></script>
+    <script src="static/JavaScript/sepsis-determine.js"></script>
     <script src="static/JavaScript/connectAPI.js"></script>
     <!-- <script src="static/JavaScript/NF-radar.js"></script> -->
     <!-- <script src="static/JavaScript/patientprofile-insertData.js"></script> -->
@@ -333,21 +334,21 @@
                 alert("PF_ratio超出範圍（141~345)")
             }
             
-           /* let Dopamine = formData2.get('Dopamine')
-            let epinephrine = formData2.get('epinephrine')
-            let norepinephrine = formData2.get('norepinephrine')
-            let Dobutamine = formData2.get('Dobutamine')
-            let ComaScale = formData2.get('ComaScale')
-            let Creatinine = formData2.get('Creatinine')
-            let urineVolume = formData2.get('urineVolume')
-            let lastSOFA = formData3.get('lastSOFA')
-            let infusion = formData3.get('infusion')
-            let Lactate = formData3.get('Lactate')
-            let gcs = formData3.get('gcs')
+            let Dopamine = formData2.get('DOPamine in Serum or Plasma')
+            let epinephrine = formData2.get('EPINEPHrine in Urine')
+            let norepinephrine = formData2.get('Norepinephrine in Urine')
+            let Dobutamine = formData2.get('Dobutamine in Serum or Plasma')
+            let ComaScale = formData2.get('Glasgow coma score total')
+            let Creatinine = formData2.get('Creatinine in Serum or Plasma')
+            let urineVolume = formData2.get('Urine output 24 hour')
+            let lastSOFA = formData3.get('SOFA Total Score')
+            let infusion = formData3.get('Infusion')
+            let Lactate = formData3.get('Lactate in Serum or Plasma')
+            let gcs = formData3.get('Glasgow coma score total')
             let bun = formData3.get('bun')
             let FIO2_percent = formData3.get('FIO2_percent')
-            let respirator = formData3.get('respirator')
-            if (consciousness < 0 && consciousness > 1) {
+            let respirator = formData3.get('Respiratory mask')
+            /*if (consciousness < 0 && consciousness > 1) {
                 errMsg += "consciousness超出範圍\n"
             }
             if (systolicPressure < 0 && systolicPressure > 1) {
@@ -406,7 +407,7 @@
             }
             if (respirator < 0 && respirator > 1) {
                 errMsg += "respirator超出範圍\n"
-            }
+            }*/
             scoreOfqSOFA = caculateqSOFA(respiratoryRate, consciousness, systolicPressure)
             SOFA = caculateSOFA(PF_ratio, respirator, Platelet, Bilirubin, MAP, Dopamine, epinephrine, norepinephrine, Dobutamine, ComaScale, Creatinine, urineVolume);
             scoreOfSOFA = SOFA[0];
@@ -423,7 +424,7 @@
             }
             else {
                 meds_plt150b = 0
-            }*/
+            }
             
             let WBC_add_obj = {
                 "category": [
@@ -601,7 +602,7 @@
                     "value": Number(band)
                 }
             }
-           /*
+           
            let respiratoryRate_add_obj = {
                 "category": [
                     {
@@ -1248,7 +1249,7 @@
                     "code": "{score}",
                     "system": "http://unitsofmeasure.org",
                     "unit": "{score}",
-                    "value": lastSOFA
+                    "value": Number(lastSOFA)
                 }
             }
             let infusion_add_obj = {
@@ -1471,15 +1472,15 @@
                     "value": Number(FIO2_percent)
                 }
             }
-*/
-            /* await add_data(respiratoryRate_add_obj, false).then(
+
+             await add_data(respiratoryRate_add_obj, false).then(
                  await add_data(consciousness_add_obj, false)).then(
-                    await add_data(systolicPressure_add_obj, false)).then(*/
-            await add_data(WBC_add_obj, false).then(
+                    await add_data(systolicPressure_add_obj, false)).then(
+            await add_data(WBC_add_obj, false)).then(
                 await add_data(CRP_add_obj, false)).then(
                     await add_data(Seg_add_obj, false)).then(
                         await add_data(Band_add_obj, false)).then(
-                            /* await add_data(PF_ratio_obj, false)).then(
+                             await add_data(PF_ratio_obj, false)).then(
                                  await add_data(Platelet_obj, false)).then(
                                      await add_data(Bilirubin_obj, false)).then(
                                          await add_data(MAP_obj, false)).then(
@@ -1494,7 +1495,7 @@
                                                                              await add_data(Lactate_add_obj, false)).then(
                                                                                  await add_data(gcs_add_obj, false)).then(
                                                                                      await add_data(bun_add_obj, false)).then(
-                                                                                         await add_data(FIO2_percent_add_obj, false)).then(*/
+                                                                                         await add_data(FIO2_percent_add_obj, false)).then(
                             alert("更新成功")
                         )
 
