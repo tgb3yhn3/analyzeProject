@@ -379,13 +379,10 @@ async function add_patient(name, sex, birth, weight, height) {
         objWeight['id'] = patient_id
         objWeight['valueQuantity']['value'] = Number(weight)
         objWeight['subject']['reference'] = 'Patient/' + patient_id
-
-    }).then(await add_data(objHeight, false).then(
-        await add_data(objWeight, false).then(()=>{
-            suc=true
-        })
-        )
-    )
+         add_data(objHeight, false)
+         add_data(objWeight, false)
+         suc=true
+    })
 
     if (suc) {
         console.log("success")
