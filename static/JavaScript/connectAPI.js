@@ -63,14 +63,14 @@ function getWeightById(token, id) {
 
 function getObservationById(token, id) {
   return new Promise((resolve, reject) => {
-    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/crack-will-380312/locations/asia-east1/datasets/patient/fhirStores/Test/fhir/Observation?subject=Patient/" + id;
+    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/crack-will-380312/locations/asia-east1/datasets/patient/fhirStores/Test/fhir/Observation?subject=Patient/" + id+"&_count=500";
     var xhr = new XMLHttpRequest();
     xhr.open('GET', dataUrl, true);
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
     xhr.send();
 
     xhr.onload = function () {
-      //console.log(this.responseText)
+      console.log(this.responseText)
       APIresult = JSON.parse(this.responseText);
       // console.log(this.responseText);
       resolve(APIresult);
@@ -236,11 +236,12 @@ async function update_Observation(promptStr, code_text, htmlPrefix, htmlId,htmlU
       patien_json = res2;
   });
   //從response 提取出對應的資料
+  
   for (const element of patien_json.entry) {
       if (element.resource.code.text == code_text) {
           element.resource.valueQuantity.value = Number(new_data)
           //取得該資料的ID
-          let url = element.fullUrl
+          let url = element.fullUrl+""
           const headers = new Headers({
               "Content-Type": "application/fhir+json",
               "Authorization": "Bearer " + token,
@@ -267,14 +268,11 @@ async function update_Observation(promptStr, code_text, htmlPrefix, htmlId,htmlU
           )
           .then(data => () => {
   
-              console.log(data)
-  
-          }).then(() => {
-  
+              console.log("YA"+data)
   
           })
           .catch(error => console.error(error));
-          break
+          
       }
   }
 
