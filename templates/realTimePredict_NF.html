@@ -123,14 +123,15 @@
                 alert("請輸入資料")
                 return
             }else{
-                if(!(wbc>=4570&&wbc<=21300))
+                if(!(wbc>=4570&&wbc<=21300)){
                     alert("wbc超出範圍")
                     return
+            }
                 if(!(crp>=1.204&&crp<=249.736)){
                     alert("crp超出範圍")
                     return
                 }
-                if(!(notseg>=54.37&&seg<=90.6)){
+                if(!(seg>=54.37&&seg<=90.6)){
                     alert("seg超出範圍")
                     return
                 }
@@ -138,7 +139,6 @@
                     alert("band超出範圍")
                     return
                 }
-            }
             console.log( formData.get('sea'),
             formData.get('wbc'),
             formData.get('crp'),
@@ -159,7 +159,7 @@
                 console.log(res)
                 radar_test(wbc,crp,seg,band)
             })
-           
+        }
         }
         
     </script>
