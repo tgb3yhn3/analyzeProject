@@ -232,7 +232,7 @@
                 }
                 if (data1.entry[i].resource.code.text == 'Band') {
                     let band = data1.entry[i].resource.valueQuantity.value
-                    debugger
+                    //debugger
                     document.getElementsByName("band")[0].value = band
                 }
             }
@@ -308,40 +308,48 @@
             let Platelet = formData1.get('Platelets in Blood')
             let Bilirubin = formData1.get('Bilirubin.total in Serum or Plasma')
             let MAP = formData1.get('Mean blood pressure')
-            
+            var alert_msg=""
+            function add_alert(msg){
+                alert_msg+=msg+"\n"
+            }
             if(document.getElementById("top").style.display!=""){
                 if(MAP<66.95 ||MAP > 135){
-                alert("MAP超出預設範圍（66.95~135）")
+                    add_alert("MAP超出預設範圍（66.95~135）")
                 return
                 }
                 if(PF_ratio<141 ||PF_ratio>345){
-                    alert("PF_ratio超出範圍（141~345)")
+                    add_alert("PF_ratio超出範圍（141~345)")
                     return
                 }
             }else{
                 if ( wbc == "" || crp == "" || seg == "" || band == "") {
-                alert("請輸入資料")
+                    add_alert("請輸入資料")
                 return
             } else {
                 if (!(wbc >= 4570 && wbc <= 21300)){
-                    alert("wbc超出範圍(4750 to 21300)")
-                    return
+                    add_alert("wbc超出範圍(4750 to 21300)")
+                    
                 }
                 if (!(crp >= 1.204 && crp <= 249.736)) {
-                    alert("crp超出範圍(1.204~249.736)")
-                    return
+                    add_alert("crp超出範圍(1.204~249.736)")
+                    
                 }
                 if (!(seg >= 54.37 && seg <= 90.6)) {
-                    alert("seg超出範圍(54.37~90.6)")
-                    return
+                    add_alert("seg超出範圍(54.37~90.6)")
+                    
                 }
                 if (!(band >= 0 && band <= 4)) {
-                    alert("band超出範圍(0~4)")
-                    return
+                    add_alert("band超出範圍(0~4)")
+                    
                 }
             }
             }
-            
+            if(alert_msg!=""){
+                if(!window.confirm(alert_msg+"確認送出")){
+                    return
+                }
+
+            }
             
             let Dopamine = formData2.get('DOPamine in Serum or Plasma')
             let epinephrine = formData2.get('EPINEPHrine in Urine')
