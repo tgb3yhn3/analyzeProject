@@ -216,7 +216,8 @@
             })
             let formData = new FormData(document.querySelector('form'))
 
-            for (var i = data1.entry.length-1; i >0; i--) {
+            for (var i = data1.entry.length-1; i >=0; i--) {
+                console.log(data1.entry[i].resource.code.text)
                 if (data1.entry[i].resource.code.text == 'WBC') {
                     let wbc = data1.entry[i].resource.valueQuantity.value
                     document.getElementsByName("wbc")[0].value = wbc
@@ -231,6 +232,7 @@
                 }
                 if (data1.entry[i].resource.code.text == 'Band') {
                     let band = data1.entry[i].resource.valueQuantity.value
+                    debugger
                     document.getElementsByName("band")[0].value = band
                 }
             }
@@ -244,7 +246,7 @@
                 data2 = res3;
             })
 
-            for (var i = data1.entry.length-1; i >0 ; i--) {
+            for (var i = data1.entry.length-1; i >=0 ; i--) {
                  var data_text = data1.entry[i].resource.code.text;
                  if(document.getElementsByName(data_text)[0]!=undefined){
                     console.log(data_text)
@@ -291,7 +293,33 @@
             crp = formData.get('crp')
             seg = formData.get('seg')
             band = formData.get('band')
-            if ( wbc == "" || crp == "" || seg == "" || band == "") {
+            
+            //debugger
+            var new_id=document.URL.split("=")[1]
+            var formData1 = new FormData(document.getElementById('form_1'))
+            var formData2 = new FormData(document.getElementById('form1'))
+            var formData3 = new FormData(document.getElementById('form2'))
+            let respiratoryRate = formData1.get('respiratoryRate')
+
+            let consciousness = formData1.get('Respiratory rate')
+            console.log("Respiratory rate"+consciousness)
+            let systolicPressure = formData1.get('Blood Pressure')
+            let PF_ratio = formData1.get('PFratio')
+            let Platelet = formData1.get('Platelets in Blood')
+            let Bilirubin = formData1.get('Bilirubin.total in Serum or Plasma')
+            let MAP = formData1.get('Mean blood pressure')
+            
+            if(document.getElementById("top").style.display!=""){
+                if(MAP<66.95 ||MAP > 135){
+                alert("MAP超出預設範圍（66.95~135）")
+                return
+                }
+                if(PF_ratio<141 ||PF_ratio>345){
+                    alert("PF_ratio超出範圍（141~345)")
+                    return
+                }
+            }else{
+                if ( wbc == "" || crp == "" || seg == "" || band == "") {
                 alert("請輸入資料")
                 return
             } else {
@@ -312,27 +340,8 @@
                     return
                 }
             }
-            //debugger
-            var new_id=document.URL.split("=")[1]
-            var formData1 = new FormData(document.getElementById('form_1'))
-            var formData2 = new FormData(document.getElementById('form1'))
-            var formData3 = new FormData(document.getElementById('form2'))
-            let respiratoryRate = formData1.get('respiratoryRate')
-
-            let consciousness = formData1.get('Respiratory rate')
-            console.log("Respiratory rate"+consciousness)
-            let systolicPressure = formData1.get('Blood Pressure')
-            let PF_ratio = formData1.get('PFratio')
-            let Platelet = formData1.get('Platelets in Blood')
-            let Bilirubin = formData1.get('Bilirubin.total in Serum or Plasma')
-            let MAP = formData1.get('Mean blood pressure')
-            if(MAP<66.95 ||MAP > 135){
-                alert("MAP超出預設範圍（66.95~135）")
-                return
             }
-            if(PF_ratio<141 ||PF_ratio>345){
-                alert("PF_ratio超出範圍（141~345)")
-            }
+            
             
             let Dopamine = formData2.get('DOPamine in Serum or Plasma')
             let epinephrine = formData2.get('EPINEPHrine in Urine')
@@ -1472,14 +1481,22 @@
                     "value": Number(FIO2_percent)
                 }
             }
-
-             await add_data(respiratoryRate_add_obj, false).then(
-                 await add_data(consciousness_add_obj, false)).then(
-                    await add_data(systolicPressure_add_obj, false)).then(
-            await add_data(WBC_add_obj, false)).then(
+            if(document.getElementById("top").style.display==""){
+                await add_data(WBC_add_obj, false).then(
                 await add_data(CRP_add_obj, false)).then(
                     await add_data(Seg_add_obj, false)).then(
                         await add_data(Band_add_obj, false)).then(
+                            ()=>{
+                                alert("更新成功")
+                                console.log("top success")
+                            }
+                        )
+
+            }else{
+                await add_data(respiratoryRate_add_obj, false).then(
+                 await add_data(consciousness_add_obj, false)).then(
+                    await add_data(systolicPressure_add_obj, false)).then(
+            
                              await add_data(PF_ratio_obj, false)).then(
                                  await add_data(Platelet_obj, false)).then(
                                      await add_data(Bilirubin_obj, false)).then(
@@ -1496,8 +1513,17 @@
                                                                                  await add_data(gcs_add_obj, false)).then(
                                                                                      await add_data(bun_add_obj, false)).then(
                                                                                          await add_data(FIO2_percent_add_obj, false)).then(
-                            alert("更新成功")
-                        )
+                                                                                         ()=>{
+                                                                                            alert("更新成功")
+                                                                                            console.log("down success")
+                                                                                         }   
+                                                                                         
+                                                                                            
+                                                                                         )
+            }
+            
+          
+                        
 
 
         }
