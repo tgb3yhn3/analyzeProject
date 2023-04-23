@@ -259,8 +259,8 @@ def singlePlot():
         largest_values = df.nlargest(5, name_list[index])[name_list[index]].tolist()
         for max_index,max_val in enumerate(largest_values):
             f=lambda x: 'left' if x else 'right'
-            ax[index].annotate("the {}  : {:.2f}".format(max_index,max_val), xy=(0, max_val), xytext=(0, max_val+0.1), ha=f(max_index%2), color='red' , fontsize=8, arrowprops=dict(facecolor='red', shrink=0.05))
-            ax[index].annotate("the {}  : {:.2f}".format(max_index,max_val), xy=(1, max_val), xytext=(1, max_val+0.1), ha=f(max_index%2), color='red', fontsize=8, arrowprops=dict(facecolor='red', shrink=0.05))
+            ax[index].annotate("the {}  : {:.2f}".format(max_index+1,max_val), xy=(0, max_val), xytext=(0, max_val+0.1), ha=f(max_index%2), color='red' , fontsize=8, arrowprops=dict(facecolor='red', shrink=0.05))
+            ax[index].annotate("the {}  : {:.2f}".format(max_index+1,max_val), xy=(1, max_val), xytext=(1, max_val+0.1), ha=f(max_index%2), color='red', fontsize=8, arrowprops=dict(facecolor='red', shrink=0.05))
     # plt.tight_layout()
         ax[index].set_xlabel(name_list[index]+" when nf is "+str(index%2==0))
         ax[index].set_ylabel("")
