@@ -164,6 +164,36 @@
             meds_plt150b = 0
         }
         //判斷結果
+        var alert_msg=""
+            function add_alert(msg){
+                alert_msg+=msg+"\n"
+            }
+        if(MAP<66.95 ||MAP > 135){
+                    add_alert("MAP超出預設範圍（66.95~135）")
+                
+                }
+                if(PF_ratio<141 ||PF_ratio>345){
+                    add_alert("PF_ratio超出範圍（141~345)")
+                    
+                }
+                if(Lactate<7 || Lactate>42.7){
+                    add_alert("Lactate超出範圍（7~42.7")
+                }
+                if(gcs<7 ||gcs>15){
+                    add_alert("gcs超出範圍（7~15)")
+                }
+                if(bun<6||bun>55.7){
+                    add_alert("bun超出範圍（6~55.7)")
+                }
+                if(FIO2_percent<0||FIO2_percent>1){
+                    add_alert("FIO2_percent超出範圍(0 or 1)")
+                }
+                if(alert_msg!=""){
+                if(!window.confirm(alert_msg+"確認送出")){
+                    return
+                }
+
+            }
         result = getResult(scoreOfqSOFA, lastSOFA, infusion, MAP, Lactate);
     
         //sepsisChangeColor(SOFA[1], SOFA[2], SOFA[3], SOFA[4], SOFA[5], SOFA[6]);

@@ -308,6 +308,20 @@
             let Platelet = formData1.get('Platelets in Blood')
             let Bilirubin = formData1.get('Bilirubin.total in Serum or Plasma')
             let MAP = formData1.get('Mean blood pressure')
+            let Dopamine = formData2.get('DOPamine in Serum or Plasma')//沒資料
+            let epinephrine = formData2.get('EPINEPHrine in Urine')
+            let norepinephrine = formData2.get('Norepinephrine in Urine')
+            let Dobutamine = formData2.get('Dobutamine in Serum or Plasma')
+            let ComaScale = formData2.get('Glasgow coma score total')
+            let Creatinine = formData2.get('Creatinine in Serum or Plasma')
+            let urineVolume = formData2.get('Urine output 24 hour')
+            let lastSOFA = formData3.get('SOFA Total Score')
+            let infusion = formData3.get('Infusion')
+            let Lactate = formData3.get('Lactate in Serum or Plasma')
+            let gcs = formData3.get('Glasgow coma score total')
+            let bun = formData3.get('bun')
+            let FIO2_percent = formData3.get('FIO2_percent')
+            let respirator = formData3.get('Respiratory mask')
             var alert_msg=""
             function add_alert(msg){
                 alert_msg+=msg+"\n"
@@ -315,11 +329,23 @@
             if(document.getElementById("top").style.display!=""){
                 if(MAP<66.95 ||MAP > 135){
                     add_alert("MAP超出預設範圍（66.95~135）")
-                return
+                
                 }
                 if(PF_ratio<141 ||PF_ratio>345){
                     add_alert("PF_ratio超出範圍（141~345)")
-                    return
+                    
+                }
+                if(Lactate<7 || Lactate>42.7){
+                    add_alert("Lactate超出範圍（7~42.7")
+                }
+                if(gcs<7 ||gcs>15){
+                    add_alert("gcs超出範圍（7~15)")
+                }
+                if(bun<6||bun>55.7){
+                    add_alert("bun超出範圍（6~55.7)")
+                }
+                if(FIO2_percent<0||FIO2_percent>1){
+                    add_alert("FIO2_percent超出範圍(0 or 1)")
                 }
             }else{
                 if ( wbc == "" || crp == "" || seg == "" || band == "") {
@@ -351,20 +377,8 @@
 
             }
             
-            let Dopamine = formData2.get('DOPamine in Serum or Plasma')
-            let epinephrine = formData2.get('EPINEPHrine in Urine')
-            let norepinephrine = formData2.get('Norepinephrine in Urine')
-            let Dobutamine = formData2.get('Dobutamine in Serum or Plasma')
-            let ComaScale = formData2.get('Glasgow coma score total')
-            let Creatinine = formData2.get('Creatinine in Serum or Plasma')
-            let urineVolume = formData2.get('Urine output 24 hour')
-            let lastSOFA = formData3.get('SOFA Total Score')
-            let infusion = formData3.get('Infusion')
-            let Lactate = formData3.get('Lactate in Serum or Plasma')
-            let gcs = formData3.get('Glasgow coma score total')
-            let bun = formData3.get('bun')
-            let FIO2_percent = formData3.get('FIO2_percent')
-            let respirator = formData3.get('Respiratory mask')
+            
+            
             /*if (consciousness < 0 && consciousness > 1) {
                 errMsg += "consciousness超出範圍\n"
             }
