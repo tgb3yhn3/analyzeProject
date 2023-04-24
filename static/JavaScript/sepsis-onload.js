@@ -67,7 +67,7 @@ async function get_data() {
     var result3 = await getPatientById(token_fhir, id).then((res3) => {
         data2 = res3;
     })
-    for (var i = 0; i < data1.entry.length; i++) {
+    for (var i = data1.entry.lengt-1; i >=0; i--) {
         var data_text = data1.entry[i].resource.code.text;
         if (data_text == 'Respiratory rate') {
             respiratoryRate = data1.entry[i].resource.valueQuantity.value;

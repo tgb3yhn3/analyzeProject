@@ -22,7 +22,7 @@ async function get_data() {
     var result2 = await getObservationById(token_fhir, id).then((res2) => {
         data1 = res2;
     })
-    for (var i = 0; i < data1.entry.length; i++) {
+    for (var i = data1.entry.lengt-1; i >=0; i--) {
         if (data1.entry[i].resource.code.text == 'WBC') {
             wbc = data1.entry[i].resource.valueQuantity.value
         }
