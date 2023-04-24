@@ -22,7 +22,7 @@ async function get_data() {
     var result2 = await getObservationById(token_fhir, id).then((res2) => {
         data1 = res2;
     })
-    for (var i = data1.entry.lengt-1; i >=0; i--) {
+    for (var i = data1.entry.length-1; i >0; i--) {
         if (data1.entry[i].resource.code.text == 'WBC') {
             wbc = data1.entry[i].resource.valueQuantity.value
         }
@@ -146,10 +146,21 @@ function sheet() {
     heading_3.innerHTML = "<nobr>NF</nobr><br><nobr>中位數</nobr>";
     let heading_4 = document.createElement('th');
     heading_4.innerHTML = "<nobr>non-NF</nobr><br>中位數</br>";
+    
+    let space=[]
+    for(let i=0;i<6;i++){
+        let tmp
+        if(i==0)
+        tmp=document.createElement('th')
+        else
+        tmp=document.createElement('td')
 
-
+        tmp.style.border="none"
+        space.push(tmp)
+    }
     row_1.appendChild(heading_1);
     row_1.appendChild(heading_2);
+    row_1.appendChild(space[0]);
     row_1.appendChild(heading_3);
     row_1.appendChild(heading_4);
     thead.appendChild(row_1);
@@ -169,6 +180,7 @@ function sheet() {
 
     row_2.appendChild(row_2_data_1);
     row_2.appendChild(row_2_data_2);
+    row_2.appendChild(space[1]);
     row_2.appendChild(row_2_data_3);
     row_2.appendChild(row_2_data_4);
     tbody.appendChild(row_2);
@@ -189,6 +201,7 @@ function sheet() {
 
     row_3.appendChild(row_3_data_1);
     row_3.appendChild(row_3_data_2);
+    row_3.appendChild(space[2]);
     row_3.appendChild(row_3_data_3);
     row_3.appendChild(row_3_data_4);
     tbody.appendChild(row_3);
@@ -208,6 +221,7 @@ function sheet() {
 
     row_4.appendChild(row_4_data_1);
     row_4.appendChild(row_4_data_2);
+    row_4.appendChild(space[3]);
     row_4.appendChild(row_4_data_3);
     row_4.appendChild(row_4_data_4);
     tbody.appendChild(row_4);
@@ -227,6 +241,7 @@ function sheet() {
 
     row_5.appendChild(row_5_data_1);
     row_5.appendChild(row_5_data_2);
+    row_5.appendChild(space[4]);
     row_5.appendChild(row_5_data_3);
     row_5.appendChild(row_5_data_4);
     tbody.appendChild(row_5);
@@ -246,6 +261,7 @@ function sheet() {
 
     row_6.appendChild(row_6_data_1);
     row_6.appendChild(row_6_data_2);
+    row_6.appendChild(space[5]);
     row_6.appendChild(row_6_data_3);
     row_6.appendChild(row_6_data_4);
     tbody.appendChild(row_6);

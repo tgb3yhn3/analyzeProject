@@ -67,7 +67,7 @@ async function get_data() {
     var result3 = await getPatientById(token_fhir, id).then((res3) => {
         data2 = res3;
     })
-    for (var i = data1.entry.lengt-1; i >=0; i--) {
+    for (var i = data1.entry.length-1; i >=0; i--) {
         var data_text = data1.entry[i].resource.code.text;
         if (data_text == 'Respiratory rate') {
             respiratoryRate = data1.entry[i].resource.valueQuantity.value;
@@ -276,10 +276,21 @@ function sheet() {
     head_5.innerHTML = '<div class ="sep_red">3</div>';
     let head_6 = document.createElement('th');
     head_6.innerHTML = '<div class ="sep_purple">4</div>';
+    let space=[]
+    for(let i=0;i<8;i++){
+        let tmp
+        if(i==0)
+        tmp=document.createElement('th')
+        else
+        tmp=document.createElement('td')
 
+        tmp.style.border="none"
+        space.push(tmp)
+    }
 
     row_1.appendChild(head_1);
     row_1.appendChild(head_0);
+    row_1.appendChild(space[0]);
     row_1.appendChild(head_2);
     row_1.appendChild(head_3);
     row_1.appendChild(head_4);
@@ -308,6 +319,7 @@ function sheet() {
 
     row_2.appendChild(row_2_data_1);
     row_2.appendChild(row_2_data_0);
+    row_2.appendChild(space[1]);
     row_2.appendChild(row_2_data_2);
     row_2.appendChild(row_2_data_3);
     row_2.appendChild(row_2_data_4);
@@ -336,6 +348,7 @@ function sheet() {
 
     row_3.appendChild(row_3_data_1);
     row_3.appendChild(row_3_data_0);
+    row_3.appendChild(space[2]);
     row_3.appendChild(row_3_data_2);
     row_3.appendChild(row_3_data_3);
     row_3.appendChild(row_3_data_4);
@@ -363,6 +376,7 @@ function sheet() {
 
     row_4.appendChild(row_4_data_1);
     row_4.appendChild(row_4_data_0);
+    row_4.appendChild(space[3]);
     row_4.appendChild(row_4_data_2);
     row_4.appendChild(row_4_data_3);
     row_4.appendChild(row_4_data_4);
@@ -396,6 +410,7 @@ function sheet() {
 
     row_5.appendChild(row_5_data_1);
     row_5.appendChild(row_5_data_0);
+    row_5.appendChild(space[4]);
     row_5.appendChild(row_5_data_2);
     row_5.appendChild(row_5_data_3);
     row_5.appendChild(row_5_data_4);
@@ -422,6 +437,7 @@ function sheet() {
 
     row_6.appendChild(row_6_data_1);
     row_6.appendChild(row_6_data_0);
+    row_6.appendChild(space[5]);
     row_6.appendChild(row_6_data_2);
     row_6.appendChild(row_6_data_3);
     row_6.appendChild(row_6_data_4);
@@ -449,6 +465,7 @@ function sheet() {
 
     row_7.appendChild(row_7_data_1);
     row_7.appendChild(row_7_data_0);
+    row_7.appendChild(space[6]);
     row_7.appendChild(row_7_data_2);
     row_7.appendChild(row_7_data_3);
     row_7.appendChild(row_7_data_4);
@@ -475,6 +492,7 @@ function sheet() {
 
     row_8.appendChild(row_8_data_1);
     row_8.appendChild(row_8_data_0);
+    row_8.appendChild(space[7]);
     row_8.appendChild(row_8_data_2);
     row_8.appendChild(row_8_data_3);
     row_8.appendChild(row_8_data_4);

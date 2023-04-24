@@ -95,19 +95,22 @@
         <div class="row">
             <div class="col">
                 <div class="card-group">
-                    <div class="card"><img class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-1.png">
+                    <div class="card"><img id='choice2-1_s'class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-1.png">
                         <div class="card-body">
                             <h4 class="card-title" id="rf" style="text-align: center;">信心度</h4>
+                            <h4 class="card-title" id='choice2-2_s' style="text-align: center;"></h4>
                         </div>
                     </div>
-                    <div class="card"><img class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-2.png">
+                    <div class="card"><img id='choice3-1_s'class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-2.png">
                         <div class="card-body">
                             <h4 class="card-title" id="lr" style="text-align: center;">信心度</h4>
+                            <h4 class="card-title" id="choice3-2_s" style="text-align: center;"></h4>
                         </div>
                     </div>
-                    <div class="card"><img class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-7.png">
+                    <div class="card"><img id="choice4-1_s"class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-7.png">
                         <div class="card-body">
                             <h4 class="card-title" id="svc" style="text-align: center;">信心度</h4>
+                            <h4 class="card-title" id="choice4-2_s" style="text-align: center;"></h4>
                         </div>
                     </div>
                 </div>
@@ -201,9 +204,33 @@
         var result4 = await getModelResult_sepsis(gcs, meds_ams15b, meds_plt150b, sofa_res = SOFA[1], sofa_ner = SOFA[5], sofa_liver = SOFA[3],
             sofa_coag = SOFA[2], sofa_renal = SOFA[6], bun, cre = Creatinine, plt = Platelet, FIO2_percent, PF_ratio, fio2_per = FIO2_percent * 100, fio2_cb = FIO2_percent * 100).then((res4) => {
                 data3 = res4;
+                var model_index = ["randomForest", 'logisticregression', "supportVectorMachine"];
+                var score_index = ["randomForest_proba", 'logisticregression_proba', "supportVectorMachine_proba"];
+
                 document.getElementById("rf").innerHTML="信心度 "+res4.randomForest_proba+" %"
                 document.getElementById("lr").innerHTML="信心度 "+res4.logisticregression_proba+" %"
                 document.getElementById("svc").innerHTML="信心度 "+res4.supportVectorMachine_proba+" %"
+                for (var i = 0; i <3; i++) {
+                var Yes_No
+                if (data3[model_index[i]] == 1) {
+                    Yes_No = true;
+                }
+                else {
+                    Yes_No = false;
+                }
+                
+                  //  document.getElementById(score_index[i] + "_s").innerHTML = "信心度 " + data3[score_index[i]] + "%"
+                    if (Yes_No) {
+                        document.getElementById("choice" + (i + 2) + "-1_s").style.border = "medium solid red"
+                        document.getElementById("choice" + (i + 2) + "-2_s").innerHTML = "判定為 Sepsis";
+                    }
+                    else {
+                        document.getElementById("choice" + (i + 2) + "-1_s").style.border = "medium solid green"
+                        document.getElementById("choice" + (i + 2) + "-2_s").innerHTML = "判定為 non-Sepsis";
+                    }
+                
+                    //document.getElementById("choice" + (i + 2) + "_s").style.display = "none";
+                }
             })
             location.href="#hint"
         }

@@ -58,31 +58,36 @@
                 <div class="row">
                     <div class="col">
                         <div class="card-group">
-                            <div class="card"><img class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image.png">
+                            <div class="card"><img id="choice1-1" class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image.png">
                                 <div class="card-body text-center">
                                     <h3 class="card-title" id="DT">信心度</h3>
+                                    <h3 class="card-title" id="choice1-2"></h3>
                                 </div>
                             </div>
-                            <div class="card"><img class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-1.png">
+                            <div class="card"><img id="choice2-1" class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-1.png">
                                 <div class="card-body text-center">
                                     <h3 class="card-title" id="RF">信心度</h3>
+                                    <h3 class="card-title" id="choice2-2"></h3>
                                 </div>
                             </div>
-                            <div class="card"><img class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-2.png">
+                            <div  class="card"><img id="choice3-1"class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-2.png">
                                 <div class="card-body text-center">
                                     <h3 class="card-title" id="LR">信心度</h3>
+                                    <h3 class="card-title" id="choice3-2"></h3>
                                 </div>
                             </div>
                         </div>
                         <div class="card-group">
-                            <div class="card"><img class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-6.png">
+                            <div class="card"><img id="choice4-1" class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-6.png">
                                 <div class="card-body text-center">
                                     <h3 class="card-title" id="NN">信心度</h3>
+                                    <h3 class="card-title" id="choice4-2"></h3>
                                 </div>
                             </div>
-                            <div class="card"><img class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-7.png">
+                            <div class="card"><img id="choice5-1" class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-7.png">
                                 <div class="card-body text-center">
                                     <h3 class="card-title" id="SVC">信心度</h3>
+                                    <h3 class="card-title" id="choice5-2"></h3>
                                 </div>
                             </div>
                             <div class="card"></div>
@@ -160,6 +165,30 @@
                 formData.get('seg'),
                 formData.get('band')
             ).then((res)=>{
+                var model_index = ["decisionTree", "randomForest", 'logisticregression', "neuralNetwork", "supportVectorMachine"];
+var score_index = ["decisionTree_proba", "randomForest_proba", 'logisticregression_proba', "neuralNetwork_proba", "supportVectorMachine_proba"];
+                data2=res
+                for (var i = 0; i <5; i++) {
+            var Yes_No
+            if (data2[model_index[i]] == 1) {
+                Yes_No = true;
+            }
+            else {
+                Yes_No = false;
+            }
+           
+                //document.getElementById(score_index[i]).innerHTML = "信心度 " + data2[score_index[i]] + "%"
+                if (Yes_No) {
+                    document.getElementById("choice" + (i + 1) + "-1").style.border = "medium solid red"
+                    document.getElementById("choice" + (i + 1) + "-2").innerHTML = "判定為 NF";
+                }
+                else {
+                    document.getElementById("choice" + (i + 1) + "-1").style.border = "medium solid green"
+                    document.getElementById("choice" + (i + 1) + "-2").innerHTML = "判定為 non-NF";
+                }
+            
+            
+        }
                 document.getElementById("DT").innerHTML="信心度 "+res.decisionTree_proba+" %"
                 document.getElementById("RF").innerHTML="信心度 "+res.randomForest_proba+" %"
                 document.getElementById("LR").innerHTML="信心度 "+res.logisticregression_proba+" %"
