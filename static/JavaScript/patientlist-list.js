@@ -356,6 +356,7 @@ async function add_patient() {
 	let Dopamine_add = window.prompt("請輸入Dopamine")//13
 	let epinephrine_add = window.prompt("請輸入epinephrine")//0
 	let norepinephrine_add = window.prompt("請輸入norepinephrine")//0
+	let dobutamine_add = window.prompt("請輸入dobutamine")//0
 	let ComaScale_add = window.prompt("請輸入ComaScale")//16
 	let Creatinine_add = window.prompt("請輸入Creatinine")//0.9
 	let urineVolume_add = window.prompt("請輸入urineVolume")//822
@@ -1102,6 +1103,50 @@ async function add_patient() {
 			"value": Number(norepinephrine_add)
 		}
 	}
+	Dobutamine_obj={
+		"category": [
+		  {
+			"coding": [
+			  {
+				"code": "vital-signs",
+				"display": "vital-signs",
+				"system": "http://terminology.hl7.org/CodeSystem/observation-category"
+			  }
+			]
+		  }
+		],
+		"code": {
+		  "coding": [
+			{
+			  "code": "21248-0",
+			  "display": "Dobutamine in Serum or Plasma",
+			  "system": "http://loinc.org"
+			}
+		  ],
+		  "text": "Dobutamine in Serum or Plasma"
+		},
+		"effectiveDateTime": "2011-08-08T23:24:58-04:00",
+		"encounter": {
+		  "reference": "Encounter/41837dda-0080-4664-90d8-e70a9ce512dd"
+		},
+		"id": "70c433d8-e825-4172-93e8-f9c3bebdb664",
+		"issued": "2011-08-08T23:24:58.908-04:00",
+		"meta": {
+		  "lastUpdated": "2023-03-15T09:46:12.306039+00:00",
+		  "versionId": "MTY3ODg3MzU3MjMwNjAzOTAwMA"
+		},
+		"resourceType": "Observation",
+		"status": "final",
+		"subject": {
+		  "reference": "Patient/"+new_id
+		},
+		"valueQuantity": {
+		  "code": "mg/ml",
+		  "system": "http://unitsofmeasure.org",
+		  "unit": "mg/ml",
+		  "value": Number(dobutamine_add)
+		}
+	  }
 	let ComaScale_obj = {
 		"category": [
 			{
