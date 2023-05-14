@@ -288,7 +288,7 @@ def singlePlot():
     image_png = buffer.getvalue()
     buffer.close()
     graphic = base64.b64encode(image_png).decode()
-    l=['wbc','crp','seg','band']
+    l=['sea','wbc','crp','seg','band']
     headers=list(df.columns)
     for i in headers:
         if i not in l:

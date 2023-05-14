@@ -6,6 +6,7 @@ import os
 import sqlite3
 import tools2.modelTraining as modelTraining
 import pandas as pd
+import tools.valueCouter as valueCouter
 dbfile = "modelDB.db"
 
 
@@ -78,10 +79,10 @@ def queryModel():
     if endDate:
         queryString+=" and endDate=\""+endDate+"\""
     if modelVersion:
-        queryString+=" and modelVersion="+modelVersion
+        queryString+=" and M.modelVersion="+modelVersion
     if modelType:
         queryString+=" and type=\""+modelType+"\""
-    queryString+=" order by modelVersion desc"
+    queryString+=" order by M.modelVersion desc"
     print(queryString)
         
     #get data from database
@@ -120,7 +121,8 @@ def uploadModel():
         modelVersion=str(int(modelVersion)+1)
     try:
         model=modelTraining.training(df,filename="",savePath="modelData/"+modelVersion+"_",modelType=modelType)
-    except:
+    except Exception as e:
+        print(e.with_traceback())
         return "400 training error your modelType:"+modelType +" your upload file:"+fileName
     if model!=None and saveModel(startDate,endDate,fileName,modelType):
         # turn dict to json
@@ -131,7 +133,18 @@ def uploadModel():
         #save json to db
         conn= sqlite3.connect(dbfile)
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO modelEfficacy (modelVersion,jsonData) VALUES (?,?)",(modelVersion,model))
+        
+        target=[]
+        if modelType=="NF":
+            target=['sea','wbc','crp','seg','band']
+        elif modelType=="Sepsis":
+            #TODO
+            #gcs, meds_ams15b, meds_plt150b, sofa_res, sofa_ner, sofa_liver,
+            #      sofa_coag, sofa_renal, bun, cre, plt, FIO2_percent, PF_ratio, fio2_per, fio2_cb
+            target=['gcs','meds_ams15b','meds_plt150b','sofa_res','sofa_ner','sofa_liver','sofa_coag','sofa_renal','bun','cre','plt','FIO2_percent','PF_ratio','fio2_per','fio2_cb']
+        meanStd=valueCouter.meanStdCounter(df,target=target)
+        meanStd=json.dumps(meanStd)
+        cursor.execute("INSERT INTO modelEfficacy (modelVersion,jsonData,meanStd) VALUES (?,?,?)",(modelVersion,model,meanStd))
         conn.commit()
 
     
@@ -261,7 +274,18 @@ def updateVersion(modelVersion,modelType="NF"):
     return True
 
      
-
+@modelManger.route('/getMeanStd',methods=['GET'])
+def getMeanStd():
+    model_type=request.args.get('type')
+    conn= sqlite3.connect(dbfile)
+    cursor = conn.cursor()
+    if model_type=="NF":
+        cursor.execute("SELECT  meanStd FROM  modelEfficacy E left JOIN nowUseModel N on E.modelVersion=N.modelVersionNF where N.id=(SELECT max(id)from nowUseModel);")
+    meanStd=cursor.fetchone()
+    if meanStd==None:
+        return "fail"
+    else:
+        return meanStd[0]
 
 
 if __name__ == '__main__':

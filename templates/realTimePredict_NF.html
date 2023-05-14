@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/assets/css/Inter.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.2/chart.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -108,12 +110,14 @@
         var crp
         var seg
         var band
+        
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="static/assets/js/bold-and-bright.js"></script>
     
     <script src="static/JavaScript/connectAPI.js"></script>
     <script src="static/JavaScript/NF-radar.js"></script>
+    
     <script>
      
      
@@ -192,10 +196,11 @@ var score_index = ["decisionTree_proba", "randomForest_proba", 'logisticregressi
                 document.getElementById("DT").innerHTML="信心度 "+res.decisionTree_proba+" %"
                 document.getElementById("RF").innerHTML="信心度 "+res.randomForest_proba+" %"
                 document.getElementById("LR").innerHTML="信心度 "+res.logisticregression_proba+" %"
-                document.getElementById("NN").innerHTML="信心度 "+res.decisionTree_proba+" %"
+                document.getElementById("NN").innerHTML="信心度 "+res.neuralNetwork_proba+" %"
                 document.getElementById("SVC").innerHTML="信心度 "+res.supportVectorMachine_proba+" %"
                 console.log(res)
-                radar_test(wbc,crp,seg,band)
+                // debugger
+                radar_test(wbc,crp,seg,band,sea)
             })
         }
         }

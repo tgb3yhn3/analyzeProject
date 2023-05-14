@@ -12,7 +12,7 @@ var birth = document.getElementById("birth");
 var age = document.getElementById("age");
 var height = document.getElementById("height");
 var weight = document.getElementById("weight");
-
+var mask= document.getElementById("mask");
 async function get_data() {
     var url = document.URL;
     var getvalue = url.split("?")[1];
@@ -37,6 +37,12 @@ async function get_data() {
     names.innerText = "姓名：" + data1.name[0].given[0];
     sex.innerText = "性別：" + data1.gender;
     birth.innerText = "生日：" + data1.birthDate;
+    for (var i = 0; i < data1.extension.length; i++) {
+        if (data1.extension[i].url == 'Respiratory mask') {
+            mask.innerText="使用呼吸器："+(data1.extension[i].valueDecimal?"是":"否")
+            console.log("mask",data1.extension[i].valueDecimal)
+        }
+    }
     age.innerText = "年齡：" + Math.ceil((new Date - new Date(data1.birthDate)) / 31536000000);
     height.innerText = "身高：" + Math.round(data2.entry[0].resource.valueQuantity.value * 100) / 100 + " " + data2.entry[0].resource.valueQuantity.unit;
     weight.innerText = "體重：" + Math.round(data3.entry[0].resource.valueQuantity.value * 100) / 100 + " " + data3.entry[0].resource.valueQuantity.unit;
@@ -74,6 +80,22 @@ async function update_birth() {
         '生日：').catch(error => console.log(error))
 
 }
+async function update_mask() {
+    await update(
+        "請輸入是否使用呼吸器(1:是 0:否)",
+        (data, newData) => {
+            for(var i=0;i<data.extension.length;i++){
+                if(data.extension[i].url=='Respiratory mask'){
+                    data.extension[i].valueDecimal=Number(newData)
+                    mask.innerText="使用呼吸器："+(newData?"是":"否")
+                    return data
+                }
+            }
+            
+        },
+        'mask',
+        '使用呼吸器：').catch(error => console.log(error))
+    }
 async function update_height() {
     await update_Observation("請輸入身高", "Body Height", "身高：", "height")
 }

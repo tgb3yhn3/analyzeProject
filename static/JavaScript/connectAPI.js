@@ -123,6 +123,7 @@ function getModelResult_NF(sea, wbc, crp, seg, band) {
 
 function getModelResult_sepsis(gcs, meds_ams15b, meds_plt150b, sofa_res, sofa_ner, sofa_liver,
   sofa_coag, sofa_renal, bun, cre, plt, FIO2_percent, PF_ratio, fio2_per, fio2_cb) {
+    console.log(gcs)
   return new Promise((resolve, reject) => {
     var dataUrl = "https://analyzeproject-xrttnigg7q-de.a.run.app/GET/predict/sepsis";
     var xhr = new XMLHttpRequest();
@@ -199,6 +200,9 @@ function getToken_fhir() {
   const response = await fetch(url, options)
       .then((response ) => {
           if (response.ok) {
+            if(htmlId=='mask'){
+              new_data = new_data.replace(/1/g,"有").replace(/0/g,"無")
+            }
               document.getElementById(htmlId).innerHTML = htmlPrefix + new_data
               alert("更新成功!")
           } else {

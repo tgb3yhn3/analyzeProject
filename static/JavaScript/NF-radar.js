@@ -1,13 +1,35 @@
-function radar_test(wbc=0,crp=0,seg=0,band=0) {
+
+function radar_test(wbc=0,crp=0,seg=0,band=0,sea=0) {
+       var meanStd
+       var max = [108000, 709.31, 96.6, 31.5, 1]
+       var min = [1100, 0.5, 5.3, 0, 0]
+       //ajax to get meanStd
+       $.ajax({
+              url: "/getMeanStd?type=NF",
+              type: "GET",
+              data: {}
+       }).done(function (data) {
+              
+             meanStd=JSON.parse(data)
+              
+              // meanStd=data
+              console.log("meanStd", meanStd)
+              mean = data.mean
+              std = data.std
+              doRadar(meanStd)
+       }).fail(function (jqXHR, textStatus, errorThrown) {
+              console.log("error")
+       });
+function doRadar(meanStd) {
        let chartStatus = Chart.getChart("radarChart"); // <canvas> id
 if (chartStatus != undefined) {
   chartStatus.destroy();
 }
        var radarChart = document.getElementById("radarChart");
-       var value_max = [108000, 709.31, 96.6, 31.5, 1]
-       var value_min = [1100, 0.5, 5.3, 0, 0]
+       
        // setup 
-       console.log(crp)
+       console.log("RADAR ",wbc,crp,seg,band)
+       console.log(meanStd)
        const data = {
               labels: ['WBC(0-22000)', 'CRP(0-240)', 'SEG(0-100)', 'Band(0-2)', 'Sea Water(0、1)'],
               datasets: [{
@@ -49,12 +71,12 @@ if (chartStatus != undefined) {
               },
               {
                      label: '目前病患',
-                     data: [(wbc - value_min[0]) / (value_max[0] - value_min[0]),
-                     (crp - value_min[1]) / (value_max[1] - value_min[1]),
-                     (seg - value_min[2]) / (value_max[2] - value_min[2]),
-                     (band - value_min[3]) / (value_max[3] - value_min[3]),
-                     (sea - value_min[4]) / (value_max[4] - value_min[4])],
-                     backgroundColor: 'rgba(238,50,30,100)',             //不填滿 全透明
+                     data: [(wbc - min[0]) /(max[0]-min[0])>0? (wbc - min[0]) /(max[0]-min[0]):0,
+                            (crp - min[1]) /(max[1]-min[1])>0? (crp - min[1]) /(max[1]-min[1]):0,
+                            (seg - min[2]) /(max[2]-min[2])>0? (seg - min[2]) /(max[2]-min[2]):0,
+                            (band - min[3]) /(max[3]-min[3])>0? (band - min[3]) /(max[3]-min[3]):0,
+                            (sea - min[4]) /(max[4]-min[4])>0? (sea - min[4]) /(max[4]-min[4]):0],
+                     backgroundColor: 'rgba(238,50,30,1)',             //不填滿 全透明
                      pointBackgroundColor: "rgba(255,255,255,1)",     //座標點的顏色，白色
                      borderColor: "rgba(56,99,186,1)",                //邊框藍色不透明
                      borderWidth: 1,
@@ -103,7 +125,7 @@ if (chartStatus != undefined) {
                             }
                      },
                      tooltip: {    //數據回應方格，滑鼠經過時會出現(以下都指此回應方格內)
-                            backgroundColor: "rgba(125,0,125,0.8)",   //背景紫紅色，半透明
+                            backgroundColor: "rgba(125,0,125,0.3)",   //背景紫紅色，半透明
                             titleFont: {         //上方labels的字體
                                    size: 14,      //大小
                             },
@@ -140,4 +162,5 @@ if (chartStatus != undefined) {
               options: chartRadarOptions
        });
       
+}
 }

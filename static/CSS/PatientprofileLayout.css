@@ -22,7 +22,7 @@
         grid-column: 3/4;
         overflow: auto;
         display: flex;
-        flex-flow: row wrap;
+        
         justify-content: center;
         align-content: space-around;
         background-color: #F2E9E4;
@@ -67,7 +67,7 @@
         grid-column: 3/4;
         overflow: auto;
         display: flex;
-        flex-flow: row wrap;
+        
         justify-content: space-around;
         align-content: center;
         background-color: #F2E9E4;

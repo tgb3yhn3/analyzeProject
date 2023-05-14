@@ -1,4 +1,6 @@
+import json
 import pickle
+import sqlite3
 import pandas as pd
 import numpy as np
 # from tensorflow.keras.models import Sequential
@@ -9,11 +11,35 @@ mean = [1.39508929e+01, 4.15178571e-01, 8.30357143e-01, 9.86607143e-01, 4.620535
         4.62053571e-01, 2.18155634e+01, 1.37572072e+00, 2.06002237e+02, 3.96549298e-01, 2.79831681e+02, 3.96549296e+01, 4.08576389e+01]
 std = [2.45809506, 0.81116207, 1.34222891, 1.07728126, 0.9925559,  0.56376965, 0.81609475,
        0.91289731, 17.41744609, 1.61262408, 98.28342531, 0.12664999, 62.46864266, 12.66499879, 14.30293763]
+dbfile = 'modelDB.db'
+def loadMeanStd():
+    #load mean and std from db
+    conn= sqlite3.connect(dbfile)
+    cursor = conn.cursor()
 
+    #select max id form nowUseModel
 
+    sql='''select meanStd from modelEfficacy  E left join nowUseModel  use on 
+ use.modelVersionSepsis=E.modelVersion and use.id=(SELECT max(id) from nowUseModel)
+WHERE  E.modelVersion =(select modelVersionSepsis from nowUseModel where id=( SELECT max(id) from nowUseModel))'''
+    cursor.execute(sql)
+    print("try to get mean and std")
+    meanStd=cursor.fetchone()[0]
+    if(meanStd==None):
+        return mean,std
+    print('load Mean and Std')
+    meanStd=json.loads(meanStd)
+    for i in meanStd:
+        mean.append(i[1])
+        std.append(i[2])
+    
+    return mean,std
 def sepsisPredict(gcs, meds_ams15b, meds_plt150b, sofa_res, sofa_ner, sofa_liver,
                   sofa_coag, sofa_renal, bun, cre, plt, FIO2_percent, PF_ratio, fio2_per, fio2_cb):
     pred = {}
+    #load std and mean from db
+    mean,std=loadMeanStd()
+    print(mean,std)
     transform = [gcs, meds_ams15b, meds_plt150b, sofa_res, sofa_ner, 
                  sofa_liver,sofa_coag, sofa_renal, bun, cre,
                  plt, FIO2_percent, PF_ratio, fio2_per, fio2_cb]

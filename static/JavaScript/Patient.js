@@ -361,7 +361,7 @@ async function add_data(data, isPatient = true) {
 }
 var patient_id
 
-async function add_patient(name, sex, birth, weight, height) {
+async function add_patient(name, sex, birth, weight, height,mask) {
     var suc = false
     let objPatient = JSON.parse(JSON.stringify(patient_json));
     let objHeight = JSON.parse(JSON.stringify(height_obj));
@@ -369,6 +369,12 @@ async function add_patient(name, sex, birth, weight, height) {
     objPatient['name'][0]['given'][0] = name
     objPatient['gender'] = sex
     objPatient['birthDate'] = birth
+    for (var i = 0; i < objPatient.extension.length; i++) {
+        if (objPatient.extension[i].url == 'Respiratory mask') {
+            objPatient.extension[i].valueDecimal=Number(mask);
+            console.log("mask",objPatient.extension[i].valueDecimal)
+        }
+    }
     var patient_id
     await add_data(objPatient, true).then((id) => {
         console.log("success insert basic data")

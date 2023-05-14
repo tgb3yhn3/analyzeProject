@@ -1,4 +1,6 @@
+import json
 import pickle
+import sqlite3
 import pandas as pd
 import numpy as np
 # from tensorflow.keras.models import Sequential
@@ -22,9 +24,35 @@ supportVectorMachine_mean = {
     'sea': 2.64367816e-01, 'wbc': 1.28008621e+04, 'crp': 9.90701552e+01, 'seg': 7.73261494e+01, 'band': 2.13017241e+00}
 supportVectorMachine_std = {'sea': 4.40996002e-01, 'wbc': 7.00600927e+03,
                             'crp': 1.08474071e+02, 'seg': 1.05109073e+01, 'band': 5.10247663e+00}
+mean=[]
+std=[]
+dbfile = 'modelDB.db'
+def loadMeanStd():
+    #load mean and std from db
+    conn= sqlite3.connect(dbfile)
+    cursor = conn.cursor()
 
+    #select max id form nowUseModel
 
+    sql='''select meanStd from modelEfficacy  E left join nowUseModel  use on 
+ use.modelVersionNF=E.modelVersion and use.id=(SELECT max(id) from nowUseModel)
+WHERE  E.modelVersion =(select modelVersionNF from nowUseModel where id=( SELECT max(id) from nowUseModel))'''
+    cursor.execute(sql)
+    print("try to get mean and std")
+    meanStd=cursor.fetchone()[0]
+    if(meanStd==None):
+        return mean,std
+    print('load Mean and Std')
+    meanStd=json.loads(meanStd)
+    mean=[]
+    std=[]
+    for i in meanStd:
+        mean.append(i[1])
+        std.append(i[2])
+    print(mean,std)
+    return mean,std
 def NFPredict(sea, wbc, crp, seg, band):
+    loadMeanStd()
     pred = {}
     randomForest_transform = {'sea': ((sea - randomForest_mean['sea']) / randomForest_std['sea']),
                               'wbc': ((wbc - randomForest_mean['wbc']) / randomForest_std['wbc']),
@@ -46,7 +74,28 @@ def NFPredict(sea, wbc, crp, seg, band):
                                       'crp': ((crp - supportVectorMachine_mean['crp']) / supportVectorMachine_std['crp']),
                                       'seg': ((seg - supportVectorMachine_mean['seg']) / supportVectorMachine_std['seg']),
                                       'band': ((band - supportVectorMachine_mean['band']) / supportVectorMachine_std['band'])}
-
+    mean,std=loadMeanStd()
+    if(len(mean)!=0):
+        randomForest_transform={'sea': ((sea - mean[0]) / std[0]),
+                                'wbc': ((wbc - mean[1]) / std[1]),
+                                'crp': ((crp - mean[2]) / std[2]),
+                                'seg': ((seg - mean[3]) / std[3]),
+                                'band': ((band - mean[4]) / std[4])}
+        logisticregression_transform={'sea': ((sea - mean[0]) / std[0]),
+                                'wbc': ((wbc - mean[1]) / std[1]),
+                                'crp': ((crp - mean[2]) / std[2]),
+                                'seg': ((seg - mean[3]) / std[3]),
+                                'band': ((band - mean[4]) / std[4])}
+        neuralNetwork_transform={'sea': ((sea - mean[0]) / std[0]),
+                                'wbc': ((wbc - mean[1]) / std[1]),
+                                'crp': ((crp - mean[2]) / std[2]),
+                                'seg': ((seg - mean[3]) / std[3]),
+                                'band': ((band - mean[4]) / std[4])}
+        supportVectorMachine_transform={'sea': ((sea - mean[0]) / std[0]),
+                                'wbc': ((wbc - mean[1]) / std[1]),
+                                'crp': ((crp - mean[2]) / std[2]),
+                                'seg': ((seg - mean[3]) / std[3]),
+                                'band': ((band - mean[4]) / std[4])}
     # decisionTree
     model_file_name = 'static/model/NF_decisionTree.pickle'
     with open(model_file_name, 'rb') as f:

@@ -80,7 +80,7 @@
                             <div class="mb-3"><label class="form-label" for="epinephrine">epinephrine(ug/kg/min)</label><input value=0 class="form-control" type="text" name="epinephrine" placeholder="epinephrine"></div>
                             <div class="mb-3"><label class="form-label" for="norepinephrine">norepinephrine(ug/kg/min)</label><input value=0 class="form-control" type="text" name="norepinephrine" placeholder="norepinephrine"></div>
                             <div class="mb-3"><label class="form-label" for="Dobutamine">Dobutamine(mg/mL)</label><input value=0 class="form-control" type="text" placeholder="Dobutamine" name="Dobutamine"></div>
-                            <div class="mb-3"><label class="form-label" for="ComaScale">ComaScale(score)</label><input value=16 class="form-control" type="text" placeholder="ComaScale" name="ComaScale"></div>
+                            
                             <div class="mb-3"><label class="form-label" for="Creatinine">Creatinine(mg/dL)</label><input value=0.9 class="form-control" type="text" placeholder="Creatinine" name="Creatinine"></div>
                             <div class="mb-3"><label class="form-label" for="urineVolume">urineVolume(mL/day)</label><input value=822 class="form-control" type="text" placeholder="urineVolume" name="urineVolume"></div>
                             <div class="mb-3"><label class="form-label" for="Respiratory mask">Respiratory mask</label><select class="form-select" name="respirator">
@@ -116,8 +116,9 @@
             <h4 id="hint"  style="text-align: center;">
         </div>
         <div class="row">
-            <div class="col">
+            
                 <div class="card-group">
+                    <div class="col-md-4">
                     <div class="card"><img id='choice2-1_s'class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-1.png">
                         <div class="card-body">
                             <h4 class="card-title" id="rf" style="text-align: center;">信心度</h4>
@@ -127,6 +128,8 @@
                             
                         </div>
                     </div>
+                </div>
+                <div class="col-md-4">
                     <div class="card"><img id='choice3-1_s'class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-2.png">
                         <div class="card-body">
                             <h4 class="card-title" id="lr" style="text-align: center;">信心度</h4>
@@ -134,6 +137,9 @@
                             <div id="lr_plot" class="col img-fluid "></div>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-4">
+
                     <div class="card"><img id="choice4-1_s"class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-7.png">
                         <div class="card-body">
                             <h4 class="card-title" id="svc" style="text-align: center;">信心度</h4>
@@ -146,6 +152,8 @@
             </div>
         </div>
     </div>
+
+    
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="static/assets/js/bold-and-bright.js"></script>
@@ -167,7 +175,7 @@
         let epinephrine= formData2.get('epinephrine')
         let norepinephrine= formData2.get('norepinephrine')
         let Dobutamine=formData2.get('Dobutamine')
-        let ComaScale= formData2.get('ComaScale')
+        let ComaScale= formData3.get('gcs')
         let Creatinine= formData2.get('Creatinine')
         let urineVolume= formData2.get('urineVolume')
         let lastSOFA= formData3.get('lastSOFA')
@@ -226,9 +234,9 @@
                 if(Bilirubin<1||Bilirubin>3){
                     add_alert("Bilirubin超出範圍（1~3)")
                 }
-                if(urineVolume<0||urineVolume>0){
-                    add_alert("urineVolume超出範圍（0~0)")
-                }
+                // if(urineVolume<0||urineVolume>0){
+                //     add_alert("urineVolume超出範圍（0~0)")
+                // }
                 if(Creatinine<0||Creatinine>4){
                     add_alert("Creatinine超出範圍（0~4)")
                 }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Log in - Brand</title>
+    <title>壞死性筋膜炎風險分析支援系統</title>
     <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
 </head>
@@ -51,6 +51,14 @@
                                 <div class="mb-3"><label class="form-label">Birth</label><input class="form-control" name="birth" placeholder="Name" type="date"></div>
                                 <div class="mb-3"><label class="form-label">Height</label><input class="form-control" type="text" name="height" placeholder="height"></div>
                                 <div class="mb-3"><label class="form-label">Weight</label><input class="form-control" type="text" name="weight" placeholder="weight"></div>
+                                <div class="mb-3"><label class="form-label" for="Respiratory mask">Respiratory mask</label><select class="form-select" name="respirator">
+                                    <optgroup label="Respiratory">
+                                        <option value="0" selected>not use</option>
+                                        
+                                        <option value="1"> use</option>
+                                    </optgroup>
+                                </select></div>
+                                
                                 <button class="btn btn-dark shadow d-block w-100"type="button" onclick=addPatient()>Add Patient</button>
                             </form>
                         </div>
@@ -74,8 +82,9 @@
             var birth =formData.get('birth')
             var height=formData.get('height')
             var weight =formData.get('weight')
+            var mask =formData.get('respirator')
             if(name&&sex&&birth&&weight&&height){
-                await add_patient(name,sex,birth,weight,height).then((suc)=>{
+                await add_patient(name,sex,birth,weight,height,mask).then((suc)=>{
                 if(!suc){
                     alert("新增病人失敗")
                 }else{

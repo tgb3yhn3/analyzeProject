@@ -75,7 +75,7 @@ async function get_data() {
             }
         }
         display_image(calculateresult(band, sea, seg, crp), 'resultimage');
-        radar_test();
+        radar_test( wbc, crp, seg, band,sea);
     })
 };
 
