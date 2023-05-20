@@ -22,13 +22,13 @@ def getData(strSQL):
     return rows
 
 #save model to database
-def saveModel(startDate,endDate,fileName,modelType):
+def saveModel(startDate,endDate,fileName,modelType,fold,split):
     conn= sqlite3.connect(dbfile)
     cursor = conn.cursor()
     nowTime=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     #file=convertToBinaryData(file)
     #insert data into table startDate,endDate,modelVersion,datasetName,model
-    cursor.execute("INSERT INTO model (startDate,endDate,updateDate,datasetName,type) VALUES (?,?,?,?,?)",(startDate,endDate,nowTime,fileName,modelType))
+    cursor.execute("INSERT INTO model (startDate,endDate,updateDate,datasetName,type,fold,split) VALUES (?,?,?,?,?,?,?)",(startDate,endDate,nowTime,fileName,modelType,fold,split))
     #check if insert success
     if cursor.rowcount < 1:
         return False
@@ -93,8 +93,8 @@ def queryModel():
     # else:
     json_list=[]
     for i in data:
-        if(i[7]!=None):
-            json_list.append(json.loads(i[7]))
+        if(i[9]!=None):
+            json_list.append(json.loads(i[9]))
         else:
             json_list.append(None)
     return render_template("model.html",models=data,nowUse=getNowUseModel(),modelEfficacy=json_list)
@@ -107,6 +107,8 @@ def uploadModel():
     endDate = request.form['endDate']
     file = request.files['file']
     modelType= request.form['type']
+    fold=request.form['fold']
+    split=request.form['split']
     #getfilename from form
     fileName = file.filename
     #read file use panda
@@ -120,11 +122,11 @@ def uploadModel():
     else:
         modelVersion=str(int(modelVersion)+1)
     try:
-        model=modelTraining.training(df,filename="",savePath="modelData/"+modelVersion+"_",modelType=modelType)
+        model=modelTraining.training(df,filename="",savePath="modelData/"+modelVersion+"_",modelType=modelType,fold=int(fold),split=int(split))
     except Exception as e:
         print(e.with_traceback())
         return "400 training error your modelType:"+modelType +" your upload file:"+fileName
-    if model!=None and saveModel(startDate,endDate,fileName,modelType):
+    if model!=None and saveModel(startDate,endDate,fileName,modelType,fold,split):
         # turn dict to json
         model=json.dumps(model)
         #get last modelVersion
@@ -228,21 +230,7 @@ def replaceModel():
 
         
 
-#do predict with modelVersion
-@modelManger.route('/predict/NF/<modelVersion>',methods=['GET'])
-def predict(modelVersion):
-    #TODO
-    #get data from database
-    data=getData("select * from model where modelVersion="+modelVersion)
-    #get modelFile
-    if data.rowcount < 1:
-        return "fail"
-    else:
-        modelFile=data[0][4]
-        #do predict
-    
 
-    return "success"
 
 #writelog to log file
 def writeLog(log):

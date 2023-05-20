@@ -31,17 +31,59 @@ async function get_data() {
 	list_update();
 	create_href();
 };
+function renderLinkIcon(node) {
+	const iconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+	const iconPath = document.createElementNS(
+	  'http://www.w3.org/2000/svg',
+	  'path'
+	);
+  
+	iconSvg.setAttribute('fill', 'currentColor');
+	iconSvg.setAttribute('viewBox', '0 0 16 16');
+	iconSvg.setAttribute('width', '1em');
+	iconSvg.setAttribute('height', '1em');
+	iconSvg.setAttribute('stroke', 'black');
+	// iconSvg.cla.add("bi bi-file-earmark-person-fil");
+	iconSvg.classList.add('post-icon');
+  
+	iconPath.setAttribute(
+	  'd',
+	  'M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z'
+	);
 
+  
+	iconSvg.appendChild(iconPath);
+  
+	return node.appendChild(iconSvg);
+  }
 function list_update() {
 	return new Promise((resolve) => {
 		var myList = document.getElementById('listDiv');
+		myList.className+=" row"
 		for (var x = 0; x < arr_name.length; x++) {
 			var newList = document.createElement('div');
+			newList.style.marginTop = "1.5em";
+			newList.style.marginBottom = "1.5em";
+			var text = document.createElement('h1');
+			var img=document.createElement('img')
+			img.src="static/images/person.svg"
+			// var hr = document.createElement('hr');
 			var textNode = document.createTextNode(arr_name[x]);
 			newList.id = "op" + x;
-			newList.className = "option";
-			newList.appendChild(textNode);
+			
+			newList.className = "option"
+			newList.className += " col-md-6"
+			// text.appendChild(img)
+			renderLinkIcon(text)
+			text.appendChild(textNode)
+			newList.appendChild(text);
+			
 			myList.appendChild(newList);
+			// myList.appendChild(hr);
+			if(x%2==1){
+				let hr = document.createElement('hr');
+				myList.appendChild(hr);
+			}
 		}
 		resolve = "list_update()"
 	})
@@ -49,11 +91,13 @@ function list_update() {
 
 function create_href() {
 	for (var i = 0; i < arr_id.length; i++) {
-		href.push('https://analyzeproject-xrttnigg7q-de.a.run.app/patientprofile?id=' + arr_id[i]);
+		href.push('http://192.168.1.102:5001/patientprofile?id=' + arr_id[i]);
 		document.getElementById('op' + i).setAttribute('value', href[i]);
-		document.getElementById('op' + i).onclick = function (event) {
-			window.location.replace(event.target.getAttribute('value'));
-		}
+		document.getElementById('op' + i).setAttribute('onclick', 'window.location.replace("' + href[i] + '")');
+		// document.getElementById('op' + i).onclick = function (event) {
+		// 	console.log(event.target);
+		// 	//window.location.replace(event.target.getAttribute('value'));
+		// }
 	}
 }
 async function add_data(data, isPatient = true) {

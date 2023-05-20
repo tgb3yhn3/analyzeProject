@@ -6,149 +6,280 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>壞死性筋膜炎風險分析支援系統</title>
     <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
     <nav class="navbar navbar-light navbar-expand-md sticky-top navbar-shrink py-3" id="mainNav">
-        <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span class="bs-icon-sm bs-icon-circle bs-icon-primary shadow d-flex justify-content-center align-items-center me-2 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor" style="font-size: 28px;">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span
+                    class="bs-icon-sm bs-icon-circle bs-icon-primary shadow d-flex justify-content-center align-items-center me-2 bs-icon"><svg
+                        xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em"
+                        fill="currentColor" style="font-size: 28px;">
                         <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
-                        <path d="M352 128C352 198.7 294.7 256 223.1 256C153.3 256 95.1 198.7 95.1 128C95.1 57.31 153.3 0 223.1 0C294.7 0 352 57.31 352 128zM287.1 362C260.4 369.1 239.1 394.2 239.1 424V448C239.1 452.2 241.7 456.3 244.7 459.3L260.7 475.3C266.9 481.6 277.1 481.6 283.3 475.3C289.6 469.1 289.6 458.9 283.3 452.7L271.1 441.4V424C271.1 406.3 286.3 392 303.1 392C321.7 392 336 406.3 336 424V441.4L324.7 452.7C318.4 458.9 318.4 469.1 324.7 475.3C330.9 481.6 341.1 481.6 347.3 475.3L363.3 459.3C366.3 456.3 368 452.2 368 448V424C368 394.2 347.6 369.1 320 362V308.8C393.5 326.7 448 392.1 448 472V480C448 497.7 433.7 512 416 512H32C14.33 512 0 497.7 0 480V472C0 393 54.53 326.7 128 308.8V370.3C104.9 377.2 88 398.6 88 424C88 454.9 113.1 480 144 480C174.9 480 200 454.9 200 424C200 398.6 183.1 377.2 160 370.3V304.2C162.7 304.1 165.3 304 168 304H280C282.7 304 285.3 304.1 288 304.2L287.1 362zM167.1 424C167.1 437.3 157.3 448 143.1 448C130.7 448 119.1 437.3 119.1 424C119.1 410.7 130.7 400 143.1 400C157.3 400 167.1 410.7 167.1 424z"></path>
-                    </svg></span><span>壞死性筋膜炎風險分析支援系統</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                        <path
+                            d="M352 128C352 198.7 294.7 256 223.1 256C153.3 256 95.1 198.7 95.1 128C95.1 57.31 153.3 0 223.1 0C294.7 0 352 57.31 352 128zM287.1 362C260.4 369.1 239.1 394.2 239.1 424V448C239.1 452.2 241.7 456.3 244.7 459.3L260.7 475.3C266.9 481.6 277.1 481.6 283.3 475.3C289.6 469.1 289.6 458.9 283.3 452.7L271.1 441.4V424C271.1 406.3 286.3 392 303.1 392C321.7 392 336 406.3 336 424V441.4L324.7 452.7C318.4 458.9 318.4 469.1 324.7 475.3C330.9 481.6 341.1 481.6 347.3 475.3L363.3 459.3C366.3 456.3 368 452.2 368 448V424C368 394.2 347.6 369.1 320 362V308.8C393.5 326.7 448 392.1 448 472V480C448 497.7 433.7 512 416 512H32C14.33 512 0 497.7 0 480V472C0 393 54.53 326.7 128 308.8V370.3C104.9 377.2 88 398.6 88 424C88 454.9 113.1 480 144 480C174.9 480 200 454.9 200 424C200 398.6 183.1 377.2 160 370.3V304.2C162.7 304.1 165.3 304 168 304H280C282.7 304 285.3 304.1 288 304.2L287.1 362zM167.1 424C167.1 437.3 157.3 448 143.1 448C130.7 448 119.1 437.3 119.1 424C119.1 410.7 130.7 400 143.1 400C157.3 400 167.1 410.7 167.1 424z">
+                        </path>
+                    </svg></span><span>壞死性筋膜炎風險分析支援系統</span></a><button data-bs-toggle="collapse" class="navbar-toggler"
+                data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span
+                    class="navbar-toggler-icon"></span></button>
             模型版本系統
-                    <div class="collapse navbar-collapse" id="navcol-1">
-                <ul class="navbar-nav mx-auto"></ul><a class="btn btn-dark text-start shadow" role="button" href="/patientlist">Back</a>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav mx-auto"></ul><a class="btn btn-dark text-start shadow" role="button"
+                    href="/patientlist">Back</a>
             </div>
         </div>
     </nav>
     <section class="text-center py-5">
-        <div class="container">
-            <h1>Version NF:{{nowUse[1]}} Sepsis:{{nowUse[2]}}</h1>
-            <form action="/model" method="POST" enctype="multipart/form-data">
-            <div class="row">
-               
-                <div class="col"><label class="form-label">modelType:</label><select name="type">
-                        <option value="NF" selected="">NF</option>
-                        <option value="Sepsis">Sepsis</option>
-                    </select></div>
-                <div class="col"><label class="form-label" for="startDate">startDate:</label><input type="date" name="startDate"></div>
-                <div class="col"><label class="form-label" for="endDate">endDate:</label><input type="date" name="endDate"></div>
-                <div class="col"><label class="form-label">File</label><input type="file" name="file"></div>
-            </div>
-        
-            <div class="row">
-                <div class="col"><button class="btn btn-dark btn-sm" type="submit">Upload DataSet</button></div>
-            </div>
-        </form>
-        <form action="/model" method="GET">
-            <div class="row" style="text-align: center;">
-                <div class="col-lg-8 text-start align-self-center"><label class="form-label" for="modelType">ModelType:</label><select id="querySelect"class="queryModel"name="type">
-                        <option value="" selected="">all</option>
-                        <option value="NF">NF</option>
-                        <option value="Sepsis">Sepsis</option>
-                    </select><label class="form-label" for="modelVersion">ModelVersion:</label><input type="text" style="text-align: justify;" name="modelVersion"></div>
-            </div>
-            <div class="row" style="text-align: center;">
-                <div class="col-lg-10 text-start"><label class="form-label">StartDate:</label><input type="date"><label class="form-label">EndDate:</label><input type="date"><label class="form-label">UpdateTime:</label><input type="date"></div>
-            </div><button class="btn btn-dark btn-sm text-center queryModel" type="button">Search</button>
-        </form>
-        {% for  model in models %}
-            <div class="row text-start justify-content-center align-items-center">
-                <div class="col-8 col-md-8 col-lg-8 text-start">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">{{model[5]}}  Version:{{model[0]}}</h4>
-                            <h6 class="text-muted card-subtitle mb-2">UpdateTime {{model[3]}}</h6>
-                            <p class="card-text">
-                                {% if modelEfficacy[loop.index0] != None %}
-                                {% for key,value in modelEfficacy[loop.index0].items() %}
-                                {% if value!=None %}
-                                <div class="row">
-                                   
-                                   <div class="row">{{key}}</div> 
-                                   {% for inKey,inValue in value.items()%}
-                                   <div class="col">
-                                    <div class="col">{{inKey}}</div> 
-                                    <div class="col">{{inValue|round(3)}}</div> 
-                                   </div>
-                                   {% endfor %}
+        <div class="container ">
+            <!-- center  -->
+            <div class="row " style="margin: auto;">
+                <div class="col mb-3">
+                    <ul class="nav nav-pills d-flex justify-content-center">
+                        <li class="nav-item">
+                            <button class="nav-link active" id="page1-click" aria-current="page">模型上傳</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" id="page2-click">檔案統計</button>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <h1 class="mb-3">Version NF:{{nowUse[1]}} Sepsis:{{nowUse[2]}}</h1>
+                <form action="/model" method="POST" enctype="multipart/form-data">
+                    <div class="row">
+
+                        <div class="form-floating col-md-4 mb-3">
+
+                            <select class="form-select" name="type" id="type">
+                                <option value="NF" selected="">NF</option>
+                                <option value="Sepsis">Sepsis</option>
+                            </select>
+                            <label class="form-label" for="type">
+                                modelType:
+                            </label>
+                        </div>
+                        <div class=" col-md-4 mb-3">
+
+                            <input id='file' class='form-control form-control-lg' type="file" name="file">
+
+                        </div>
+                        <div class="form-floating col-md-2 mb-3">
+                            <input id="fold" class="form-control" type="number" value="1" min="1" name="fold">
+                            <label class="form-label" for="fold">
+                                Cross-validation Folds
+                            </label>
+                        </div>
+                        <div class="form-floating col-md-2 mb-3">
+                            <input id="split" class="form-control" type="range" value="0" min="0" max="100"
+                                name="split">
+                            <label class="form-label" for="split" id="split-value">
+                                Percentage split 0%
+                            </label>
+                            <script>
+                                $("#split").on("input", function () {
+                                    $("#split").val(this.value)
+                                    $("#split-value").text("Percentage split " + this.value + "%")
+                                });
+                            </script>
+
+                        </div>
+                        <div class="form-floating col-md-4 mb-3">
+                            <input id="startDate" class="form-control" type="date" name="startDate">
+                            <label class="form-label" for="startDate ">
+                                startDate:
+                            </label>
+                        </div>
+                        <div class="form-floating col-md-4 mb-3">
+                            <input id="endDate" class="form-control" type="date" name="endDate">
+                            <label class="form-label" for="endDate">endDate:</label>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <button class="btn btn-dark btn-md" type="submit">Upload DataSet</button>
+                        </div>
+                    </div>
+
+                    
+                </form>
+                <hr>
+                <div class="page2 mb-3">
+                    <div class=" form-floating mb-3">
+                        <select class='form-select'id="attributeSelect"></select>
+                        <label class='form-label'for="attributeSelect">選擇Attribute:
+                        
+                    </label>
+                    
+                    </div>
+                    <label id="miss">Missing </label>
+                    <canvas id="chart"></canvas>
+                    <script src="static/Javascript/drawChart.js"></script>
+                </div>
+                <form class="page1 mb-3 " action="/model" method="GET">
+                    <div class="row" style="text-align: center;">
+                        <div class="col-md-2 form-floating mb-3">
+
+                            <select id="modelTypeQ" class=" form-select " name="typeQ">
+                                <option value="" selected="">all</option>
+                                <option value="NF">NF</option>
+                                <option value="Sepsis">Sepsis</option>
+                            </select>
+                            <label class="form-label" for="modelType-q">
+                                ModelType:
+                            </label>
+                        </div>
+                        <div class="col-md-2 form-floating mb-3">
+                            <input class="form-control" type="text" style="text-align: justify;" name="modelVersionQ"
+                                id="modelVersionQ">
+                            <label class="form-label" for="modelVersion-q">
+                                ModelVersion:
+                            </label>
+                        </div>
+                        <div class="col-md-3 form-floating mb-3">
+                            <input class="form-control" type="date" name="startDateQ" id="startDateQ">
+                            <label class="form-label" for="startDate-q">StartDate:</label>
+                        </div>
+                        <div class="col-md-3 form-floating mb-3">
+                            <input class="form-control" type="date" name="endDateQ" id="endDateQ">
+                            <label class="form-label" for="endDat-qe">EndDate:</label>
+                        </div>
+                        <!-- <div class="col-lg-10 text-start"><label
+                            class="form-label">UpdateTime:</label><input type="date"></div>
+                    </div> -->
+
+                        <div class="col mb-2">
+                            <button class="btn btn-dark btn-md  queryModel" type="button">Search</button>
+                        </div>
+                    </div>
+                </form>
+                {% for model in models %}
+                <div class="row text-start justify-content-center  align-items-center page1">
+
+                    <div class="col-8 col-md-8 col-lg-8 text-start">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">{{model[5]}} Version:{{model[0]}} Split :{{model[7]}} Fold :{{model[6]}}</h4>
+                                <h6 class="text-muted card-subtitle mb-2">UpdateTime {{model[3]}}</h6>
+                                <p class="card-text">
+                                    {% if modelEfficacy[loop.index0] != None %}
+                                    {% for key,value in modelEfficacy[loop.index0].items() %}
+                                    {% if value!=None %}
+                                <div class="row " >
+
+                                    <div class="row "><h3>{{key}}</h3></div>
+                                    {% for inKey,inValue in value.items()%}
+                                    <div class="col text-center">
+
+                                        <div class="col"><h4>{{inKey}}</h4></div>
+                                        <hr>
+                                        <div class="col">{{inValue|round(3)}}</div>
+                                    </div>
+                                    {% endfor %}
                                 </div>
                                 <hr>
                                 {% endif %}
-                                
+
                                 {% endfor %}
                                 {% endif %}
-                            </p><a class="card-link" href="#">Link</a><a class="card-link" href="#">Link</a>
+                                </p>
+                            </div>
                         </div>
                     </div>
+                    <div class="col-sm-4 text-center">
+                        <button class="btn btn-primary selectModel {{model[5]}}" id='{{model[0]}}' type="button">Use
+                            This Model</button>
+                        <button class="btn btn-danger deleteModel {{model[5]}}" id="{{model[0]}}"
+                            type="button">Delete</button>
+                    </div>
                 </div>
-                <div class="col-sm-4 text-center">
-                    <button class="btn btn-primary selectModel {{model[5]}}" id='{{model[0]}}' type="button">Use This Model</button>
-                    <button class="btn btn-danger deleteModel {{model[5]}}" id="{{model[0]}}" type="button">Delete</button></div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/bold-and-bright.js"></script>
-
+    
+    <script src="https://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 </body>
 <script>
 
-$(document).ready(function(){
-         //ajax to select model
-        $(".selectModel").click(function(event){
+    $(document).ready(function () {
+        $('#page1-click').click(function () {
+            //remove class active
+            $('#page2-click').removeClass('active')
+            $('#page1-click').addClass('active')
+            $('.page1').show()
+            $('.page2').hide()
+        })
+        $('#page2-click').click(function () {
+            //remove class active
+            //check if file has been uploaded
+            if ($('#file').val() == "") {
+                alert("請先上傳檔案")
+                $( "#file" ).effect( "shake" );
+                return
+            }
+            $('#page1-click').removeClass('active')
+            $('#page2-click').addClass('active')
+            $('.page1').hide()
+            $('.page2').show()
+        })
+        //ajax to select model
+        $(".selectModel").click(function (event) {
             console.log(event.target.id)
             $.ajax({
                 type: "POST",
                 url: "/model/select",
                 data: {
                     modelVersion: event.target.id,
-                    type:event.target.classList[3]
+                    type: event.target.classList[3]
                 },
-                success: function(response){
+                success: function (response) {
                     alert("更換成功")
                     console.log(response);
                     window.location.reload()
                 },
-                error: function(error){
+                error: function (error) {
                     alert("更換失敗")
                     console.log(error);
                 }
             })
         })
         //ajax to delete model
-        $(".deleteModel").click(function(event){
+        $(".deleteModel").click(function (event) {
             console.log(event.target.id)
             $.ajax({
                 type: "DELETE",
                 url: "/model",
                 data: {
                     modelVersion: event.target.id,
-                    type:event.target.classList[3]
+                    type: event.target.classList[3]
                 },
-                success: function(response){
+                success: function (response) {
                     alert("刪除成功")
                     console.log(response);
                     window.location.reload()
                 },
-                error: function(error){
+                error: function (error) {
                     alert("刪除失敗")
                     console.log(error);
                 }
             })
         })
         //ajax to query model with get method
-        $(".queryModel").click(function(event){
-            window.location.href = "/model?type="+$("#querySelect").val()+"&modelVersion="+$("input[name='modelVersion']").val()
+        $(".queryModel").click(function (event) {
+            window.location.href = "/model?type=" + $("#modelTypeQ").val() + "&modelVersion=" + $("#modelVersionQ").val()+
+            "&startDate="+$("#startDateQ").val()+"&endDate="+$("#endDateQ").val()
         })
     })
-    
-    
 
 
-        
+
+
+
 </script>
 
 </html>
