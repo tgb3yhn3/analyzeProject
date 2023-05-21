@@ -370,4 +370,4 @@ def uploadCSV():
         # 將檔案內容印出來
     return render_template("upload.html",success=False)
 if __name__ == '__main__':
-    app.run("localhost",5001,debug=True)
+    app.run(host="localhost",port=5001,debug=True)

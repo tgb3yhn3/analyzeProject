@@ -39,3 +39,4 @@ COPY . ./
 EXPOSE 5001
 VOLUME /app
 CMD exec gunicorn --reload --bind :$PORT --workers 1 --threads 8 --timeout 0 app:app
+# CMD python app.py

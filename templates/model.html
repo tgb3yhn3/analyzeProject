@@ -10,9 +10,32 @@
         href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="static/CSS/load-others.css">
+    <script src="static/JavaScript/load-others.js"></script>
 </head>
 
 <body>
+    <div class="loading-wrapper" style="display:none ;">
+		<div class="loading-grid">
+			<div class="loading">
+				<img src="static/gif/walking_people.gif" height="35%">
+				<div class="containerForText">
+					<div class="Text text-background">模型訓練中...<div id="time" class="Text text-background">
+                    
+                    </div></div>
+					<div class="Text text-color">模型訓練中...</div>
+                    
+				</div>
+                
+                <script>
+                    
+                </script>
+				<!-- <div class="progress">
+					<div class="progress-value"></div>
+				</div> -->
+			</div>
+		</div>
+	</div>
     <nav class="navbar navbar-light navbar-expand-md sticky-top navbar-shrink py-3" id="mainNav">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span
                     class="bs-icon-sm bs-icon-circle bs-icon-primary shadow d-flex justify-content-center align-items-center me-2 bs-icon"><svg
@@ -32,6 +55,7 @@
             </div>
         </div>
     </nav>
+    
     <section class="text-center py-5">
         <div class="container ">
             <!-- center  -->
@@ -99,7 +123,7 @@
                         </div>
                         
                         <div class="col-md-4 mb-3">
-                            <button class="btn btn-dark btn-md" type="submit">Upload DataSet</button>
+                            <button class="btn btn-dark btn-md" type="submit" id="submit">Upload DataSet</button>
                         </div>
                     </div>
 
@@ -207,6 +231,16 @@
 <script>
 
     $(document).ready(function () {
+        $('#submit').click(()=>{
+            
+                $('.loading-wrapper').show()
+                var time = 0;
+                    var timer = setInterval(function(){
+                        time++;
+                        document.getElementById("time").innerHTML = time;
+                    },1000);
+            
+        })
         $('#page1-click').click(function () {
             //remove class active
             $('#page2-click').removeClass('active')

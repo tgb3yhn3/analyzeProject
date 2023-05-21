@@ -503,11 +503,11 @@ function sheet() {
 
 //返回至病人資料頁
 function back_click(element) {
-    window.location.replace('http://192.168.1.102:5001/sepsischoice?id=' + id);
+    window.location.replace('http://localhost:5001/sepsischoice?id=' + id);
 }
 
 function backlist(element) {
-    window.location.replace('http://192.168.1.102:5001/patientlist');
+    window.location.replace('http://localhost:5001/patientlist');
 }
 
 get_data();
