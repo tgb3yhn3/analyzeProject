@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>壞死性筋膜炎風險分析支援系統</title>
+    <title>急重症風險分析支援系統</title>
     <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
@@ -12,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="static/CSS/load-others.css">
     <script src="static/JavaScript/load-others.js"></script>
+    <link rel="shortcut icon" href="./static/images/ccass.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -45,7 +46,7 @@
                         <path
                             d="M352 128C352 198.7 294.7 256 223.1 256C153.3 256 95.1 198.7 95.1 128C95.1 57.31 153.3 0 223.1 0C294.7 0 352 57.31 352 128zM287.1 362C260.4 369.1 239.1 394.2 239.1 424V448C239.1 452.2 241.7 456.3 244.7 459.3L260.7 475.3C266.9 481.6 277.1 481.6 283.3 475.3C289.6 469.1 289.6 458.9 283.3 452.7L271.1 441.4V424C271.1 406.3 286.3 392 303.1 392C321.7 392 336 406.3 336 424V441.4L324.7 452.7C318.4 458.9 318.4 469.1 324.7 475.3C330.9 481.6 341.1 481.6 347.3 475.3L363.3 459.3C366.3 456.3 368 452.2 368 448V424C368 394.2 347.6 369.1 320 362V308.8C393.5 326.7 448 392.1 448 472V480C448 497.7 433.7 512 416 512H32C14.33 512 0 497.7 0 480V472C0 393 54.53 326.7 128 308.8V370.3C104.9 377.2 88 398.6 88 424C88 454.9 113.1 480 144 480C174.9 480 200 454.9 200 424C200 398.6 183.1 377.2 160 370.3V304.2C162.7 304.1 165.3 304 168 304H280C282.7 304 285.3 304.1 288 304.2L287.1 362zM167.1 424C167.1 437.3 157.3 448 143.1 448C130.7 448 119.1 437.3 119.1 424C119.1 410.7 130.7 400 143.1 400C157.3 400 167.1 410.7 167.1 424z">
                         </path>
-                    </svg></span><span>壞死性筋膜炎風險分析支援系統</span></a><button data-bs-toggle="collapse" class="navbar-toggler"
+                    </svg></span><span>急重症風險分析支援系統</span></a><button data-bs-toggle="collapse" class="navbar-toggler"
                 data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span
                     class="navbar-toggler-icon"></span></button>
             模型版本系統
@@ -60,7 +61,7 @@
         <div class="container ">
             <!-- center  -->
             <div class="row " style="margin: auto;">
-                <div class="col mb-3">
+                <!-- <div class="col mb-3">
                     <ul class="nav nav-pills d-flex justify-content-center">
                         <li class="nav-item">
                             <button class="nav-link active" id="page1-click" aria-current="page">模型上傳</button>
@@ -70,7 +71,7 @@
                         </li>
 
                     </ul>
-                </div>
+                </div> -->
 
                 <h1 class="mb-3">Version NF:{{nowUse[1]}} Sepsis:{{nowUse[2]}}</h1>
                 <form action="/model" method="POST" enctype="multipart/form-data">
@@ -92,17 +93,17 @@
 
                         </div>
                         <div class="form-floating col-md-2 mb-3">
-                            <input id="fold" class="form-control" type="number" value="1" min="1" name="fold">
-                            <label class="form-label" for="fold">
+                            <input id="fold" class="form-control" type="hidden" value="1" min="1" name="fold">
+                            <!-- <label class="form-label" for="fold">
                                 Cross-validation Folds
-                            </label>
+                            </label> -->
                         </div>
                         <div class="form-floating col-md-2 mb-3">
-                            <input id="split" class="form-control" type="range" value="0" min="0" max="100"
+                            <input id="split" class="form-control" type="hidden" value="80" min="0" max="100"
                                 name="split">
-                            <label class="form-label" for="split" id="split-value">
+                            <!-- <label class="form-label" for="split" id="split-value">
                                 Percentage split 0%
-                            </label>
+                            </label> -->
                             <script>
                                 $("#split").on("input", function () {
                                     $("#split").val(this.value)
@@ -185,7 +186,8 @@
                     <div class="col-8 col-md-8 col-lg-8 text-start">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">{{model[5]}} Version:{{model[0]}} Split :{{model[7]}} Fold :{{model[6]}}</h4>
+                                <h4 class="card-title">{{model[5]}} Version:{{model[0]}} </h4>
+                                <!-- Split :{{model[7]}} Fold :{{model[6]}} -->
                                 <h6 class="text-muted card-subtitle mb-2">UpdateTime {{model[3]}}</h6>
                                 <p class="card-text">
                                     {% if modelEfficacy[loop.index0] != None %}

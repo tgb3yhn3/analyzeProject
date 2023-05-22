@@ -72,7 +72,7 @@ function list_update() {
 			newList.id = "op" + x;
 			
 			newList.className = "option"
-			newList.className += " col-md-6"
+			newList.className += " col-md-4"
 			// text.appendChild(img)
 			renderLinkIcon(text)
 			text.appendChild(textNode)
@@ -80,7 +80,7 @@ function list_update() {
 			
 			myList.appendChild(newList);
 			// myList.appendChild(hr);
-			if(x%2==1){
+			if(x%3==2){
 				let hr = document.createElement('hr');
 				myList.appendChild(hr);
 			}

@@ -161,6 +161,10 @@ function getToken_fhir() {
   });
 }async function update(promptStr, settingFunc, htmlId, htmlPrefix) {
   let new_data = window.prompt(promptStr)
+  if (new_data == null||new_data == "") {
+      alert("請輸入資料")
+      return
+  }
   let token
   let patien_json
   let ori_url = document.URL

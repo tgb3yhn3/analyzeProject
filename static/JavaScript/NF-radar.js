@@ -1,8 +1,8 @@
 
 function radar_test(wbc=0,crp=0,seg=0,band=0,sea=0) {
        var meanStd
-       var max = [108000, 709.31, 96.6, 31.5, 1]
-       var min = [1100, 0.5, 5.3, 0, 0]
+       var max = [22000, 240, 100, 2, 1]
+       var min = [0, 0, 0, 0, 0]
        //ajax to get meanStd
        $.ajax({
               url: "/getMeanStd?type=NF",
@@ -71,11 +71,11 @@ if (chartStatus != undefined) {
               },
               {
                      label: '目前病患',
-                     data: [(wbc - min[0]) /(max[0]-min[0])>0? (wbc - min[0]) /(max[0]-min[0]):0,
-                            (crp - min[1]) /(max[1]-min[1])>0? (crp - min[1]) /(max[1]-min[1]):0,
-                            (seg - min[2]) /(max[2]-min[2])>0? (seg - min[2]) /(max[2]-min[2]):0,
-                            (band - min[3]) /(max[3]-min[3])>0? (band - min[3]) /(max[3]-min[3]):0,
-                            (sea - min[4]) /(max[4]-min[4])>0? (sea - min[4]) /(max[4]-min[4]):0],
+                     data: [(wbc-min[0] ) /(max[0]-min[0])>1? 1:(wbc - min[0]) /(max[0]-min[0]),
+                            (crp-min[1] ) /(max[1]-min[1])>1? 1:(crp - min[1]) /(max[1]-min[1]),
+                            (seg -min[2]) /(max[2]-min[2])>1? 1:(seg - min[2]) /(max[2]-min[2]),
+                            (band-min[3] ) /(max[3]-min[3])>1? 1:(band - min[3]) /(max[3]-min[3]),
+                            (sea -min[4]) /(max[4]-min[4])>1? 1:(sea - min[4]) /(max[4]-min[4])],
                      backgroundColor: 'rgba(238,50,30,1)',             //不填滿 全透明
                      pointBackgroundColor: "rgba(255,255,255,1)",     //座標點的顏色，白色
                      borderColor: "rgba(56,99,186,1)",                //邊框藍色不透明

@@ -156,6 +156,7 @@ function sheet() {
         tmp=document.createElement('td')
 
         tmp.style.border="none"
+        tmp.style.borderRight="3px solid black"
         space.push(tmp)
     }
     row_1.appendChild(heading_1);
