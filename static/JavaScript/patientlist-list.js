@@ -72,7 +72,7 @@ function list_update() {
 			newList.id = "op" + x;
 			
 			newList.className = "option"
-			newList.className += " col-md-6"
+			newList.className += " col-md-4"
 			// text.appendChild(img)
 			renderLinkIcon(text)
 			text.appendChild(textNode)
@@ -80,7 +80,7 @@ function list_update() {
 			
 			myList.appendChild(newList);
 			// myList.appendChild(hr);
-			if(x%2==1){
+			if(x%3==2){
 				let hr = document.createElement('hr');
 				myList.appendChild(hr);
 			}
@@ -91,7 +91,7 @@ function list_update() {
 
 function create_href() {
 	for (var i = 0; i < arr_id.length; i++) {
-		href.push('http://localhost:5001/patientprofile?id=' + arr_id[i]);
+		href.push('https://analyzeproject-xrttnigg7q-de.a.run.app/patientprofile?id=' + arr_id[i]);
 		document.getElementById('op' + i).setAttribute('value', href[i]);
 		document.getElementById('op' + i).setAttribute('onclick', 'window.location.replace("' + href[i] + '")');
 		// document.getElementById('op' + i).onclick = function (event) {
