@@ -61,7 +61,7 @@
         <div class="container ">
             <!-- center  -->
             <div class="row " style="margin: auto;">
-                <!-- <div class="col mb-3">
+                <div class="col mb-3">
                     <ul class="nav nav-pills d-flex justify-content-center">
                         <li class="nav-item">
                             <button class="nav-link active" id="page1-click" aria-current="page">模型上傳</button>
@@ -71,7 +71,7 @@
                         </li>
 
                     </ul>
-                </div> -->
+                </div>
 
                 <h1 class="mb-3">Version NF:{{nowUse[1]}} Sepsis:{{nowUse[2]}}</h1>
                 <form action="/model" method="POST" enctype="multipart/form-data">
@@ -93,17 +93,17 @@
 
                         </div>
                         <div class="form-floating col-md-2 mb-3">
-                            <input id="fold" class="form-control" type="hidden" value="1" min="1" name="fold">
-                            <!-- <label class="form-label" for="fold">
+                            <input id="fold" class="form-control" type="number" value="1" min="1" name="fold">
+                            <label class="form-label" for="fold">
                                 Cross-validation Folds
-                            </label> -->
+                            </label>
                         </div>
                         <div class="form-floating col-md-2 mb-3">
-                            <input id="split" class="form-control" type="hidden" value="80" min="0" max="100"
+                            <input id="split" class="form-control" type="range" value="80" min="0" max="100"
                                 name="split">
-                            <!-- <label class="form-label" for="split" id="split-value">
+                            <label class="form-label" for="split" id="split-value">
                                 Percentage split 0%
-                            </label> -->
+                            </label>
                             <script>
                                 $("#split").on("input", function () {
                                     $("#split").val(this.value)
@@ -139,6 +139,10 @@
                     </label>
                     
                     </div>
+                    <label id="min">Min </label>
+                    <label id="max">Max </label>
+                    <label id="mean">Mean </label>
+                    <label id="std">Std </label>
                     <label id="miss">Missing </label>
                     <canvas id="chart"></canvas>
                     <script src="static/Javascript/drawChart.js"></script>
@@ -187,7 +191,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">{{model[5]}} Version:{{model[0]}} </h4>
-                                <!-- Split :{{model[7]}} Fold :{{model[6]}} -->
+                                Split :{{model[7]}} Fold :{{model[6]}}
                                 <h6 class="text-muted card-subtitle mb-2">UpdateTime {{model[3]}}</h6>
                                 <p class="card-text">
                                     {% if modelEfficacy[loop.index0] != None %}

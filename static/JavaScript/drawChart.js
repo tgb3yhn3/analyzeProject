@@ -8,6 +8,26 @@ $(document).ready(()=>{
 }
     
 )
+function mean(data){
+    if(data.length==0){
+        return 0;
+    }
+    var sum=0;
+    var count=0;
+    for(var i=0;i<data.length;i++){
+        sum+=data[i];
+        
+    }
+    return sum/data.length;
+}
+function std (array) {
+    if(array.length==0){
+        return 0;
+    }
+    const n = array.length
+    const m = mean(array)
+    return Math.sqrt(array.map(x => Math.pow(x - m, 2)).reduce((a, b) => a + b) / n)
+  }
 
 function handleFileSelect(event) {
     var file = event.target.files[0];
@@ -55,8 +75,9 @@ function processData(csv) {
     var labels = [];
     var counts = [];
     var missing = 0;
+    var calData=[]
     // Process data for selected attribute
-    console.log(lines)
+    // console.log(lines)
     for (var i = 1; i < lines.length; i++) {
         var values = lines[i].split(',');
         var value = (values[headers.indexOf(attribute)]);
@@ -78,9 +99,18 @@ function processData(csv) {
         } else {
             counts[value]++;
         }
-        
+        calData.push(value)
     }
+    calData.sort(function (a, b) {
+        
+        return a - b;
+        
+    });
     document.getElementById("miss").innerHTML = "Missing : " + missing;
+    document.getElementById("min").innerHTML = "Min : " + calData[0];
+        document.getElementById("max").innerHTML = "Max : " + calData[calData.length - 1];
+        document.getElementById("mean").innerHTML = "Mean : " + mean(calData).toFixed(2);
+        document.getElementById("std").innerHTML = "Std : " +std(calData).toFixed(2);
     // Convert counts object to array
     for (var key in counts) {
         if (counts.hasOwnProperty(key)) {
@@ -170,7 +200,7 @@ function processData(csv) {
             labels.push(data[m].value);
             counts.push(data[m].count);
         }
-        debugger
+        // debugger
         // Chart.js configuration for bar chart with intervals
         var ctx = document.getElementById('chart').getContext('2d');
         let chartStatus = Chart.getChart("chart"); // <canvas> id
@@ -199,8 +229,8 @@ function processData(csv) {
                 }
             }
         });
-        document.getElementById("miss").innerHTML = "Missing : " + missing;
+        
     }
     }
-
+    
 
