@@ -249,7 +249,7 @@ def updateVersion(modelVersion,modelType="NF"):
         modelVersionSepsis=cursor.fetchone()
         if modelVersionSepsis==None:
             modelVersionSepsis=[""]
-        cursor.execute("insert into nowUseModel (modelVersionNF,modelVersionSepsis,updateDate) values (?,?,?)",(modelVersion,modelVersionSepsis[0],datetime.datetime.now().strftime("%Y%m%d%H%M%S")))
+        cursor.execute("insert into nowUseModel (modelVersionNF,modelVersionSepsis,updateDate) values (?,?,?)",(modelVersion,modelVersionSepsis[0],(datetime.datetime.now()+datetime.timedelta(hours=8)).strftime("%Y%m%d%H%M%S")))
     else:
         #the NF didn't need to update
         cursor.execute("select modelVersionNF from nowUseModel order by id desc limit 1")
