@@ -195,7 +195,7 @@ def replaceModel():
         'NF_randomForest.pickle',
         'NF_logisticregression.pickle',
         'NF_supportVectorMachine.pickle',
-        'NF_neuralNetWork.h5'
+        'NF_neuralNetwork.h5'
     ]
     modellist_Sepsis=[
         'sepsis_randomForest.pickle',
