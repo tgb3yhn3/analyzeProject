@@ -503,11 +503,11 @@ function sheet() {
 
 //返回至病人資料頁
 function back_click(element) {
-    window.location.replace('https://analyzeproject-xrttnigg7q-de.a.run.app/sepsischoice?id=' + id);
+    window.location.replace('http://34.81.122.147/sepsischoice?id=' + id);
 }
 
 function backlist(element) {
-    window.location.replace('https://analyzeproject-xrttnigg7q-de.a.run.app/patientlist');
+    window.location.replace('http://34.81.122.147/patientlist');
 }
 
 get_data();

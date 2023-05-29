@@ -42,10 +42,10 @@ function sure_click(element) {
 	else {
 		sea = 0;
 	}
-	window.location.replace('https://analyzeproject-xrttnigg7q-de.a.run.app/NF?id=' + id + "&method=" + result + "&sea=" + sea);
+	window.location.replace('http://34.81.122.147/NF?id=' + id + "&method=" + result + "&sea=" + sea);
 }
 
 //返回至病人資料頁
 function back_click(element) {
-	window.location.replace('https://analyzeproject-xrttnigg7q-de.a.run.app/patientprofile?id=' + id);
+	window.location.replace('http://34.81.122.147/patientprofile?id=' + id);
 }
