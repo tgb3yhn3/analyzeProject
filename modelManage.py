@@ -256,7 +256,7 @@ def updateVersion(modelVersion,modelType="NF"):
         modelVersionNF=cursor.fetchone()
         if modelVersionNF==None:
             modelVersionNF=[""]
-        cursor.execute("insert into nowUseModel (modelVersionNF,modelVersionSepsis,updateDate) values (?,?,?)",(modelVersionNF[0],modelVersion,datetime.datetime.now().strftime("%Y%m%d%H%M%S")))    
+        cursor.execute("insert into nowUseModel (modelVersionNF,modelVersionSepsis,updateDate) values (?,?,?)",(modelVersionNF[0],modelVersion,(datetime.datetime.now()+datetime.timedelta(hours=8)).strftime("%Y%m%d%H%M%S")))    
     #check if insert success
     conn.commit()
     return True
