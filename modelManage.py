@@ -25,7 +25,7 @@ def getData(strSQL):
 def saveModel(startDate,endDate,fileName,modelType,fold,split):
     conn= sqlite3.connect(dbfile)
     cursor = conn.cursor()
-    nowTime=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    nowTime=(datetime.datetime.now()+datetime.timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
     #file=convertToBinaryData(file)
     #insert data into table startDate,endDate,modelVersion,datasetName,model
     cursor.execute("INSERT INTO model (startDate,endDate,updateDate,datasetName,type,fold,split) VALUES (?,?,?,?,?,?,?)",(startDate,endDate,nowTime,fileName,modelType,fold,split))
