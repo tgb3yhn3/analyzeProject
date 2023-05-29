@@ -193,7 +193,7 @@ def replaceModel():
     modellist_NF=[
         'NF_decisionTree.pickle',
         'NF_randomForest.pickle',
-        'NF_logisticRegression.pickle',
+        'NF_logisticregression.pickle',
         'NF_supportVectorMachine.pickle',
         'NF_neuralNetWork.h5'
     ]
