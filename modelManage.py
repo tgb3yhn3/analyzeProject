@@ -199,7 +199,7 @@ def replaceModel():
     ]
     modellist_Sepsis=[
         'sepsis_randomForest.pickle',
-        'sepsis_logisticRegression.pickle',
+        'sepsis_logisticregression.pickle',
         'sepsis_supportVectorMachine.pickle'
     ]
     if modelType=="NF":
@@ -211,14 +211,14 @@ def replaceModel():
         modellist[modellist.index(model)]=model.format(modelVersion)
     #check if model file exist
     for model in modellist:
-        if not os.path.exists('/app/modelData/'+str(modelVersion)+"_"+model):
+        if not os.path.exists('modelData/'+str(modelVersion)+"_"+model):
             writeLog('model file not exist ' +str(modelVersion)+"_"+model)
             print('model file not exist ' +str(modelVersion)+"_"+model)
             return Response(status="400")
 
     #copy model file at static/model
     for model in modellist:
-        shutil.copyfile('/app/modelData/'+str(modelVersion)+"_"+model,'/app/static/model/'+model)
+        shutil.copyfile('modelData/'+str(modelVersion)+"_"+model,'static/model/'+model)
         
 
        
