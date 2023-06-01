@@ -64,14 +64,15 @@
                 <div class="col mb-3">
                     <ul class="nav nav-pills d-flex justify-content-center">
                         <li class="nav-item">
-                            <button class="nav-link active" id="page1-click" aria-current="page">模型效能</button>
+                            <button class="nav-link active" id="page3-click">模型上傳</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link " id="page1-click" aria-current="page">模型效能</button>
                         </li>
                         <li class="nav-item">
                             <button class="nav-link" id="page2-click">檔案統計</button>
                         </li>
-                        <li class="nav-item">
-                            <button class="nav-link" id="page3-click">模型上傳</button>
-                        </li>
+                        
                     </ul>
                 </div>
 
@@ -194,7 +195,7 @@
                         <div class="card">
                             <div class="card-body ">
                                 <h4 class="card-title ">{{model[5]}} Version:{{model[0]}} </h4>
-                                Split :{{model[7]}} Fold :{{model[6]}}
+                                <div class="page1">Split :{{model[7]}} Fold :{{model[6]}}</div>
                                 <h6 class="text-muted card-subtitle mb-2">UpdateTime {{model[3]}}</h6>
                                 <p class="card-text page1">
                                     {% if modelEfficacy[loop.index0] != None %}
@@ -241,6 +242,7 @@
 
     $(document).ready(function () {
         $('.page2').hide()
+        $('.page1').hide()
         $('#submit').click(()=>{
             
                 $('.loading-wrapper').show()
