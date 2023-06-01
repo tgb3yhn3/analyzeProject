@@ -64,12 +64,14 @@
                 <div class="col mb-3">
                     <ul class="nav nav-pills d-flex justify-content-center">
                         <li class="nav-item">
-                            <button class="nav-link active" id="page1-click" aria-current="page">模型上傳</button>
+                            <button class="nav-link active" id="page1-click" aria-current="page">模型效能</button>
                         </li>
                         <li class="nav-item">
                             <button class="nav-link" id="page2-click">檔案統計</button>
                         </li>
-
+                        <li class="nav-item">
+                            <button class="nav-link" id="page3-click">模型上傳</button>
+                        </li>
                     </ul>
                 </div>
 
@@ -92,13 +94,13 @@
                             <input id='file' class='form-control form-control-lg' type="file" name="file">
 
                         </div>
-                        <div class="form-floating col-md-2 mb-3">
+                        <div class="form-floating col-md-2 mb-3 page1">
                             <input id="fold" class="form-control" type="number" value="1" min="1" name="fold">
                             <label class="form-label" for="fold">
                                 Cross-validation Folds
                             </label>
                         </div>
-                        <div class="form-floating col-md-2 mb-3">
+                        <div class="form-floating col-md-2 mb-3 page1">
                             <input id="split" class="form-control" type="range" value="80" min="0" max="100"
                                 name="split">
                             <label class="form-label" for="split" id="split-value">
@@ -147,7 +149,8 @@
                     <canvas id="chart"></canvas>
                     <script src="static/Javascript/drawChart.js"></script>
                 </div>
-                <form class="page1 mb-3 " action="/model" method="GET">
+                
+                <form class="page1 mb-3 page3" action="/model" method="GET">
                     <div class="row" style="text-align: center;">
                         <div class="col-md-2 form-floating mb-3">
 
@@ -185,19 +188,19 @@
                     </div>
                 </form>
                 {% for model in models %}
-                <div class="row text-start justify-content-center  align-items-center page1">
+                <div class="row text-start justify-content-center  align-items-center  ">
 
                     <div class="col-8 col-md-8 col-lg-8 text-start">
                         <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">{{model[5]}} Version:{{model[0]}} </h4>
+                            <div class="card-body ">
+                                <h4 class="card-title ">{{model[5]}} Version:{{model[0]}} </h4>
                                 Split :{{model[7]}} Fold :{{model[6]}}
                                 <h6 class="text-muted card-subtitle mb-2">UpdateTime {{model[3]}}</h6>
-                                <p class="card-text">
+                                <p class="card-text page1">
                                     {% if modelEfficacy[loop.index0] != None %}
                                     {% for key,value in modelEfficacy[loop.index0].items() %}
                                     {% if value!=None %}
-                                <div class="row " >
+                                <div class="row page1" >
 
                                     <div class="row "><h3>{{key}}</h3></div>
                                     {% for inKey,inValue in value.items()%}
@@ -209,7 +212,7 @@
                                     </div>
                                     {% endfor %}
                                 </div>
-                                <hr>
+                                <hr class="page1">
                                 {% endif %}
 
                                 {% endfor %}
@@ -218,7 +221,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 text-center">
+                    <div class="col-sm-4 text-center page3">
                         <button class="btn btn-primary selectModel {{model[5]}}" id='{{model[0]}}' type="button">Use
                             This Model</button>
                         <button class="btn btn-danger deleteModel {{model[5]}}" id="{{model[0]}}"
@@ -251,9 +254,12 @@
         $('#page1-click').click(function () {
             //remove class active
             $('#page2-click').removeClass('active')
+            $('#page3-click').removeClass('active')
             $('#page1-click').addClass('active')
-            $('.page1').show()
+            
             $('.page2').hide()
+            $('.page3').hide()
+            $('.page1').show()
         })
         $('#page2-click').click(function () {
             //remove class active
@@ -264,9 +270,18 @@
                 return
             }
             $('#page1-click').removeClass('active')
+            $('#page3-click').removeClass('active')
             $('#page2-click').addClass('active')
             $('.page1').hide()
             $('.page2').show()
+        })
+        $('#page3-click').click(function(){
+            $('#page1-click').removeClass('active')
+            $('#page2-click').removeClass('active')
+            $('#page3-click').addClass('active')
+            
+            $('.page1').hide()
+            $('.page3').show()
         })
         //ajax to select model
         $(".selectModel").click(function (event) {

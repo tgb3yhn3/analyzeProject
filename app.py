@@ -222,6 +222,7 @@ def edit():
 
 @app.route('/singlePlot',methods=['get'])
 def get_singlePlot():
+    #print(request.args.get('type'))
     df = pd.read_csv('危險因子分析/Fdata1415.csv')
     df2=pd.read_csv('危險因子分析/Fdata1415.csv')
     df.drop('nf',axis=1,inplace=True)
@@ -230,6 +231,12 @@ def get_singlePlot():
     for i in headers:
         if i not in l:
             df.drop(i,axis=1,inplace=True)
+    
+    if request.args.get('type') =='sepsis':
+        df = pd.read_csv('trainingData/Sepsis_15TB.csv')
+        df2=pd.read_csv('trainingData/Sepsis_15TB.csv')
+    
+   
     return render_template('analyze_single.html', columns=df.columns,img="",choose="",pvalue=tools.valueCouter.p_value(df2))
 @app.route('/singlePlot',methods=['post'])
 def singlePlot():
