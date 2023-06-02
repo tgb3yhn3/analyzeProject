@@ -363,7 +363,9 @@ def singlePlot():
         
 @app.route('/plot',methods=['get'])
 def before_plot():
+    
     df = pd.read_csv('危險因子分析/NFdata1415.csv')
+    
     # df.drop('ID',axis=1,inplace=True)
     l=['nf','wbc','crp','seg','band']
     headers=list(df.columns)
@@ -371,9 +373,12 @@ def before_plot():
         if i not in l:
             df.drop(i,axis=1,inplace=True)
     # 傳遞參數到 HTML 畫面
+    if request.args.get('type')=='sepsis':
+        df=pd.read_csv('trainingData/Sepsis_15TB.csv')
     return render_template('analyze_double.html', columns=df.columns,img="",choose="",pvalue=tools.valueCouter.p_value(df))
 @app.route('/plot',methods=['post'])
 def plot():
+    type=request.form.get('type')
     # 從 request 取得使用者選擇的參數
     df = pd.read_csv('危險因子分析/NFdata1415.csv')
     # df.drop('ID',axis=1,inplace=True)
@@ -382,18 +387,29 @@ def plot():
     for i in headers:
         if i not in l:
             df.drop(i,axis=1,inplace=True)
+    if type=='sepsis':
+        df=pd.read_csv('trainingData/Sepsis_15TB.csv')
     x_col = request.form.get('x')
     y_col = request.form.get('y')
     choose=[x_col,y_col]
     # 產生散佈圖
     plot_data = df[[x_col, y_col]].dropna()
     #if nf=1 set to red
-    plot_data['nf']=df['nf']
-    plot_data['nf']=plot_data['nf'].apply(lambda x: 'red' if x else 'green')
-
-    fig = plot_data.plot.scatter(x=x_col, y=y_col,c='nf').get_figure()
     buffer = io.BytesIO()
-    fig.savefig(buffer, format='png')
+    if type=='sepsis':
+        
+        plot_data['sofa_sepsis']=df['sofa_sepsis']
+        plot_data['sofa_sepsis']=plot_data['sofa_sepsis'].apply(lambda x: 'red' if x else 'green')
+        fig = plot_data.plot.scatter(x=x_col, y=y_col,c='sofa_sepsis').get_figure()
+        fig.savefig(buffer, format='png')
+    else:
+        plot_data['nf']=df['nf']
+        plot_data['nf']=plot_data['nf'].apply(lambda x: 'red' if x else 'green')
+        fig = plot_data.plot.scatter(x=x_col, y=y_col,c='nf').get_figure()
+        fig.savefig(buffer, format='png')
+    
+    
+    
     buffer.seek(0)
     image_png = buffer.getvalue()
     buffer.close()
@@ -404,6 +420,7 @@ def plot():
     #         <img src="data:image/png;base64,{}">
     #     </div>
     # '''
+   
     return render_template('analyze_double.html',columns=df.columns,img=graphic,choose=choose,pvalue=tools.valueCouter.p_value(df))
 @app.route('/upload',methods=['GET','POST'])
 def uploadCSV():
