@@ -1,13 +1,17 @@
 import pandas as pd
 from scipy import stats
-def p_value(df=pd.read_csv("trainingData/NFdata1415.csv",encoding="utf-8-sig"),target=['sea','wbc','crp','seg','band']):
+def p_value(df=pd.read_csv("trainingData/NFdata1415.csv",encoding="utf-8-sig"),target=['sea','wbc','crp','seg','band'],type="nf"):
     column_headers = list(df.columns)
     rtn=[]
     for i in range(len(column_headers)):
         #print(column_headers[i])
         
-        if(column_headers[i] in target):
-            crosstab = pd.crosstab(df[column_headers[i]],df["nf"])
+        if(column_headers[i] in target or type=='sepsis'):
+            if(type=='sepsis'):
+                crosstab = pd.crosstab(df[column_headers[i]],df["sofa_sepsis"])
+            else:
+                crosstab = pd.crosstab(df[column_headers[i]],df["nf"])
+            
             #print(crosstab)
             crosstab, p_value, degFreedom, expected = stats.chi2_contingency(crosstab)
             #print("  ")

@@ -65,9 +65,10 @@
                             <div class="mb-3"><label class="form-label" for="respiratoryRate">respiratoryRate(times/min)</label><input value=19 class="form-control" type="text" name="respiratoryRate" placeholder="respiratoryRate" value="16"></div>
                             <div class="mb-3"><label class="form-label" for="consciousness">consciousness(score)</label><input value=100 class="form-control" type="text" name="consciousness" placeholder="consciousness"></div>
                             <div class="mb-3"><label class="form-label" for="systolicPressure">systolicPressure(mmHg)</label><input value=124 class="form-control" type="text" name="systolicPressure" placeholder="systolicPressure"></div>
-                            <div class="mb-3"><label class="form-label" for="PF_ratio">PF_ratio(mmHg)</label><input value=360 class="form-control" type="text" placeholder="PF_ratio" name="PF_ratio"></div>
-                            <div class="mb-3"><label class="form-label" for="Platelet">Platelet(10*3/μL)</label><input value=156 class="form-control" type="text" placeholder="Platelet" name="Platelet"></div>
-                            <div class="mb-3"><label class="form-label" for="Bilirubin">Bilirubin(mg/dL)</label><input value=7 class="form-control" type="text" placeholder="Bilirubin" name="Bilirubin"></div>
+                            <div class="mb-3"><label class="form-label" for="lastSOFA">lastSOFA(score)</label><input value=0 class="form-control" type="text" name="lastSOFA" placeholder="lastSOFA"></div>
+                            <div class="mb-3"><label class="form-label" for="infusion">infusion(ml)</label><input value=0 class="form-control" type="text" name="infusion" placeholder="infusion"></div>
+                            <div class="mb-3"><label class="form-label" for="Lactate">Lactate(mmole/L)</label><input value=2 class="form-control" type="text" name="Lactate" placeholder="Lactate"></div>
+                            
                             <div class="mb-3"><label class="form-label" for="MAP">MAP(mmHg)</label><input value=68  class="form-control" type="text" placeholder="MAP" name="MAP"></div>
                         </form>
                     </div>
@@ -81,8 +82,8 @@
                             <div class="mb-3"><label class="form-label" for="epinephrine">epinephrine(ug/kg/min)</label><input value=0 class="form-control" type="text" name="epinephrine" placeholder="epinephrine"></div>
                             <div class="mb-3"><label class="form-label" for="norepinephrine">norepinephrine(ug/kg/min)</label><input value=0 class="form-control" type="text" name="norepinephrine" placeholder="norepinephrine"></div>
                             <div class="mb-3"><label class="form-label" for="Dobutamine">Dobutamine(mg/mL)</label><input value=0 class="form-control" type="text" placeholder="Dobutamine" name="Dobutamine"></div>
+                            <div class="mb-3"><label class="form-label" for="Bilirubin">Bilirubin(mg/dL)</label><input value=7 class="form-control" type="text" placeholder="Bilirubin" name="Bilirubin"></div>
                             
-                            <div class="mb-3"><label class="form-label" for="Creatinine">Creatinine(mg/dL)</label><input value=0.9 class="form-control" type="text" placeholder="Creatinine" name="Creatinine"></div>
                             <div class="mb-3"><label class="form-label" for="urineVolume">urineVolume(mL/day)</label><input value=822 class="form-control" type="text" placeholder="urineVolume" name="urineVolume"></div>
                             <div class="mb-3"><label class="form-label" for="Respiratory mask">Respiratory mask</label><select class="form-select" name="respirator">
                                 <optgroup label="Respiratory">
@@ -99,9 +100,9 @@
                 <div class="card">
                     <div class="card-body text-center d-flex flex-column align-items-center">
                         <form id="form2" name="form2">
-                            <div class="mb-3"><label class="form-label" for="lastSOFA">lastSOFA(score)</label><input value=0 class="form-control" type="text" name="lastSOFA" placeholder="lastSOFA"></div>
-                            <div class="mb-3"><label class="form-label" for="infusion">infusion(ml)</label><input value=0 class="form-control" type="text" name="infusion" placeholder="infusion"></div>
-                            <div class="mb-3"><label class="form-label" for="Lactate">Lactate(mmole/L)</label><input value=2 class="form-control" type="text" name="Lactate" placeholder="Lactate"></div>
+                            <div class="mb-3"><label class="form-label" for="PF_ratio">PF_ratio(mmHg)</label><input value=360 class="form-control" type="text" placeholder="PF_ratio" name="PF_ratio"></div>
+                            <div class="mb-3"><label class="form-label" for="Platelet">Platelet(10*3/μL)</label><input value=156 class="form-control" type="text" placeholder="Platelet" name="Platelet"></div>
+                            <div class="mb-3"><label class="form-label" for="Creatinine">Creatinine(mg/dL)</label><input value=0.9 class="form-control" type="text" placeholder="Creatinine" name="Creatinine"></div>
                             <div class="mb-3"><label class="form-label" for="gcs">gcs(score)</label><input value=16 class="form-control" type="text" placeholder="gcs" name="gcs"></div>
                             <div class="mb-3"><label class="form-label" for="bun">bun(mg/dL)</label><input value=15.5 class="form-control" type="text" placeholder="bun" name="bun"></div>
                             <div class="mb-3"><label class="form-label" for="FIO2_percent">FIO2_percent(%)</label><input value=0.33 class="form-control" type="text" placeholder="FIO2_percent" name="FIO2_percent"></div>
@@ -168,25 +169,25 @@
         let respiratoryRate=formData.get('respiratoryRate')
         let consciousness= formData.get('consciousness')
         let systolicPressure= formData.get('systolicPressure')
-        let PF_ratio= formData.get('PF_ratio')
-        let Platelet= formData.get('Platelet')
-        let Bilirubin= formData.get('Bilirubin')
+        let lastSOFA= formData.get('lastSOFA')
+        let infusion= formData.get('infusion')
+        let Lactate= formData.get('Lactate')
         let MAP= formData.get('MAP')
         let Dopamine= formData2.get('Dopamine')
         let epinephrine= formData2.get('epinephrine')
         let norepinephrine= formData2.get('norepinephrine')
         let Dobutamine=formData2.get('Dobutamine')
-        let ComaScale= formData3.get('gcs')
-        let Creatinine= formData2.get('Creatinine')
+        let Bilirubin= formData2.get('Bilirubin')
         let urineVolume= formData2.get('urineVolume')
-        let lastSOFA= formData3.get('lastSOFA')
-        let infusion= formData3.get('infusion')
-        let Lactate= formData3.get('Lactate')
+        let respirator=formData2.get('respirator')
+        let PF_ratio= formData3.get('PF_ratio')
+        let Platelet= formData3.get('Platelet')
+        let Creatinine= formData3.get('Creatinine')
+        let ComaScale= formData3.get('gcs')
         let gcs= formData3.get('gcs')
         console.log(formData3.get('gcs'))
         let bun= formData3.get('bun')
         let FIO2_percent= formData3.get('FIO2_percent')
-        let respirator=formData3.get('respirator')
         scoreOfqSOFA = caculateqSOFA(respiratoryRate, consciousness, systolicPressure)
         SOFA = caculateSOFA(PF_ratio, respirator, Platelet, Bilirubin, MAP, Dopamine, epinephrine, norepinephrine, Dobutamine, ComaScale, Creatinine, urineVolume);
         scoreOfSOFA = SOFA[0];

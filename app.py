@@ -222,6 +222,7 @@ def edit():
 
 @app.route('/singlePlot',methods=['get'])
 def get_singlePlot():
+    #print(request.args.get('type'))
     df = pd.read_csv('危險因子分析/Fdata1415.csv')
     df2=pd.read_csv('危險因子分析/Fdata1415.csv')
     df.drop('nf',axis=1,inplace=True)
@@ -230,74 +231,141 @@ def get_singlePlot():
     for i in headers:
         if i not in l:
             df.drop(i,axis=1,inplace=True)
+    
+    if request.args.get('type') =='sepsis':
+        df = pd.read_csv('trainingData/Sepsis_15TB.csv')
+        df2=pd.read_csv('trainingData/Sepsis_15TB.csv')
+        return render_template('analyze_single.html', columns=df.columns,img="",choose="",pvalue=tools.valueCouter.p_value(df2,type='sepsis'))
+   
     return render_template('analyze_single.html', columns=df.columns,img="",choose="",pvalue=tools.valueCouter.p_value(df2))
 @app.route('/singlePlot',methods=['post'])
 def singlePlot():
-    df_ori = pd.read_csv('危險因子分析/Fdata1415.csv')
    # column_headers = list(df_ori.columns)
     max_values=[]
     name_list=[request.form.get('y'),request.form.get('y')]
+    if(request.form.get('type')=='nf'):
+        df_ori = pd.read_csv('危險因子分析/Fdata1415.csv')
+        fig = plt.figure(figsize=(16, 9))
+        
+        ax = fig.subplots(1, 2)
+        # mgr = plt.get_current_fig_manager()
+
+        # 切換至全螢幕模式
+        # mgr.full_screen_toggle()        
+        for index,i in enumerate(name_list):
+            # column_headers=df[i]
+            df=df_ori[df_ori['nf']==index%2]
+            df.sort_values(by=name_list[index])
+            
+
+            sns.boxplot(x='nf', y=i, data=df,ax=ax[index],palette=['#9ee4e8','#0000FF'])
+            #change boxplot color
+            
+            #ax[index].set_xticklabels(['NF', 'Sepsis'])
+
+            #ax[index].tick_params(axis='x', labelleft=False, labelright=True)
+            q1, q2, q3 = df[i].quantile(q=[0.25, 0.5, 0.75])
+            max_val=df[i].max()
+            # 繪製平均值、中位數和四分位數
+            ax[index].axhline(df[i].mean(), color='r', linestyle='--', label='mean')
+            ax[index].annotate("mean: {:.2f}".format(df[i].mean()), xy=(-0.5, df[i].mean()), xytext=(-0.5, df[i].mean()), ha='right', color='red', fontsize=8)
+            # ax[index].axhline(q1, color='g', linestyle='--', label='q1')
+            # ax[index].axhline(q2, color='b', linestyle='--', label='q2')
+            # ax[index].axhline(q3, color='g', linestyle='--', label='q3')
+            ax[index].annotate("25%: {:.2f}".format(q1), xy=(0.5, q1), xytext=(0.65, q1), ha='right', color='green', fontsize=8)
+            ax[index].annotate("50%: {:.2f}".format(q2), xy=(0.5, q2), xytext=(0.65,q2), ha='right', color='blue', fontsize=8)
+            ax[index].annotate("75%: {:.2f}".format(q3), xy=(0.5, q3), xytext=(0.65, q3), ha='right', color='green', fontsize=8)
+            
+            
+                # 將最大值添加到列表中
+            max_values.append(max_val)
+            
+            largest_values = df.nlargest(5, name_list[index])[name_list[index]].tolist()
+            for max_index,max_val in enumerate(largest_values):
+                f=lambda x: 'left' if x else 'right'
+                ax[index].annotate("the {}  : {:.2f}".format(max_index+1,max_val), xy=(0, max_val), xytext=(0, max_val+0.1), ha=f(max_index%2), color='red' , fontsize=8 )
+                ax[index].annotate("the {}  : {:.2f}".format(max_index+1,max_val), xy=(1, max_val), xytext=(1, max_val+0.1), ha=f(max_index%2), color='red', fontsize=8)
+        # plt.tight_layout()
+            ax[index].set_xlabel(name_list[index]+" when nf is "+str(index%2==0))
+            ax[index].set_ylabel("")
+        fig=fig.get_figure()
+        buffer = io.BytesIO()
+        fig.savefig(buffer, format='png')
+        buffer.seek(0)
+        image_png = buffer.getvalue()
+        buffer.close()
+        graphic = base64.b64encode(image_png).decode()
+        l=['sea','wbc','crp','seg','band']
+        headers=list(df.columns)
+        for i in headers:
+            if i not in l:
+                df.drop(i,axis=1,inplace=True)
+        return render_template('analyze_single.html', columns=df.columns,img=graphic,choose=["nf",request.form.get('y')],pvalue=tools.valueCouter.p_value(df_ori))
+    elif(request.form.get('type')=='sepsis'):
+        df_ori=pd.read_csv('trainingData/Sepsis_15TB.csv')
+        fig = plt.figure(figsize=(16, 9))
+        
+        ax = fig.subplots(1, 2)
+        # mgr = plt.get_current_fig_manager()
+
+        # 切換至全螢幕模式
+        # mgr.full_screen_toggle()        
+        for index,i in enumerate(name_list):
+            # column_headers=df[i]
+            df=df_ori[df_ori['sofa_sepsis']==index%2]
+            df.sort_values(by=name_list[index])
+            
+
+            sns.boxplot(x='sofa_sepsis', y=i, data=df,ax=ax[index],palette=['#9ee4e8','#0000FF'])
+            #change boxplot color
+            
+            #ax[index].set_xticklabels(['NF', 'Sepsis'])
+
+            #ax[index].tick_params(axis='x', labelleft=False, labelright=True)
+            q1, q2, q3 = df[i].quantile(q=[0.25, 0.5, 0.75])
+            max_val=df[i].max()
+            # 繪製平均值、中位數和四分位數
+            ax[index].axhline(df[i].mean(), color='r', linestyle='--', label='mean')
+            ax[index].annotate("mean: {:.2f}".format(df[i].mean()), xy=(-0.5, df[i].mean()), xytext=(-0.5, df[i].mean()), ha='right', color='red', fontsize=8)
+            # ax[index].axhline(q1, color='g', linestyle='--', label='q1')
+            # ax[index].axhline(q2, color='b', linestyle='--', label='q2')
+            # ax[index].axhline(q3, color='g', linestyle='--', label='q3')
+            ax[index].annotate("25%: {:.2f}".format(q1), xy=(0.5, q1), xytext=(0.65, q1), ha='right', color='green', fontsize=8)
+            ax[index].annotate("50%: {:.2f}".format(q2), xy=(0.5, q2), xytext=(0.65,q2), ha='right', color='blue', fontsize=8)
+            ax[index].annotate("75%: {:.2f}".format(q3), xy=(0.5, q3), xytext=(0.65, q3), ha='right', color='green', fontsize=8)
+            
+            
+                # 將最大值添加到列表中
+            max_values.append(max_val)
+            
+            largest_values = df.nlargest(5, name_list[index])[name_list[index]].tolist()
+            for max_index,max_val in enumerate(largest_values):
+                f=lambda x: 'left' if x else 'right'
+                ax[index].annotate("the {}  : {:.2f}".format(max_index+1,max_val), xy=(0, max_val), xytext=(0, max_val+0.1), ha=f(max_index%2), color='red' , fontsize=8 )
+                ax[index].annotate("the {}  : {:.2f}".format(max_index+1,max_val), xy=(1, max_val), xytext=(1, max_val+0.1), ha=f(max_index%2), color='red', fontsize=8)
+        # plt.tight_layout()
+            ax[index].set_xlabel(name_list[index]+" when sofa_sepsis is "+str(index%2==1))
+            ax[index].set_ylabel("")
+        fig=fig.get_figure()
+        buffer = io.BytesIO()
+        fig.savefig(buffer, format='png')
+        buffer.seek(0)
+        image_png = buffer.getvalue()
+        buffer.close()
+        graphic = base64.b64encode(image_png).decode()
+        # l=['sea','wbc','crp','seg','band']
+        headers=list(df.columns)
+        # for i in headers:
+        #     if i not in l:
+        #         df.drop(i,axis=1,inplace=True)
+        return render_template('analyze_single.html', columns=df.columns,img=graphic,choose=["sofa_sepsis",request.form.get('y')],pvalue=tools.valueCouter.p_value(df_ori))
     
-    fig = plt.figure(figsize=(16, 9))
-    
-    ax = fig.subplots(1, 2)
-    # mgr = plt.get_current_fig_manager()
-
-    # 切換至全螢幕模式
-    # mgr.full_screen_toggle()        
-    for index,i in enumerate(name_list):
-        # column_headers=df[i]
-        df=df_ori[df_ori['nf']==index%2]
-        df.sort_values(by=name_list[index])
         
-
-        sns.boxplot(x='nf', y=i, data=df,ax=ax[index],palette=['#9ee4e8','#0000FF'])
-        #change boxplot color
-        
-        #ax[index].set_xticklabels(['NF', 'Sepsis'])
-
-        #ax[index].tick_params(axis='x', labelleft=False, labelright=True)
-        q1, q2, q3 = df[i].quantile(q=[0.25, 0.5, 0.75])
-        max_val=df[i].max()
-        # 繪製平均值、中位數和四分位數
-        ax[index].axhline(df[i].mean(), color='r', linestyle='--', label='mean')
-        ax[index].annotate("mean: {:.2f}".format(df[i].mean()), xy=(-0.5, df[i].mean()), xytext=(-0.5, df[i].mean()), ha='right', color='red', fontsize=8)
-        # ax[index].axhline(q1, color='g', linestyle='--', label='q1')
-        # ax[index].axhline(q2, color='b', linestyle='--', label='q2')
-        # ax[index].axhline(q3, color='g', linestyle='--', label='q3')
-        ax[index].annotate("25%: {:.2f}".format(q1), xy=(0.5, q1), xytext=(0.65, q1), ha='right', color='green', fontsize=8)
-        ax[index].annotate("50%: {:.2f}".format(q2), xy=(0.5, q2), xytext=(0.65,q2), ha='right', color='blue', fontsize=8)
-        ax[index].annotate("75%: {:.2f}".format(q3), xy=(0.5, q3), xytext=(0.65, q3), ha='right', color='green', fontsize=8)
-        
-        
-            # 將最大值添加到列表中
-        max_values.append(max_val)
-        
-        largest_values = df.nlargest(5, name_list[index])[name_list[index]].tolist()
-        for max_index,max_val in enumerate(largest_values):
-            f=lambda x: 'left' if x else 'right'
-            ax[index].annotate("the {}  : {:.2f}".format(max_index+1,max_val), xy=(0, max_val), xytext=(0, max_val+0.1), ha=f(max_index%2), color='red' , fontsize=8 )
-            ax[index].annotate("the {}  : {:.2f}".format(max_index+1,max_val), xy=(1, max_val), xytext=(1, max_val+0.1), ha=f(max_index%2), color='red', fontsize=8)
-    # plt.tight_layout()
-        ax[index].set_xlabel(name_list[index]+" when nf is "+str(index%2==0))
-        ax[index].set_ylabel("")
-    fig=fig.get_figure()
-    buffer = io.BytesIO()
-    fig.savefig(buffer, format='png')
-    buffer.seek(0)
-    image_png = buffer.getvalue()
-    buffer.close()
-    graphic = base64.b64encode(image_png).decode()
-    l=['sea','wbc','crp','seg','band']
-    headers=list(df.columns)
-    for i in headers:
-        if i not in l:
-            df.drop(i,axis=1,inplace=True)
-    return render_template('analyze_single.html', columns=df.columns,img=graphic,choose=["nf",request.form.get('y')],pvalue=tools.valueCouter.p_value(df_ori))
-
 @app.route('/plot',methods=['get'])
 def before_plot():
+    
     df = pd.read_csv('危險因子分析/NFdata1415.csv')
+    
     # df.drop('ID',axis=1,inplace=True)
     l=['nf','wbc','crp','seg','band']
     headers=list(df.columns)
@@ -305,9 +373,12 @@ def before_plot():
         if i not in l:
             df.drop(i,axis=1,inplace=True)
     # 傳遞參數到 HTML 畫面
+    if request.args.get('type')=='sepsis':
+        df=pd.read_csv('trainingData/Sepsis_15TB.csv')
     return render_template('analyze_double.html', columns=df.columns,img="",choose="",pvalue=tools.valueCouter.p_value(df))
 @app.route('/plot',methods=['post'])
 def plot():
+    type=request.form.get('type')
     # 從 request 取得使用者選擇的參數
     df = pd.read_csv('危險因子分析/NFdata1415.csv')
     # df.drop('ID',axis=1,inplace=True)
@@ -316,18 +387,29 @@ def plot():
     for i in headers:
         if i not in l:
             df.drop(i,axis=1,inplace=True)
+    if type=='sepsis':
+        df=pd.read_csv('trainingData/Sepsis_15TB.csv')
     x_col = request.form.get('x')
     y_col = request.form.get('y')
     choose=[x_col,y_col]
     # 產生散佈圖
     plot_data = df[[x_col, y_col]].dropna()
     #if nf=1 set to red
-    plot_data['nf']=df['nf']
-    plot_data['nf']=plot_data['nf'].apply(lambda x: 'red' if x else 'green')
-
-    fig = plot_data.plot.scatter(x=x_col, y=y_col,c='nf').get_figure()
     buffer = io.BytesIO()
-    fig.savefig(buffer, format='png')
+    if type=='sepsis':
+        
+        plot_data['sofa_sepsis']=df['sofa_sepsis']
+        plot_data['sofa_sepsis']=plot_data['sofa_sepsis'].apply(lambda x: 'red' if x else 'green')
+        fig = plot_data.plot.scatter(x=x_col, y=y_col,c='sofa_sepsis').get_figure()
+        fig.savefig(buffer, format='png')
+    else:
+        plot_data['nf']=df['nf']
+        plot_data['nf']=plot_data['nf'].apply(lambda x: 'red' if x else 'green')
+        fig = plot_data.plot.scatter(x=x_col, y=y_col,c='nf').get_figure()
+        fig.savefig(buffer, format='png')
+    
+    
+    
     buffer.seek(0)
     image_png = buffer.getvalue()
     buffer.close()
@@ -338,6 +420,7 @@ def plot():
     #         <img src="data:image/png;base64,{}">
     #     </div>
     # '''
+   
     return render_template('analyze_double.html',columns=df.columns,img=graphic,choose=choose,pvalue=tools.valueCouter.p_value(df))
 @app.route('/upload',methods=['GET','POST'])
 def uploadCSV():
@@ -369,5 +452,9 @@ def uploadCSV():
         return render_template("upload.html",success=True)
         # 將檔案內容印出來
     return render_template("upload.html",success=False)
+@app.route('/pvalue',methods=['GET'])
+def pvalue():
+    return render_template('pvalue.html',pvalue=tools.valueCouter.p_value(pd.read_csv('危險因子分析/NFdata1415.csv'))
+                           ,pvalue2=tools.valueCouter.p_value(pd.read_csv('trainingData/Sepsis_15TB.csv'),type='sepsis'))
 if __name__ == '__main__':
     app.run(host="localhost",port=5001,debug=True)
