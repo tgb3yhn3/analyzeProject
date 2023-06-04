@@ -193,13 +193,13 @@ def replaceModel():
     modellist_NF=[
         'NF_decisionTree.pickle',
         'NF_randomForest.pickle',
-        'NF_logisticRegression.pickle',
+        'NF_logisticregression.pickle',
         'NF_supportVectorMachine.pickle',
         'NF_neuralNetWork.h5'
     ]
     modellist_Sepsis=[
         'sepsis_randomForest.pickle',
-        'sepsis_logisticRegression.pickle',
+        'sepsis_logisticregression.pickle',
         'sepsis_supportVectorMachine.pickle'
     ]
     if modelType=="NF":
