@@ -95,23 +95,32 @@
                             <input id='file' class='form-control form-control-lg' type="file" name="file">
 
                         </div>
-                        <div class="form-floating col-md-2 mb-3 page1">
-                            <input id="fold" class="form-control" type="number" value="1" min="1" name="fold">
-                            <label class="form-label" for="fold">
-                                Cross-validation Folds
-                            </label>
+                        <div class="form-floating col-md-1 mb-3 page1">
+                            <ul class="nav nav-pills d-flex justify-content-center">
+                                <li class="nav-item">
+                                    <button class="nav-link active" id="flexRadioDefault1" type="button">Split</button>
+                                </li>
+                                <li class="nav-item">
+                                    <button class="nav-link " id="flexRadioDefault2" aria-current="page"type="button">Fold</button>
+                                </li>
+                                
+                                
+                            </ul>
+                           
+                            
                         </div>
-                        <div class="form-floating col-md-2 mb-3 page1">
+                        <div class="form-floating col-md-3 mb-3 page1">
+                            <input id="fold" class="form-control" type="number" value="1" min="1" name="fold">
+                            <label id ='fold-label'class="form-label" for="fold">
+                                 Folds Times:
+                            </label>
                             <input id="split" class="form-control" type="range" value="80" min="0" max="100"
                                 name="split">
-                            <label class="form-label" for="split" id="split-value">
-                                Percentage split 0%
+                            <label id ='split-label' class="form-label" for="split" id="split-value">
+                                 split 80%
                             </label>
                             <script>
-                                $("#split").on("input", function () {
-                                    $("#split").val(this.value)
-                                    $("#split-value").text("Percentage split " + this.value + "%")
-                                });
+                                
                             </script>
 
                         </div>
@@ -147,8 +156,9 @@
                     <label id="mean">Mean </label>
                     <label id="std">Std </label>
                     <label id="miss">Missing </label>
+                    <label id="dataType">dataType </label>
                     <canvas id="chart"></canvas>
-                    <script src="static/Javascript/drawChart.js"></script>
+                    <script src="static/JavaScript/drawChart.js"></script>
                 </div>
                 
                 <form class="page1 mb-3 page3" action="/model" method="GET">
@@ -189,13 +199,16 @@
                     </div>
                 </form>
                 {% for model in models %}
-                <div class="row text-start justify-content-center  align-items-center  ">
+                <div class=" row text-start justify-content-center  align-items-center  ">
 
                     <div class="col-8 col-md-8 col-lg-8 text-start">
                         <div class="card">
                             <div class="card-body ">
                                 <h4 class="card-title ">{{model[5]}} Version:{{model[0]}} </h4>
                                 <div class="page1">Split :{{model[7]}} Fold :{{model[6]}}</div>
+                                <script>
+
+                                </script>
                                 <h6 class="text-muted card-subtitle mb-2">UpdateTime {{model[3]}}</h6>
                                 <p class="card-text page1">
                                     {% if modelEfficacy[loop.index0] != None %}
@@ -241,6 +254,41 @@
 <script>
 
     $(document).ready(function () {
+        $("#split").on("input", function () {
+            console.log("change",this.value)
+            $("#split").val(this.value)
+            document.getElementById("split-label").innerHTML = "Split : "+this.value+"%"
+        })
+        
+        $('#fold').hide()
+        $('#fold-label').hide()
+        $('#flexRadioDefault1').click(()=>{
+            
+               $('#flexRadioDefault1').addClass('active')
+               $('#flexRadioDefault2').removeClass('active')
+
+               $('#fold').hide()
+               $('#fold-label').hide()
+               $('#split').show()
+               $('#split-label').show()
+                $("#fold").val(1)
+                
+            
+        
+        })
+        $('#flexRadioDefault2').click(()=>{
+            
+            $('#flexRadioDefault2').addClass('active')
+               $('#flexRadioDefault1').removeClass('active')
+                
+            
+                $('#split').hide()
+                $('#split-label').hide()
+                $('#fold').show()
+                $('#fold-label').show()
+                $("#split").val(80)
+                $("#split").trigger("input")
+    })
         $('.page2').hide()
         $('.page1').hide()
         $('#submit').click(()=>{

@@ -78,6 +78,7 @@ function processData(csv) {
     var calData=[]
     // Process data for selected attribute
     // console.log(lines)
+    var dataType='Number'
     for (var i = 1; i < lines.length; i++) {
         var values = lines[i].split(',');
         var value = (values[headers.indexOf(attribute)]);
@@ -87,12 +88,21 @@ function processData(csv) {
         if(value===undefined||value===""||value===" "){
             console.log(value,i)
             missing+=1
+            continue;
             }
         // Ignore NaN values
         if (isNaN(value)) {
-            
+            dataType='String'
+            counts[0]++;
             continue;
         }
+        //check is float
+        // function isFloat(n){
+        //     return Number(n) === n && n % 1 !== 0;
+        // }
+        // if(isFloat(value)){
+        //      dataType='Float'
+        // }
         value=Number(value)
         if (!counts[value]) {
             counts[value] = 1;
@@ -111,6 +121,7 @@ function processData(csv) {
         document.getElementById("max").innerHTML = "Max : " + calData[calData.length - 1];
         document.getElementById("mean").innerHTML = "Mean : " + mean(calData).toFixed(2);
         document.getElementById("std").innerHTML = "Std : " +std(calData).toFixed(2);
+        document.getElementById("dataType").innerHTML = "Type : " + dataType;
     // Convert counts object to array
     for (var key in counts) {
         if (counts.hasOwnProperty(key)) {
