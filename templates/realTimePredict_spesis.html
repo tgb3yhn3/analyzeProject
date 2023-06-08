@@ -179,7 +179,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel">預測結果</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -193,9 +193,9 @@
                         <div class="card">
                             <!-- <div id='choice2-1_s'class="card-img-top w-100 d-block" "> -->
                             <div class="card-body">
-                                <h4 class="card-title" id="rf" style="text-align: center;">信心度</h4>
-                                <h4 class="card-title" id='choice2-2_s' style="text-align: center;"></h4>
+                                <h4 class="card-title" id='choice2-2_s' style="text-align: center;">randomForest</h4>
                                 <div id="rf_plot" class="col img-fluid "></div>
+                                <h4 class="card-title" id="rf" style="text-align: center;">信心度</h4>
     
     
                             </div>
@@ -206,9 +206,10 @@
                             <!-- <div id='choice3-1_s'class="card-img-top w-100 d-block" > -->
     
                             <div class="card-body">
-                                <h4 class="card-title" id="lr" style="text-align: center;">信心度</h4>
-                                <h4 class="card-title" id="choice3-2_s" style="text-align: center;"></h4>
+                                
+                                <h4 class="card-title" id="choice3-2_s" style="text-align: center;">logisticRegression</h4>
                                 <div id="lr_plot" class="col img-fluid "></div>
+                                <h4 class="card-title" id="lr" style="text-align: center;">信心度</h4>
                             </div>
                         </div>
                     </div>
@@ -219,9 +220,9 @@
     
     
                             <div class="card-body">
-                                <h4 class="card-title" id="svm" style="text-align: center;">信心度</h4>
-                                <h4 class="card-title" id="choice4-2_s" style="text-align: center;"></h4>
+                                <h4 class="card-title" id="choice4-2_s" style="text-align: center;">supportVectorMachine</h4>
                                 <div id="svm_plot" class="col img-fluid "></div>
+                                <h4 class="card-title" id="svm" style="text-align: center;">信心度</h4>
     
                             </div>
                         </div>
@@ -231,9 +232,9 @@
                         <div class="card">
                             <!-- <div id='choice2-1_s'class="card-img-top w-100 d-block" "> -->
                             <div class="card-body">
-                                <h4 class="card-title" id="total_prob" style="text-align: center;">信心度</h4>
-                                <!-- <h4 class="card-title" id='total' style="text-align: center;"></h4> -->
+                                <h4 class="card-title" id='total' style="text-align: center;">Total</h4>
                                 <div id="total_plot" class="col img-fluid "></div>
+                                <h4 class="card-title" id="total_prob" style="text-align: center;">信心度</h4>
     
     
                             </div>
@@ -243,8 +244,8 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
         </div>
       </div>
     </div>
@@ -416,7 +417,7 @@
                         show: true,
                         label: {
                             show: true,
-                            radius: 0,
+                            radius: 0.5,
                             formatter: function (label, series) {
                                 return '<div style="font-size:14pt;color:black;"><u>' +
                                     label + ' : ' +

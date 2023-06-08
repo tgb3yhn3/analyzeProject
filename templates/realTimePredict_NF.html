@@ -11,6 +11,15 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="shortcut icon" href="./static/images/ccass.ico" type="image/x-icon">
+    <style>
+         .plot {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            font-size: 14px;
+            line-height: 1.2em;
+            overflow: hidden;
+        }
+    </style>
 </head>
 
 <body>
@@ -47,63 +56,102 @@
                                         <option value="1">有接觸海水</option>
                                     </optgroup>
                                 </select></div>
-                            <div class="mb-3"><label class="form-label" for="WBC">WBC(10*3/μL)</label><input class="form-control" type="text" name="wbc" placeholder="WBC"></div>
-                            <div class="mb-3"><label class="form-label" for="CRP">CRP(mg/dL)</label><input class="form-control" type="text" name="crp" placeholder="CRP"></div>
-                            <div class="mb-3"><label class="form-label" for="SEG">SEG(%)</label><input class="form-control" type="text"  name="seg"placeholder="seg"></div>
-                            <div class="mb-3"><label class="form-label" for="Band">Band(%)</label><input class="form-control" type="text"  name="band" placeholder="Band"></div>
-                            <div class="mb-3"><button class="btn btn-dark shadow" type="button" onclick="doPredict()">Start Predict</button></div>
+                            <div class="mb-3"><label class="form-label" for="WBC">WBC(10*3/μL)</label><input class="form-control" type="text" name="wbc" placeholder="WBC"value=12400></div>
+                            <div class="mb-3"><label class="form-label" for="CRP">CRP(mg/dL)</label><input class="form-control" type="text" name="crp" placeholder="CRP"value=120></div>
+                            <div class="mb-3"><label class="form-label" for="SEG">SEG(%)</label><input class="form-control" type="text"  name="seg"placeholder="seg"value=80></div>
+                            <div class="mb-3"><label class="form-label" for="Band">Band(%)</label><input class="form-control" type="text"  name="band" placeholder="Band"value=8></div>
+                            <div class="mb-3"><button class="btn btn-dark shadow" type="button" onclick="doPredict()"data-bs-toggle="modal" data-bs-target="#exampleModal">Start Predict</button></div>
                         </form>
                     </div>
                 </div>
                 <div class="card"></div>
             </div>
+            <!-- Modal -->
+  <div class="modal modal-xl fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">預測結果</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
             <div class="col text-center">
                 <div class="row">
                     <div class="col">
                         <div class="card-group">
-                            <div class="card"><img id="choice1-1" class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image.png">
+                            <div class="card">
+                                <!-- <img id="choice1-1" class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image.png"> -->
                                 <div class="card-body text-center">
+                                    <h4>decisionTree</h4>
+                                    <div class="plot" id="DT_plot">
+                                        
+                                    </div>
                                     <h3 class="card-title" id="DT">信心度</h3>
-                                    <h3 class="card-title" id="choice1-2"></h3>
                                 </div>
                             </div>
-                            <div class="card"><img id="choice2-1" class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-1.png">
+                            <div class="card">
+                                <!-- <img id="choice2-1" class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-1.png"> -->
                                 <div class="card-body text-center">
+                                    <h4>randomForest</h4>
+                                    <div class="plot" id="RF_plot">
+                                        
+                                    </div>
                                     <h3 class="card-title" id="RF">信心度</h3>
-                                    <h3 class="card-title" id="choice2-2"></h3>
+ 
                                 </div>
                             </div>
-                            <div  class="card"><img id="choice3-1"class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-2.png">
+                            <div  class="card">
+                                <!-- <img id="choice3-1"class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-2.png"> -->
                                 <div class="card-body text-center">
+                                    <h4>logisticRegression</h4>
+                                    <div class="plot" id="LR_plot">
+                                    </div>
                                     <h3 class="card-title" id="LR">信心度</h3>
-                                    <h3 class="card-title" id="choice3-2"></h3>
+
                                 </div>
                             </div>
                         </div>
                         <div class="card-group">
-                            <div class="card"><img id="choice4-1" class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-6.png">
+                            <div class="card">
+                                <!-- <img id="choice4-1" class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-6.png"> -->
                                 <div class="card-body text-center">
+                                    <h4>neuralNetwork</h4>
+                                    <div class="plot" id="NN_plot">
+                                    </div>
                                     <h3 class="card-title" id="NN">信心度</h3>
-                                    <h3 class="card-title" id="choice4-2"></h3>
+
                                 </div>
                             </div>
-                            <div class="card"><img id="choice5-1" class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-7.png">
+                            <div class="card">
+                                <!-- <img id="choice5-1" class="card-img-top w-100 d-block" src="static/assets/img/clipboard-image-7.png"> -->
                                 <div class="card-body text-center">
-                                    <h3 class="card-title" id="SVC">信心度</h3>
-                                    <h3 class="card-title" id="choice5-2"></h3>
+                                    <h4>supportVectorMachine</h4>
+                                    <div class="plot" id="SVM_plot">
+                                    </div>
+                                    <h3 class="card-title" id="SVM">信心度</h3>
+
                                 </div>
                             </div>
-                            <div class="card"></div>
+
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="blockChart" style="margin-top: 4vmin;">
-            <div>
-                <canvas id="radarChart"></canvas>
+            <div class="blockChart" style="margin-top: 4vmin;">
+                <div>
+                    <canvas id="radarChart"></canvas>
+                </div>
             </div>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+        </div>
+        
     </div>
     <script>
         var sea
@@ -118,7 +166,15 @@
     
     <script src="static/JavaScript/connectAPI.js"></script>
     <script src="static/JavaScript/NF-radar.js"></script>
-    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <!-- Flot JS 主库 -->
+    <script src="https://cdn.jsdelivr.net/npm/flot@0.8.3/jquery.flot.js"></script>
+
+    <!-- Flot JS 常用插件 -->
+
+    <script src="https://cdn.jsdelivr.net/npm/flot@0.8.3/jquery.flot.pie.js"></script>
+
     <script>
      
      
@@ -183,14 +239,7 @@ var score_index = ["decisionTree_proba", "randomForest_proba", 'logisticregressi
             }
            
                 //document.getElementById(score_index[i]).innerHTML = "信心度 " + data2[score_index[i]] + "%"
-                if (Yes_No) {
-                    document.getElementById("choice" + (i + 1) + "-1").style.border = "medium solid red"
-                    document.getElementById("choice" + (i + 1) + "-2").innerHTML = "判定為 NF";
-                }
-                else {
-                    document.getElementById("choice" + (i + 1) + "-1").style.border = "medium solid green"
-                    document.getElementById("choice" + (i + 1) + "-2").innerHTML = "判定為 non-NF";
-                }
+                
             
             
         }
@@ -198,14 +247,53 @@ var score_index = ["decisionTree_proba", "randomForest_proba", 'logisticregressi
                 document.getElementById("RF").innerHTML="信心度 "+res.randomForest_proba+" %"
                 document.getElementById("LR").innerHTML="信心度 "+res.logisticregression_proba+" %"
                 document.getElementById("NN").innerHTML="信心度 "+res.neuralNetwork_proba+" %"
-                document.getElementById("SVC").innerHTML="信心度 "+res.supportVectorMachine_proba+" %"
+                document.getElementById("SVM").innerHTML="信心度 "+res.supportVectorMachine_proba+" %"
                 console.log(res)
                 // debugger
+                let proba=[res.decisionTree_proba,res.randomForest_proba,res.logisticregression_proba,res.neuralNetwork_proba,res.supportVectorMachine_proba]
+                plot_list=["DT_plot","RF_plot","LR_plot","NN_plot","SVM_plot"]
+                for (let i = 0; i < proba.length; i++) {
+                    if(data2[model_index[i]] == 1){
+                        makeDonut(plot_list[i], [{ label: "sepsis", data: proba[i], color: "#FF0000" }, { label: "non-sepsis", data: 100 - proba[i], color: "#00FF00" }])
+
+                    }else{
+                        makeDonut(plot_list[i], [{ label: "sepsis", data: 100-proba[i], color: "#FF0000" }, { label: "non-sepsis", data: proba[i], color: "#00FF00" }])
+                    }
+                }
                 radar_test(wbc,crp,seg,band,sea)
+
             })
         }
         }
         
+    </script>
+    <script>
+        function makeDonut(id, data) {
+
+$.plot('#' + id, data, {
+    legend: {
+        show: false
+    },
+    series: {
+        pie: {
+            innerRadius: 0.5,
+            show: true,
+            label: {
+                show: true,
+                radius: 0.5,
+                formatter: function (label, series) {
+                    return '<div style="font-size:14pt;color:black;"><u>' +
+                        label + ' : ' +
+                        Math.round(series.percent) +
+                        '%</u></div>';
+                },
+
+            }
+
+        }
+    }
+});
+}
     </script>
 </body>
 
