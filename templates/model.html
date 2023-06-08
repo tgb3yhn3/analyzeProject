@@ -77,7 +77,7 @@
                 </div>
 
                 <h1 class="mb-3">Version NF:{{nowUse[1]}} Sepsis:{{nowUse[2]}}</h1>
-                <form action="/model" method="POST" enctype="multipart/form-data">
+                <form action="/model" method="POST" enctype="multipart/form-data"id='form'>
                     <div class="row">
 
                         <div class="form-floating col-md-4 mb-3">
@@ -138,19 +138,62 @@
                         <div class="col-md-4 mb-3">
                             <button class="btn btn-dark btn-md" type="submit" id="submit">Upload DataSet</button>
                         </div>
+                        <div class="col-md-4 mb-3 page2">
+                           
+                        </div>
                     </div>
 
                     
                 </form>
                 <hr>
                 <div class="page2 mb-3">
-                    <div class=" form-floating mb-3">
-                        <select class='form-select'id="attributeSelect"></select>
-                        <label class='form-label'for="attributeSelect">選擇Attribute:
+                    <div class=" form-floating mb-3  input-group">
+                       
                         
-                    </label>
-                    
+                        
+                        <select class='form-select'id="attributeSelect"></select>
+                        <label class='form-label'for="attributeSelect">選擇Attribute:</label>
+                        <button class="btn btn-outline-dark "id='showinfo' data-bs-toggle="modal" data-bs-target="#exampleModal">Show More Info</button>
+                        <!-- Button trigger modal -->
                     </div>
+  <!-- Modal -->
+  <div class="modal modal-xl fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" >
+            <div class="row">
+                <div class="col-2"style="border-right:1pt solid;">
+                    Name
+                </div>
+                <div class="col-4" id='get'style="border-right:1pt solid;">
+                    get
+                </div>
+                <div class="col-4" id='non-get'style="border-right:1pt solid;">
+                    Non-get
+                </div>
+                <div class="col-2"style="border-right:1pt solid;">
+                    P-value
+                </div>
+
+            </div>
+          <div id="info"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+                        
+                        
+                    
+                    
+                    
                     <label id="min">Min </label>
                     <label id="max">Max </label>
                     <label id="mean">Mean </label>
@@ -201,7 +244,7 @@
                 {% for model in models %}
                 <div class=" row text-start justify-content-center  align-items-center  ">
 
-                    <div class="col-8 col-md-8 col-lg-8 text-start">
+                    <div class="col-8 col-md-8 col-lg-8 text-start page1 page3">
                         <div class="card">
                             <div class="card-body ">
                                 <h4 class="card-title ">{{model[5]}} Version:{{model[0]}} </h4>
@@ -210,11 +253,11 @@
 
                                 </script>
                                 <h6 class="text-muted card-subtitle mb-2">UpdateTime {{model[3]}}</h6>
-                                <p class="card-text page1">
+                                <p class="card-text page1 page3">
                                     {% if modelEfficacy[loop.index0] != None %}
                                     {% for key,value in modelEfficacy[loop.index0].items() %}
                                     {% if value!=None %}
-                                <div class="row page1" >
+                                <div class="row page1 page3" >
 
                                     <div class="row "><h3>{{key}}</h3></div>
                                     {% for inKey,inValue in value.items()%}
@@ -260,6 +303,60 @@
             document.getElementById("split-label").innerHTML = "Split : "+this.value+"%"
         })
         
+            $('#showinfo').click(function() {
+                
+                var formData = new FormData($('#form')[0]);
+                
+                $.ajax({
+                    url: '/pvalue',
+                    type: 'POST',
+                    data: formData,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+
+                        console.log(response)
+                        var typ=response[0]
+                        if(typ){
+                            document.getElementById('get').innerText='NF'
+                            document.getElementById('non-get').innerText='non-NF'
+
+                            
+                        }else{
+                            document.getElementById('get').innerText='Sepsis'
+                            document.getElementById('non-get').innerText='non-Sepsis'
+                        }
+                        response=response[1]
+                        target=document.getElementById("info")
+                        html="<hr>"
+                        for (let i =0;i<response.length;i++){
+                            html+="<div class='row'>"
+                            for(let j=0;j<response[i].length;j++){
+                                if(j==2 ||j==4){
+                                    html+='<div class="col" style="text-align:left;border-right:1pt solid;">('+response[i][j]+'%)</div>'
+
+                                }else if(j==0){
+
+                                    html+='<div class="col" style="border-right:1pt solid;">'+response[i][j]+'</div>'
+                                }else{
+                                    html+='<div class="col" >'+response[i][j]+'</div>'
+                                }
+
+                            }
+                            html+="</div>"
+                        }
+                        target.innerHTML=html
+                        
+                    },
+                    error: function() {
+                        alert('An error occurred while processing the file.');
+                    }
+                });
+                return false;
+            });
+        
         $('#fold').hide()
         $('#fold-label').hide()
         $('#flexRadioDefault1').click(()=>{
@@ -291,6 +388,7 @@
     })
         $('.page2').hide()
         $('.page1').hide()
+        $('.page3').show()
         $('#submit').click(()=>{
             
                 $('.loading-wrapper').show()
@@ -323,6 +421,7 @@
             $('#page3-click').removeClass('active')
             $('#page2-click').addClass('active')
             $('.page1').hide()
+            $('.page3').hide()
             $('.page2').show()
         })
         $('#page3-click').click(function(){
@@ -331,6 +430,7 @@
             $('#page3-click').addClass('active')
             
             $('.page1').hide()
+            $('.page2').hide()
             $('.page3').show()
         })
         //ajax to select model
