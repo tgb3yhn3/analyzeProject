@@ -211,7 +211,7 @@ def replaceModel():
         modellist[modellist.index(model)]=model.format(modelVersion)
     #check if model file exist
     for model in modellist:
-        if not os.path.exists('/app/modelData/'+str(modelVersion)+"_"+model):
+        if not os.path.exists('modelData/'+str(modelVersion)+"_"+model):
             writeLog('model file not exist ' +str(modelVersion)+"_"+model)
             print('model file not exist ' +str(modelVersion)+"_"+model)
             print(os.path.dirname(os.path.realpath(__file__)))
@@ -220,7 +220,7 @@ def replaceModel():
 
     #copy model file at static/model
     for model in modellist:
-        shutil.copyfile('/app/modelData/'+str(modelVersion)+"_"+model,'/app/static/model/'+model)
+        shutil.copyfile('modelData/'+str(modelVersion)+"_"+model,'static/model/'+model)
         
 
        
@@ -258,7 +258,7 @@ def updateVersion(modelVersion,modelType="NF"):
         modelVersionNF=cursor.fetchone()
         if modelVersionNF==None:
             modelVersionNF=[""]
-        cursor.execute("insert into nowUseModel (modelVersionNF,modelVersionSepsis,updateDate) values (?,?,?)",(modelVersionNF[0],modelVersion,datetime.datetime.now().strftime("%Y%m%d%H%M%S")))    
+        cursor.execute("insert into nowUseModel (modelVersionNF,modelVersionSepsis,updateDate) values (?,?,?)",(modelVersionNF[0],modelVersion,(datetime.datetime.now()+datetime.timedelta(hours=8)).strftime("%Y%m%d%H%M%S")))    
     #check if insert success
     conn.commit()
     return True

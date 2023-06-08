@@ -452,9 +452,28 @@ def uploadCSV():
         return render_template("upload.html",success=True)
         # 將檔案內容印出來
     return render_template("upload.html",success=False)
-@app.route('/pvalue',methods=['GET'])
+@app.route('/pvalue',methods=['GET','POST'])
 def pvalue():
-    return render_template('pvalue.html',pvalue=tools.valueCouter.p_value(pd.read_csv('危險因子分析/NFdata1415.csv'))
+    if request.method=='GET':
+        return render_template('pvalue.html',pvalue=tools.valueCouter.p_value(pd.read_csv('危險因子分析/NFdata1415.csv'))
                            ,pvalue2=tools.valueCouter.p_value(pd.read_csv('trainingData/Sepsis_15TB.csv'),type='sepsis'))
+    elif request.method=='POST':
+        #read file from post
+        file = request.files['file']
+
+        df=pd.read_csv(file,encoding='utf-8-sig')
+        head=list( df.columns)
+        pValue=tools.valueCouter.pure_pvalue(df)
+        getDiease=tools.valueCouter.countGetDiease(df)
+        #merge two array
+        typ='nf'in head
+        
+        for i in range(len(head)):
+            head[i]=[head[i]]
+            head[i].extend(getDiease[i])
+            head[i].extend([pValue[i]])
+        #caculate pvalue mean std and return as json
+        return jsonify([typ,head])
+
 if __name__ == '__main__':
     app.run(host="localhost",port=5001,debug=True)
