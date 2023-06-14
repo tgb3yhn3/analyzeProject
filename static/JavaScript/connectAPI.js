@@ -1,5 +1,5 @@
 /*
-https://fhir2-dm5wodoipq-de.a.run.app/patientlist
+https://fhir2-dm5wodoipq-de.a.run.app/
 */
 function getPatient(token) {
   return new Promise((resolve, reject) => {
@@ -98,7 +98,7 @@ function getObservationByCode(token, id, code) {
 
 function getModelResult_NF(sea, wbc, crp, seg, band) {
   return new Promise((resolve, reject) => {
-    var dataUrl = "https://fhir2-dm5wodoipq-de.a.run.app/patientlistGET/predict/NF";
+    var dataUrl = "https://fhir2-dm5wodoipq-de.a.run.app/GET/predict/NF";
     var xhr = new XMLHttpRequest();
     xhr.open('POST', dataUrl, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -124,7 +124,7 @@ function getModelResult_sepsis(gcs, meds_ams15b, meds_plt150b, sofa_res, sofa_ne
   sofa_coag, sofa_renal, bun, cre, plt, FIO2_percent, PF_ratio, fio2_per, fio2_cb) {
     console.log(gcs)
   return new Promise((resolve, reject) => {
-    var dataUrl = "https://fhir2-dm5wodoipq-de.a.run.app/patientlistGET/predict/sepsis";
+    var dataUrl = "https://fhir2-dm5wodoipq-de.a.run.app/GET/predict/sepsis";
     var xhr = new XMLHttpRequest();
     xhr.open('POST', dataUrl, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -145,7 +145,7 @@ function getModelResult_sepsis(gcs, meds_ams15b, meds_plt150b, sofa_res, sofa_ne
 
 function getToken_fhir() {
   return new Promise((resolve, reject) => {
-    var dataUrl = "https://fhir2-dm5wodoipq-de.a.run.app/patientlistGET/token_fhir";
+    var dataUrl = "https://fhir2-dm5wodoipq-de.a.run.app/GET/token_fhir";
     var xhr = new XMLHttpRequest();
     xhr.open('GET', dataUrl, true);
     xhr.send();

@@ -503,11 +503,11 @@ function sheet() {
 
 //返回至病人資料頁
 function back_click(element) {
-    window.location.replace('https://fhir2-dm5wodoipq-de.a.run.app/patientlistsepsischoice?id=' + id);
+    window.location.replace('https://fhir2-dm5wodoipq-de.a.run.app/sepsischoice?id=' + id);
 }
 
 function backlist(element) {
-    window.location.replace('https://fhir2-dm5wodoipq-de.a.run.app/patientlistpatientlist');
+    window.location.replace('https://fhir2-dm5wodoipq-de.a.run.app/patientlist');
 }
 
 get_data();

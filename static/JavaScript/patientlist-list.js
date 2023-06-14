@@ -91,7 +91,7 @@ function list_update() {
 
 function create_href() {
 	for (var i = 0; i < arr_id.length; i++) {
-		href.push('https://fhir2-dm5wodoipq-de.a.run.app/patientlistpatientprofile?id=' + arr_id[i]);
+		href.push('https://fhir2-dm5wodoipq-de.a.run.app/patientprofile?id=' + arr_id[i]);
 		document.getElementById('op' + i).setAttribute('value', href[i]);
 		document.getElementById('op' + i).setAttribute('onclick', 'window.location.replace("' + href[i] + '")');
 		// document.getElementById('op' + i).onclick = function (event) {

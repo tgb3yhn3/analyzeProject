@@ -102,11 +102,11 @@ function calculateresult(band, sea, seg, crp) {          //計算結果
     }
 }
 function back_click(element) {
-    window.location.replace('https://fhir2-dm5wodoipq-de.a.run.app/patientlistNFchoice?id=' + id);
+    window.location.replace('https://fhir2-dm5wodoipq-de.a.run.app/NFchoice?id=' + id);
 }
 
 function backlist(element) {
-    window.location.replace('https://fhir2-dm5wodoipq-de.a.run.app/patientlistpatientlist');
+    window.location.replace('https://fhir2-dm5wodoipq-de.a.run.app/patientlist');
 }
 
 function show() {
@@ -123,7 +123,7 @@ function show() {
 }
 
 function detail(element) {
-    window.open('https://fhir2-dm5wodoipq-de.a.run.app/patientlistNFbodyvalue' + '?sea=' + sea + '&wbc=' + wbc + '&crp=' + crp + '&seg=' + seg + '&band=' + band)
+    window.open('https://fhir2-dm5wodoipq-de.a.run.app/NFbodyvalue' + '?sea=' + sea + '&wbc=' + wbc + '&crp=' + crp + '&seg=' + seg + '&band=' + band)
 }
 
 function sheet() {
