@@ -27,7 +27,7 @@ db = client.personalist
 collection = db.user
 
 # sercet_key = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for x in range(10))
-sercet_key = 'u6IaMSFpafX_LVXCJZekenhIZ3KV9Ra1JA5vlDCkj'
+sercet_key = 'AIzaSyB7KOTyKTYdrHvQIOsptodKdWgcYxtilQk'
 UPLOAD_FOLDER='/uploadFile'
 # app setting
 app = Flask(__name__)
