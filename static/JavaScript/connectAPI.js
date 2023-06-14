@@ -1,6 +1,5 @@
 /*
-https://analyzeproject-xrttnigg7q-de.a.run.app
-https://analyzeproject-xrttnigg7q-de.a.run.app
+https://fhir-dm5wodoipq-de.a.run.app
 */
 function getPatient(token) {
   return new Promise((resolve, reject) => {
