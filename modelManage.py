@@ -214,6 +214,8 @@ def replaceModel():
         if not os.path.exists('modelData/'+str(modelVersion)+"_"+model):
             writeLog('model file not exist ' +str(modelVersion)+"_"+model)
             print('model file not exist ' +str(modelVersion)+"_"+model)
+            print(os.path.dirname(os.path.realpath(__file__)))
+            print(os.getcwd())
             return Response(status="400")
 
     #copy model file at static/model

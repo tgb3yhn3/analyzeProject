@@ -91,7 +91,7 @@ function list_update() {
 
 function create_href() {
 	for (var i = 0; i < arr_id.length; i++) {
-		href.push('http://localhost:5001/patientprofile?id=' + arr_id[i]);
+		href.push('https://fhir-dm5wodoipq-de.a.run.app/patientprofile?id=' + arr_id[i]);
 		document.getElementById('op' + i).setAttribute('value', href[i]);
 		document.getElementById('op' + i).setAttribute('onclick', 'window.location.replace("' + href[i] + '")');
 		// document.getElementById('op' + i).onclick = function (event) {
@@ -109,7 +109,7 @@ async function add_data(data, isPatient = true) {
 	});
 
 	//開始PUT
-	let url = "https://healthcare.googleapis.com/v1beta1/projects/crack-will-380312/locations/asia-east1/datasets/test2/fhirStores/test2/fhir/" + (isPatient ? "Patient" : "Observation");
+	let url = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/fhir/" + (isPatient ? "Patient" : "Observation");
 	const headers = new Headers({
 		"Content-Type": "application/fhir+json",
 		"Authorization": "Bearer " + token,

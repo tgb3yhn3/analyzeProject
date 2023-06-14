@@ -42,10 +42,10 @@ function sure_click(element) {
 	else {
 		sea = 0;
 	}
-	window.location.replace('http://localhost:5001/NF?id=' + id + "&method=" + result + "&sea=" + sea);
+	window.location.replace('https://fhir-dm5wodoipq-de.a.run.app/NF?id=' + id + "&method=" + result + "&sea=" + sea);
 }
 
 //返回至病人資料頁
 function back_click(element) {
-	window.location.replace('http://localhost:5001/patientprofile?id=' + id);
+	window.location.replace('https://fhir-dm5wodoipq-de.a.run.app/patientprofile?id=' + id);
 }
