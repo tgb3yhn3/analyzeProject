@@ -310,7 +310,7 @@ async function add_data(data, isPatient = true) {
     });
 
     //開始PUT
-    let url = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/fhir/" + (isPatient ? "Patient" : "Observation");
+    let url = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/" + (isPatient ? "Patient" : "Observation");
     const headers = new Headers({
         "Content-Type": "application/fhir+json",
         "Authorization": "Bearer " + token,

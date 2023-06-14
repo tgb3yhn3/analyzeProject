@@ -3,7 +3,7 @@ http://34.81.193.154/
 */
 function getPatient(token) {
   return new Promise((resolve, reject) => {
-    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/fhir/Patient";
+    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/Patient";
     var xhr = new XMLHttpRequest(); // XMLHttpRequest物件(以此物件的方法進行資料請求)
     xhr.open('GET', dataUrl, true); // 以GET方法開啟一個請求 //open('Method',API的URL,預設值為true非同步進行)
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
@@ -19,7 +19,7 @@ function getPatient(token) {
 
 function getPatientById(token, id) {
   return new Promise((resolve, reject) => {
-    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/fhir/Patient/" + id;
+    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/Patient/" + id;
     var xhr = new XMLHttpRequest(); // XMLHttpRequest物件(以此物件的方法進行資料請求)
     xhr.open('GET', dataUrl, true); // 以GET方法開啟一個請求 //open('Method',API的URL,預設值為true非同步進行)
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
@@ -35,7 +35,7 @@ function getPatientById(token, id) {
 
 function getHeightById(token, id) {
   return new Promise((resolve, reject) => {
-    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/fhir/Observation?subject=" + id + "&code=http://loinc.org|8302-2" + "&_sort=-date";
+    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/Observation?subject=" + id + "&code=http://loinc.org|8302-2" + "&_sort=-date";
     var xhr = new XMLHttpRequest();
     xhr.open('GET', dataUrl, true);
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
@@ -51,7 +51,7 @@ function getHeightById(token, id) {
 
 function getWeightById(token, id) {
   return new Promise((resolve, reject) => {
-    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/fhir/Observation?subject=" + id + "&code=http://loinc.org|29463-7" + "&_sort=-date";
+    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/Observation?subject=" + id + "&code=http://loinc.org|29463-7" + "&_sort=-date";
     var xhr = new XMLHttpRequest();
     xhr.open('GET', dataUrl, true);
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
@@ -66,7 +66,7 @@ function getWeightById(token, id) {
 
 function getObservationById(token, id) {
   return new Promise((resolve, reject) => {
-    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/fhir/Observation?subject=Patient/" + id+"&_count=500";
+    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/Observation?subject=Patient/" + id+"&_count=500";
     var xhr = new XMLHttpRequest();
     xhr.open('GET', dataUrl, true);
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
@@ -83,7 +83,7 @@ function getObservationById(token, id) {
 
 function getObservationByCode(token, id, code) {
   return new Promise((resolve, reject) => {
-    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/fhir/Observation?subject=" + id + "&code=http://loinc.org|" + code + "&_sort=-date";
+    var dataUrl = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/Observation?subject=" + id + "&code=http://loinc.org|" + code + "&_sort=-date";
     var xhr = new XMLHttpRequest();
     xhr.open('GET', dataUrl, true);
     xhr.setRequestHeader('Authorization', 'Bearer ' + token)
@@ -176,7 +176,7 @@ function getToken_fhir() {
       patien_json = res2;
   });
   //開始PUT
-  let url = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/fhir/Patient/" + id;
+  let url = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/Patient/" + id;
   const headers = new Headers({
       "Content-Type": "application/fhir+json",
       "Authorization": "Bearer " + token,
@@ -304,7 +304,7 @@ async function update_Observation(promptStr, code_text, htmlPrefix, htmlId,htmlU
 }
 function update_data(token,id,source_type,data_type,data){//no use
   console.log(token,id,source_type,data_type,data)
-  const url = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/fhir/"+source_type+"/"+data_type;
+  const url = "https://healthcare.googleapis.com/v1beta1/projects/agile-device-389611/locations/asia-east1/datasets/fhir/fhirStores/fhir/"+source_type+"/"+data_type;
 
 // 設定請求標頭
 const headers = new Headers({
