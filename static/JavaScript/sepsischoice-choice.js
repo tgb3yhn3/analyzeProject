@@ -24,10 +24,10 @@ function sure_click(element) {
 		result += "F";
 	}
 
-	window.location.replace('https://analyzeproject-xrttnigg7q-de.a.run.app/sepsis?id=' + id + "&method=" + result);
+	window.location.replace('https://fhir-dm5wodoipq-de.a.run.app/sepsis?id=' + id + "&method=" + result);
 }
 
 //返回至病人資料頁
 function back_click(element) {
-	window.location.replace('https://analyzeproject-xrttnigg7q-de.a.run.app/patientprofile?id=' + id);
+	window.location.replace('https://fhir-dm5wodoipq-de.a.run.app/patientprofile?id=' + id);
 }
