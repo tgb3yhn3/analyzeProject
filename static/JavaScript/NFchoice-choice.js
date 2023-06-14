@@ -42,10 +42,10 @@ function sure_click(element) {
 	else {
 		sea = 0;
 	}
-	window.location.replace('https://34.81.193.154/NF?id=' + id + "&method=" + result + "&sea=" + sea);
+	window.location.replace('http://34.81.193.154/NF?id=' + id + "&method=" + result + "&sea=" + sea);
 }
 
 //返回至病人資料頁
 function back_click(element) {
-	window.location.replace('https://34.81.193.154/patientprofile?id=' + id);
+	window.location.replace('http://34.81.193.154/patientprofile?id=' + id);
 }

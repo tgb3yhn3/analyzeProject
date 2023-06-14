@@ -24,10 +24,10 @@ function sure_click(element) {
 		result += "F";
 	}
 
-	window.location.replace('https://34.81.193.154/sepsis?id=' + id + "&method=" + result);
+	window.location.replace('http://34.81.193.154/sepsis?id=' + id + "&method=" + result);
 }
 
 //返回至病人資料頁
 function back_click(element) {
-	window.location.replace('https://34.81.193.154/patientprofile?id=' + id);
+	window.location.replace('http://34.81.193.154/patientprofile?id=' + id);
 }

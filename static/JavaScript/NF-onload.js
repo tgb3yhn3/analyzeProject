@@ -102,11 +102,11 @@ function calculateresult(band, sea, seg, crp) {          //計算結果
     }
 }
 function back_click(element) {
-    window.location.replace('https://34.81.193.154/NFchoice?id=' + id);
+    window.location.replace('http://34.81.193.154/NFchoice?id=' + id);
 }
 
 function backlist(element) {
-    window.location.replace('https://34.81.193.154/patientlist');
+    window.location.replace('http://34.81.193.154/patientlist');
 }
 
 function show() {
@@ -123,7 +123,7 @@ function show() {
 }
 
 function detail(element) {
-    window.open('https://34.81.193.154/NFbodyvalue' + '?sea=' + sea + '&wbc=' + wbc + '&crp=' + crp + '&seg=' + seg + '&band=' + band)
+    window.open('http://34.81.193.154/NFbodyvalue' + '?sea=' + sea + '&wbc=' + wbc + '&crp=' + crp + '&seg=' + seg + '&band=' + band)
 }
 
 function sheet() {
