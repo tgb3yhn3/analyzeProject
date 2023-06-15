@@ -11,19 +11,20 @@ def createJWT_FHIR():
     iat = time.time()
     exp = iat + 3600
     additional_headers = {
-        'kid': 'd776ecbe045ac7a6e721fb0ac59fccda9548382a',
+        'kid': 'b1113043ddb299f187ab44249a8e8c94d3124f9b',
         'alg': 'RS256',
         'typ': 'JWT'}
     payload = {
-        'iss': 'healthcareapifhir@crack-will-380312.iam.gserviceaccount.com',
-        'sub': 'healthcareapifhir@crack-will-380312.iam.gserviceaccount.com',
+        'iss': 'fhir-281@agile-device-389611.iam.gserviceaccount.com',
+        'sub': 'fhir-281@agile-device-389611.iam.gserviceaccount.com',
         'aud': 'https://healthcare.googleapis.com/',
         'iat': iat,
         'exp': exp
     }
-    signed_jwt = jwt.encode(payload, '-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCprhLxuoVqVxM+\n8jJiwAKLNk5vNFneFXFbomYipKyGbu0AH74MiJLEnmplyD2F0rtzYjGpz4poXarQ\naGcpsRMC2UgOPDQu+srTJRhG0D7pIATa9f6tWaP/R5DsbqWp5E1qEFIVFrJabxYW\n0ZwWDEdfZPoFQOWpbs1Z2GztvRr9tENsytzkdh9CuhmfNW0KgeK4jYJXB8OWSOMb\n9XAPP/wwH2ejidtG3qv/hbWA3t0EPlVihz4EiokdZf3Lco4BfsxmMNJRb3tJC08C\nlmBAvd7SGLm8dQNqLZ/OSMfVp4SF1ysQ0dR/Lx6/UfH+JZ6/gPzOFpclKNqv9WKk\nuSAsE+/nAgMBAAECggEAAl4Bpr+j0gvnd9tSP+sOqLHTba9oT78syf6zClE2cDPi\nNZGXOnuVMlEUU0FVvaILgHB5YbWBdJsljC5zvmCQW1vLMND73qD3goWA5F4dbySn\nPLAGURud1Msel5jg0csGMGpDQV9ZVQZGDk8DaYXnbRmiX5rp0bW383VvDqemkpTl\nPoa3cTSAKNnz3jATfx1v7y9kErjqGuYgYcppJT/5Q/kOv/eoBAcvJDfQfQmQ/pZe\n4XCGi9/QZExQmfISqx0l9bi6tc1lQl8F9VM3PYtzyAKxZgBFSug/7cX14pNSucfB\nLo8Wi2JKwGlHtBxIlCf7jscWK/jR5Mq0FY4E1cYqfQKBgQDam9jU4+EISQVUncjo\n9830LOaqSLyWALzc3owaF/a0YcQJlJr3VZ9xS5x1oQkcNcMcrH82tkhq+WXexQa7\nBzxQU8O7L71QyD+fkAzJ8ub4bC7noAr4M0zk+LXzXZEHSYTuxHqMDZqY+0a78I6O\nYQaRtmszlXpfNC4sLe5AXb+JbQKBgQDGs8wTDPOO+vs578Da/ZhkXkFT384VPmQd\nCSu98DMhTVK39lp46d1TCvl8D5rkdmvgpzYax6d5U6y5j7xIj+1YotDp3SsLrrw/\nL6aDw9KKynimMO7Z+PYAeQHIYRwys7Jscvv/FIBwPHHzHLTnTONcxEBRtkUCZuzC\ng8bP1nL+IwKBgAhECEjUbPfROwBeDvCwHftzjy01HtxVHs8DIy0BZvSfFbh/A/UC\nKcsw3rOb6SpF5iC5bP32mnpg/7cSoBSGS4OGB0qWnYPmbnFsEu+33X/bJ1LevEty\nNSAbP1X6Xbd20i3tA+0zvnq2VZBZoipEBOmRijAjIMNkx7In8nBAmzNpAoGBAIRu\nSsIbrKyLzCq2B0QtJocmZsXe8PwppBHSDew+jeVRIqNnNq9FtvPk6Zhs0iAYaRfG\negHpNU5gnUrjaGq4OkkL4s8rT8guglpeiM1jEwzbmwOws1BlZJe2DqEdT+ze5Tjw\nfdFpOZ0UPCH67PsHvLUUO4X6RA4wyPVvXG8jD2sfAoGAH4oz9JaScfUjAaf0FHVR\nxpA8MXUlYa3qw8/JwWtvzaUWAx6rVRjKYc9y/SL58su7XXcZiO+jwn6SeAr3/kHC\ncsaYonxT3mW8BjpEzzin48EmY4FQMHThYJt9ND2G6Qno7v9n7+ngWmxAZxIqNRoh\nzenQIRU8F1o+hb2tnp4I4dc=\n-----END PRIVATE KEY-----\n', headers=additional_headers, algorithm='RS256')
+    signed_jwt = jwt.encode(payload, '-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQClk3HV0iT2rAkC\nyVZB2qDWwACTwrVIyIFoIB2ct3p6zWouTDU8yboFs1H0eChMcKYYjVfrgllyCF20\nd/jI6UuEXSeGJTHvxLb7cEqYkOGn5aA8i2WjiCSs1zzBim+3Kcl+xJ0H3Y7tVezR\nGNb+ms9nIRejspI1zRTgrJdU0cBMDZ/C5QQCoNe+k0Nl66RNyQfPx7pT2YGb6cJI\nT/Tv0uOggWxHjfBNyoJ9xsJTCBtxUxTM54hRP5BOSVVRP5nKzTA5EbjvqMKWvYYL\n3Ew4oSHPym/Y6jZmsZnMPxL+5BkccpHWt4QWdg0D2wMlHQhoMLV2X9Mx8wMVoUSJ\nH+l7xEAhAgMBAAECggEAEfi55H7XlQAZhshGcOWraz/CGEesIFsmA6Cnwiq+lC1v\nWtjZ9vAA3U1IRhgULK7V8miGDFmUvo42qIfUlK8Qy6xGRdbL76XLBCndKOfh3FTN\n0oCBXtGARJPko++0Hj3+gUBTOIc1dCCNUKlI7a/tNtkGTTXszYLl4xiMoO/W1tI/\niJH1EHdO+o5qkDiGOsEK+7TEb3ZSmr3q5lpNxUVHpLrE2ygJoC9Ysmy0Q911lzpi\nerbfpXp5x0xcbzu5tiBEGT1binOctxtVLE61Hsd5jtvgruUFlCo3Ucu81rbWMtx5\nwPtHMLAlxsC2fjU6il8hGRS1GeTt0mvLxQ6g55KBCQKBgQDT5hdx44gp7c13Zoxc\niFkzCRSTkJ5+dYsLaO9+KAHu0Z/tyThrJkpFkIx56+UGC8AMuV/AmZuYvwWAc8+y\n9hiYFo+E/6NO8uF2vsds859iedq9csiSXLWYvyxr/1/tpxJk4YLGJZmaJ/4B/1Vu\nMbvm+MwUVUBOs8wRsYZP8VOWOQKBgQDICUkBs8Pg4jVX8pM6I7ncK/55jzs1NSbH\nT0IDY7waoJNjC8E/BconWcy2n9HmRsqhgWCRD4GyWlD48dGhbF74LdQdv57FOQRT\nS+FVrB6ckDDKJWYNLD1HZQ3FYz5D4OvSDWTHzY2fHWYZNpirPHb527COjF7cjP8v\nlN4OTGK5KQKBgEMr0kzJCvX3q0VpXZ9LnbMe8sXgd02xJzWjux+rwQkarG7tdZQJ\n3Et3CgDwNXaYLPYboW3lg7yE+VKB49pgRuWXaUGI5BT3y18gFQnFpMXLyPp7M3eq\nKerU11kY6Cjm6F7QWetEKhADE3NApK082MrcHZ1odO0987e8Jc6bupqJAoGAFW+h\nSjRoZj33d3BARLe1YBm60G3/60jB2hPtQA29B6Fziealk8pcCnF+FYf051douXvy\nzDi8Lk+tY7AORd0mJDRNCc8SBZKBmyeDgznJof91qwPs9rZp7q+ulRt4fa+ptb3H\nsf2eEpIE8ei+3YLCQS5AslXqiHn3krLCRQf8gFkCgYEAoz38pS0X484N7P9uP6GV\nRuqRUWpECNPCM9SGOpVwktNLdsnQ6F9LrwDlR6D+oOM/iBG6CibFsrPpMjeTCXGW\nKaKsicYxQf7MYYy6PPUVEO++oTivd3fJj0C6AkQcCkcGg/bKBml/kyxsBDKi8beK\nx4LKYpG+KCPIlU2DV5GFaDY=\n-----END PRIVATE KEY-----\n', headers=additional_headers, algorithm='RS256')
     print('FHIR jwt token created')
     # print(signed_jwt)
+    print(signed_jwt)
     return signed_jwt
 
 
