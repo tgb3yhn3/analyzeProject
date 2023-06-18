@@ -44,10 +44,13 @@ function processData(csv) {
      lines = csv.split('\n');
     headers = lines[0].split(',');
     var attributeSelect = document.getElementById('attributeSelect');
-    
+    var attributeSelectMann= document.getElementById('attributeSelectMann');
     // Clear attribute select options
     while (attributeSelect.firstChild) {
         attributeSelect.removeChild(attributeSelect.firstChild);
+    }
+    while (attributeSelectMann.firstChild) {
+        attributeSelectMann.removeChild(attributeSelectMann.firstChild);
     }
     
     // Add headers to attribute select
@@ -56,6 +59,12 @@ function processData(csv) {
         option.value = headers[i];
         option.text = headers[i];
         attributeSelect.appendChild(option);
+    }
+    for (var i = 0; i < headers.length; i++) {
+        var option = document.createElement('option');
+        option.value = headers[i];
+        option.text = headers[i];
+        attributeSelectMann.appendChild(option);
     }
     
     // Set default attribute to the first one

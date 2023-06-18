@@ -2,7 +2,7 @@ from distutils.command.config import config
 from pickle import FALSE
 from urllib import response
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify,render_template_string,Blueprint
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify,render_template_string,Blueprint,send_file
 from flask_cors import CORS
 import pymongo
 from tools.jwtcreate import *
@@ -474,6 +474,52 @@ def pvalue():
             head[i].extend([pValue[i]])
         #caculate pvalue mean std and return as json
         return jsonify([typ,head])
+@app.route('/pvalue_mann',methods=['POST'])
+def pvalue_mann():
+    file = request.files['file']
+    df=pd.read_csv(file,encoding='utf-8-sig')
+    head=list( df.columns)
+    #pValue=tools.valueCouter.pure_pvalue(df,type='mann')
+    getDiease=tools.valueCouter.countGetDiseaseValueType(df)
+    meanStd=tools.valueCouter.pure_meanStd(df)
+    #merge two array
+    typ='nf'in head
+    print(getDiease)
+    for i in range(len(head)):
+        head[i]=[head[i]]
+        head[i].extend(meanStd[i])
+        head[i].extend([getDiease[i]])
+       # head[i].extend([pValue[i]])
+    #caculate pvalue mean std and return as json
+    return jsonify([typ,head])
+@app.route('/histplot',methods=['POST'])
+def histplot():
+    file = request.files['file']
+
+    df=pd.read_csv(file,encoding='utf-8-sig')
+    
+    head=list( df.columns)
+    if("nf" in head):
+        target="nf"
+    else:
+        target="sofa_sepsis"
+    param=request.form.get('param')
+    dfk=df
+    dfk=dfk[[param,target]]
+    print(param)
+    sns.histplot(dfk, x=param, hue=target,element="step")
+    sns.despine()
+    #turn imge into base64 and return
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format='png')
+    plt.clf()
+    buffer.seek(0)
+    image_png = buffer.getvalue()
+    buffer.close()
+    graphic = base64.b64encode(image_png).decode()
+    return graphic
+    #return ajax imageine to html
+    
 
 if __name__ == '__main__':
     app.run(host="localhost",port=5001,debug=True)

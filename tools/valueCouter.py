@@ -72,6 +72,29 @@ def countGetDiease(df):
         rtn.append([nfCount2,round(nfPercent2,2),nonNFCount2,round(nonNFPercent2,2)])
         # print("NF/nonNF %s positive count(percent) = %d (%.1f%%) / %d (%.1f%%)" %(column_headers[i],nfCount2,nfPercent2,nonNFCount2,nonNFPercent2))
     return rtn
+def countGetDiseaseValueType(df)->list:
+    column_headers = list(df.columns)
+    if("nf" in column_headers):
+        target = "nf"
+    elif("sofa_sepsis" in column_headers):
+        target = "sofa_sepsis"
+    mask = df[target]==1      #記錄NF的資料
+    dfA = df[mask]				#指定訓練資料
+    dfB = df[~mask]
+
+    column_headers = list(df.columns)
+    rtn=[]
+    for i in range(len(column_headers)):
+    #Perform two-sided Mann-Whitney U test (Two columns do not have equal medians).
+        uStatistic, p_value = stats.mannwhitneyu(x=dfA[column_headers[i]], y=dfB[column_headers[i]], alternative="two-sided")
+        rtn.append("{:.2e}".format(p_value))
+    return rtn
+def findIsValueType(row):
+    #if only have 1 and 0
+    for i in row:
+        if(i!=0 and i!=1):
+            return True
+    return False
 if(__name__=="__main__"):
     df=pd.read_csv('危險因子分析/NFdata1415.csv',encoding='utf-8-sig')
     countGetDiease(df)

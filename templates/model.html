@@ -17,26 +17,27 @@
 
 <body>
     <div class="loading-wrapper" style="display:none ;">
-		<div class="loading-grid">
-			<div class="loading">
-				<img src="static/gif/walking_people.gif" height="35%">
-				<div class="containerForText">
-					<div class="Text text-background">模型訓練中...<div id="time" class="Text text-background">
-                    
-                    </div></div>
-					<div class="Text text-color">模型訓練中...</div>
-                    
-				</div>
-                
+        <div class="loading-grid">
+            <div class="loading">
+                <img src="static/gif/walking_people.gif" height="35%">
+                <div class="containerForText">
+                    <div class="Text text-background">模型訓練中...<div id="time" class="Text text-background">
+
+                        </div>
+                    </div>
+                    <div class="Text text-color">模型訓練中...</div>
+
+                </div>
+
                 <script>
-                    
+
                 </script>
-				<!-- <div class="progress">
+                <!-- <div class="progress">
 					<div class="progress-value"></div>
 				</div> -->
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
     <nav class="navbar navbar-light navbar-expand-md sticky-top navbar-shrink py-3" id="mainNav">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span
                     class="bs-icon-sm bs-icon-circle bs-icon-primary shadow d-flex justify-content-center align-items-center me-2 bs-icon"><svg
@@ -56,7 +57,7 @@
             </div>
         </div>
     </nav>
-    
+
     <section class="text-center py-5">
         <div class="container ">
             <!-- center  -->
@@ -72,12 +73,12 @@
                         <li class="nav-item">
                             <button class="nav-link" id="page2-click">基本統計資料</button>
                         </li>
-                        
+
                     </ul>
                 </div>
 
                 <h1 class="mb-3">Version NF:{{nowUse[1]}} Sepsis:{{nowUse[2]}}</h1>
-                <form action="/model" method="POST" enctype="multipart/form-data"id='form'>
+                <form action="/model" method="POST" enctype="multipart/form-data" id='form'>
                     <div class="row">
 
                         <div class="form-floating col-md-4 mb-3">
@@ -101,26 +102,27 @@
                                     <button class="nav-link active" id="flexRadioDefault1" type="button">Split</button>
                                 </li>
                                 <li class="nav-item">
-                                    <button class="nav-link " id="flexRadioDefault2" aria-current="page"type="button">Fold</button>
+                                    <button class="nav-link " id="flexRadioDefault2" aria-current="page"
+                                        type="button">Fold</button>
                                 </li>
-                                
-                                
+
+
                             </ul>
-                           
-                            
+
+
                         </div>
                         <div class="form-floating col-md-3 mb-3 page1">
                             <input id="fold" class="form-control" type="number" value="1" min="1" name="fold">
-                            <label id ='fold-label'class="form-label" for="fold">
-                                 Folds Times:
+                            <label id='fold-label' class="form-label" for="fold">
+                                Folds Times:
                             </label>
                             <input id="split" class="form-control" type="range" value="80" min="0" max="100"
                                 name="split">
-                            <label id ='split-label' class="form-label" for="split" id="split-value">
-                                 split 80%
+                            <label id='split-label' class="form-label" for="split" id="split-value">
+                                split 80%
                             </label>
                             <script>
-                                
+
                             </script>
 
                         </div>
@@ -134,66 +136,123 @@
                             <input id="endDate" class="form-control" type="date" name="endDate">
                             <label class="form-label" for="endDate">endDate:</label>
                         </div>
-                        
+
                         <div class="col-md-4 mb-3">
                             <button class="btn btn-dark btn-md" type="submit" id="submit">Upload DataSet</button>
                         </div>
                         <div class="col-md-4 mb-3 page2">
-                           
+
                         </div>
                     </div>
 
-                    
+
                 </form>
                 <hr>
                 <div class="page2 mb-3">
                     <div class=" form-floating mb-3  input-group">
-                       
-                        
-                        
-                        <select class='form-select'id="attributeSelect"></select>
-                        <label class='form-label'for="attributeSelect">選擇Attribute:</label>
-                        <button class="btn btn-outline-dark "id='showinfo' data-bs-toggle="modal" data-bs-target="#exampleModal">chi square</button>
+
+
+
+                        <select class='form-select' id="attributeSelect"></select>
+                        <label class='form-label' for="attributeSelect">選擇Attribute:</label>
+                        <button class="btn btn-outline-dark " id='show_mann' data-bs-toggle="modal"
+                            data-bs-target="#exampleModal1">mannwhitneyu</button>
+                        <button class="btn btn-outline-dark " id='show_chi' data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">chi square</button>
                         <!-- Button trigger modal -->
                     </div>
-  <!-- Modal -->
-  <div class="modal modal-xl fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" >
-            <div class="row">
-                <div class="col-2"style="border-right:1pt solid;">
-                    Name
-                </div>
-                <div class="col-4" id='get'style="border-right:1pt solid;">
-                    get
-                </div>
-                <div class="col-4" id='non-get'style="border-right:1pt solid;">
-                    Non-get
-                </div>
-                <div class="col-2"style="border-right:1pt solid;">
-                    P-value
-                </div>
+                    <!-- Modal -->
+                    <div class="modal modal-xl fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-2" style="border-right:1pt solid;">
+                                            Name
+                                        </div>
+                                        <div class="col-4" id='get' style="border-right:1pt solid;">
+                                            get
+                                        </div>
+                                        <div class="col-4" id='non-get' style="border-right:1pt solid;">
+                                            Non-get
+                                        </div>
+                                        <div class="col-2" style="border-right:1pt solid;">
+                                            P-value
+                                        </div>
 
-            </div>
-          <div id="info"></div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-          
-        </div>
-      </div>
-    </div>
-  </div>
-                        
-                        
-                    
-                    
-                    
+                                    </div>
+                                    <div id="info"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal modal-xl fade" id="exampleModal1" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row " style="margin: auto;">
+                                        <div class="col mb-3">
+                                            <ul class="nav nav-pills d-flex justify-content-center">
+                                                <li class="nav-item">
+                                                    <button class="nav-link active" id="mann-click">mann</button>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <button class="nav-link " id="histplot-click">histplot</button>
+                                                </li>
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="row mann">
+                                        <div class="col-3" style="border-right:1pt solid;">
+                                            Name
+                                        </div>
+                                        <div class="col-3" id='get' style="border-right:1pt solid;">
+                                            mean
+                                        </div>
+                                        <div class="col-3" id='non-get' style="border-right:1pt solid;">
+                                            std
+                                        </div>
+                                        <div class="col-3" style="border-right:1pt solid;">
+                                            P-value
+                                        </div>
+
+                                    </div>
+                                    <div id="info2" class="mann"></div>
+                                    <div class="row histplot form-floating mb-3  input-group" id="">
+                                        <select class='form-select' id="attributeSelectMann"></select>
+                                        <label class='form-label' for="attributeSelectMann">選擇Attribute:</label>
+                                    </div>
+                                    <img id ="histplot_img" class="histplot"src>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
                     <label id="min">Min </label>
                     <label id="max">Max </label>
                     <label id="mean">Mean </label>
@@ -203,7 +262,7 @@
                     <canvas id="chart"></canvas>
                     <script src="static/JavaScript/drawChart.js"></script>
                 </div>
-                
+
                 <form class="page1 mb-3 page3" action="/model" method="GET">
                     <div class="row" style="text-align: center;">
                         <div class="col-md-2 form-floating mb-3">
@@ -257,13 +316,17 @@
                                     {% if modelEfficacy[loop.index0] != None %}
                                     {% for key,value in modelEfficacy[loop.index0].items() %}
                                     {% if value!=None %}
-                                <div class="row page1 page3" >
+                                <div class="row page1 ">
 
-                                    <div class="row "><h3>{{key}}</h3></div>
+                                    <div class="row ">
+                                        <h3>{{key}}</h3>
+                                    </div>
                                     {% for inKey,inValue in value.items()%}
                                     <div class="col text-center">
 
-                                        <div class="col"><h4>{{inKey}}</h4></div>
+                                        <div class="col">
+                                            <h4>{{inKey}}</h4>
+                                        </div>
                                         <hr>
                                         <div class="col">{{inValue|round(3)}}</div>
                                     </div>
@@ -291,120 +354,249 @@
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/bold-and-bright.js"></script>
-    
+
     <script src="https://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 </body>
 <script>
 
     $(document).ready(function () {
+        document.getElementById('attributeSelectMann').addEventListener('change' ,function () {
+            console.log("change")
+            var fileInput = document.getElementById('file');
+            var file = fileInput.files[0];
+            var selectParam = document.getElementById('attributeSelectMann').value;
+
+            var formData = new FormData();
+            formData.append('file', file);
+            formData.append('param', selectParam);
+
+            $.ajax({
+                url: '/histplot',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    console.log(response);
+                    // const imageUrl = URL.createObjectURL(blob);
+                    const image = document.createElement('img');
+                    $('#histplot_img').attr('src', 'data:image/png;base64,' + response);
+                    
+                
+                    
+                }
+            })
+        })
         $("#split").on("input", function () {
-            console.log("change",this.value)
+            console.log("change", this.value)
             $("#split").val(this.value)
-            document.getElementById("split-label").innerHTML = "Split : "+this.value+"%"
+            document.getElementById("split-label").innerHTML = "Split : " + this.value + "%"
+        })
+
+        $('#show_chi').click(function () {
+
+            var formData = new FormData($('#form')[0]);
+
+            $.ajax({
+                url: '/pvalue',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+
+                    console.log(response)
+                    var typ = response[0]
+                    if (typ) {
+                        document.getElementById('get').innerText = 'NF'
+                        document.getElementById('non-get').innerText = 'non-NF'
+
+
+                    } else {
+                        document.getElementById('get').innerText = 'Sepsis'
+                        document.getElementById('non-get').innerText = 'non-Sepsis'
+                    }
+                    response = response[1]
+                    target = document.getElementById("info")
+                    html = "<hr>"
+                    for (let i = 0; i < response.length; i++) {
+                        html += "<div class='row'>"
+                        for (let j = 0; j < response[i].length; j++) {
+                            if (j == 2 || j == 4) {
+                                html += '<div class="col" style="text-align:left;border-right:1pt solid;">(' + response[i][j] + '%)</div>'
+
+                            } else if (j == 0) {
+
+                                html += '<div class="col" style="border-right:1pt solid;">' + response[i][j] + '</div>'
+                            } else {
+                                html += '<div class="col" >' + response[i][j] + '</div>'
+                            }
+
+                        }
+                        html += "</div>"
+                    }
+                    target.innerHTML = html
+
+                },
+                error: function () {
+                    alert('An error occurred while processing the file.');
+                }
+            });
+            return false;
+        });
+        $('#show_mann').click(function () {
+
+            var formData = new FormData($('#form')[0]);
+
+            $.ajax({
+                url: '/pvalue_mann',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+
+                    console.log(response)
+                    var typ = response[0]
+                    if (typ) {
+                        document.getElementById('get').innerText = 'NF'
+                        document.getElementById('non-get').innerText = 'non-NF'
+
+
+                    } else {
+                        document.getElementById('get').innerText = 'Sepsis'
+                        document.getElementById('non-get').innerText = 'non-Sepsis'
+                    }
+
+                    response = response[1]
+                    console.log(response)
+                    target = document.getElementById("info2")
+                    html = "<hr>"
+                    for (let i = 0; i < response.length; i++) {
+                        console.log(response[i])
+                        html += "<div class='row'>"
+                        for (let j = 0; j < response[i].length; j++) {
+                            // if(j==2 ||j==4){
+                            //         html+='<div class="col" style="text-align:left;border-right:1pt solid;">('+response[i][j]+'%)</div>'
+
+                            //     }else 
+                            if (j != response[i].length - 1) {
+
+                                html += '<div class="col" style="border-right:1pt solid;">' + response[i][j] + '</div>'
+                            } else {
+                                html += '<div class="col" >' + response[i][j] + '</div>'
+                            }
+
+                        }
+                        html += "</div>"
+                    }
+                    console.log(html)
+                    target.innerHTML = html
+
+                },
+                error: function () {
+                    alert('An error occurred while processing the file.');
+                }
+            });
+            return false;
+        });
+        $('.histplot').hide()
+        $('#mann-click').click(() => {
+            $('#histplot-click').removeClass('active')
+            $('#mann-click').addClass('active')
+            $('.mann').show()
+            $('.histplot').hide()
+        })
+        $('#histplot-click').click(() => {
+            $('#mann-click').removeClass('active')
+            $('#histplot-click').addClass('active')
+            $('.mann').hide()
+            $('.histplot').show()
+            
+            var fileInput = document.getElementById('file');
+            var file = fileInput.files[0];
+            var selectParam = document.getElementById('attributeSelectMann').value;
+
+            var formData = new FormData();
+            formData.append('file', file);
+            formData.append('param', selectParam);
+
+            $.ajax({
+                url: '/histplot',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    console.log(response);
+                    // const imageUrl = URL.createObjectURL(blob);
+                    const image = document.createElement('img');
+                    $('#histplot_img').attr('src', 'data:image/png;base64,' + response);
+                    
+                
+                    
+                }
+            })
+
         })
         
-            $('#showinfo').click(function() {
-                
-                var formData = new FormData($('#form')[0]);
-                
-                $.ajax({
-                    url: '/pvalue',
-                    type: 'POST',
-                    data: formData,
-                    async: false,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-
-                        console.log(response)
-                        var typ=response[0]
-                        if(typ){
-                            document.getElementById('get').innerText='NF'
-                            document.getElementById('non-get').innerText='non-NF'
-
-                            
-                        }else{
-                            document.getElementById('get').innerText='Sepsis'
-                            document.getElementById('non-get').innerText='non-Sepsis'
-                        }
-                        response=response[1]
-                        target=document.getElementById("info")
-                        html="<hr>"
-                        for (let i =0;i<response.length;i++){
-                            html+="<div class='row'>"
-                            for(let j=0;j<response[i].length;j++){
-                                if(j==2 ||j==4){
-                                    html+='<div class="col" style="text-align:left;border-right:1pt solid;">('+response[i][j]+'%)</div>'
-
-                                }else if(j==0){
-
-                                    html+='<div class="col" style="border-right:1pt solid;">'+response[i][j]+'</div>'
-                                }else{
-                                    html+='<div class="col" >'+response[i][j]+'</div>'
-                                }
-
-                            }
-                            html+="</div>"
-                        }
-                        target.innerHTML=html
-                        
-                    },
-                    error: function() {
-                        alert('An error occurred while processing the file.');
-                    }
-                });
-                return false;
-            });
-        
+    
         $('#fold').hide()
         $('#fold-label').hide()
-        $('#flexRadioDefault1').click(()=>{
-            
-               $('#flexRadioDefault1').addClass('active')
-               $('#flexRadioDefault2').removeClass('active')
+        $('#flexRadioDefault1').click(() => {
 
-               $('#fold').hide()
-               $('#fold-label').hide()
-               $('#split').show()
-               $('#split-label').show()
-                $("#fold").val(1)
-                
-            
-        
+            $('#flexRadioDefault1').addClass('active')
+            $('#flexRadioDefault2').removeClass('active')
+
+            $('#fold').hide()
+            $('#fold-label').hide()
+            $('#split').show()
+            $('#split-label').show()
+            $("#fold").val(1)
+
+
+
         })
-        $('#flexRadioDefault2').click(()=>{
-            
+        $('#flexRadioDefault2').click(() => {
+
             $('#flexRadioDefault2').addClass('active')
-               $('#flexRadioDefault1').removeClass('active')
-                
-            
-                $('#split').hide()
-                $('#split-label').hide()
-                $('#fold').show()
-                $('#fold-label').show()
-                $("#split").val(80)
-                $("#split").trigger("input")
-    })
+            $('#flexRadioDefault1').removeClass('active')
+
+
+            $('#split').hide()
+            $('#split-label').hide()
+            $('#fold').show()
+            $('#fold-label').show()
+            $("#split").val(80)
+            $("#split").trigger("input")
+        })
         $('.page2').hide()
         $('.page1').hide()
         $('.page3').show()
-        $('#submit').click(()=>{
-            
-                $('.loading-wrapper').show()
-                var time = 0;
-                    var timer = setInterval(function(){
-                        time++;
-                        document.getElementById("time").innerHTML = time;
-                    },1000);
-            
+        $('#submit').click(() => {
+
+            $('.loading-wrapper').show()
+            var time = 0;
+            var timer = setInterval(function () {
+                time++;
+                document.getElementById("time").innerHTML = time;
+            }, 1000);
+
         })
         $('#page1-click').click(function () {
             //remove class active
             $('#page2-click').removeClass('active')
             $('#page3-click').removeClass('active')
             $('#page1-click').addClass('active')
-            
+
             $('.page2').hide()
             $('.page3').hide()
             $('.page1').show()
@@ -414,21 +606,21 @@
             //check if file has been uploaded
             if ($('#file').val() == "") {
                 alert("請先上傳檔案")
-                $( "#file" ).effect( "shake" );
+                $("#file").effect("shake");
                 return
             }
             $('#page1-click').removeClass('active')
             $('#page3-click').removeClass('active')
             $('#page2-click').addClass('active')
-            $('.page1').hide()
             $('.page3').hide()
             $('.page2').show()
+            $('.page1').hide()
         })
-        $('#page3-click').click(function(){
+        $('#page3-click').click(function () {
             $('#page1-click').removeClass('active')
             $('#page2-click').removeClass('active')
             $('#page3-click').addClass('active')
-            
+
             $('.page1').hide()
             $('.page2').hide()
             $('.page3').show()
@@ -477,8 +669,8 @@
         })
         //ajax to query model with get method
         $(".queryModel").click(function (event) {
-            window.location.href = "/model?type=" + $("#modelTypeQ").val() + "&modelVersion=" + $("#modelVersionQ").val()+
-            "&startDate="+$("#startDateQ").val()+"&endDate="+$("#endDateQ").val()
+            window.location.href = "/model?type=" + $("#modelTypeQ").val() + "&modelVersion=" + $("#modelVersionQ").val() +
+                "&startDate=" + $("#startDateQ").val() + "&endDate=" + $("#endDateQ").val()
         })
     })
 
