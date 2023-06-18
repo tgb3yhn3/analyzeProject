@@ -7,8 +7,12 @@
     <title>Spesis預測</title>
     <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/assets/css/Inter.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.2/chart.min.js"></script>
     <link rel="shortcut icon" href="./static/images/ccass.ico" type="image/x-icon">
     <style>
+        .card-title{
+            white-space:nowrap;
+        }
         #rf_plot {
             width: 100%;
             aspect-ratio: 1 / 1;
@@ -189,31 +193,31 @@
             <div class="row">
     
                 <div class="card-group">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="card">
                             <!-- <div id='choice2-1_s'class="card-img-top w-100 d-block" "> -->
                             <div class="card-body">
                                 <h4 class="card-title" id='choice2-2_s' style="text-align: center;">randomForest</h4>
-                                <div id="rf_plot" class="col img-fluid "></div>
+                                <canvas id="rf_plot" class="col img-fluid "></canvas>
                                 <h4 class="card-title" id="rf" style="text-align: center;">信心度</h4>
     
     
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="card">
                             <!-- <div id='choice3-1_s'class="card-img-top w-100 d-block" > -->
     
                             <div class="card-body">
                                 
                                 <h4 class="card-title" id="choice3-2_s" style="text-align: center;">logisticRegression</h4>
-                                <div id="lr_plot" class="col img-fluid "></div>
+                                <canvas id="lr_plot" class="col img-fluid "></canvas>
                                 <h4 class="card-title" id="lr" style="text-align: center;">信心度</h4>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
     
                         <div class="card">
                             <!-- <div id="choice4-1_s"class="card-img-top w-100 d-block" > -->
@@ -221,19 +225,19 @@
     
                             <div class="card-body">
                                 <h4 class="card-title" id="choice4-2_s" style="text-align: center;">supportVectorMachine</h4>
-                                <div id="svm_plot" class="col img-fluid "></div>
+                                <canvas id="svm_plot" class="col img-fluid "></canvas>
                                 <h4 class="card-title" id="svm" style="text-align: center;">信心度</h4>
     
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-10">
+                    
+                    <div class="col-md-3">
                         <div class="card">
                             <!-- <div id='choice2-1_s'class="card-img-top w-100 d-block" "> -->
                             <div class="card-body">
                                 <h4 class="card-title" id='total' style="text-align: center;">Total</h4>
-                                <div id="total_plot" class="col img-fluid "></div>
+                                <canvas id="total_plot" class="col img-fluid "></canvas>
                                 <h4 class="card-title" id="total_prob" style="text-align: center;">信心度</h4>
     
     
@@ -403,32 +407,26 @@
     <!-- Flot JS 常用插件 -->
 
     <script src="https://cdn.jsdelivr.net/npm/flot@0.8.3/jquery.flot.pie.js"></script>
-
+    <script src="https://cdnjs.com/libraries/Chart.js"></script>
     <script>
         function makeDonut(id, data) {
+            const chartData = {
+                labels: [data[0].label, data[1].label],
+                datasets: [{
+                    data: [data[0].data, data[1].data],
+                    backgroundColor: [data[0].color, data[1].color],
+                    hoverBackgroundColor: ['#FF6384', '#C1E6C6']
+                }]
+            };
 
-            $.plot('#' + id, data, {
-                legend: {
-                    show: false
-                },
-                series: {
-                    pie: {
-                        innerRadius: 0.5,
-                        show: true,
-                        label: {
-                            show: true,
-                            radius: 0.5,
-                            formatter: function (label, series) {
-                                return '<div style="font-size:14pt;color:black;"><u>' +
-                                    label + ' : ' +
-                                    Math.round(series.percent) +
-                                    '%</u></div>';
-                            },
 
-                        }
+            const donutChart = document.getElementById(id);
 
-                    }
-                }
+
+            new Chart(donutChart, {
+                type: 'doughnut',
+                data: chartData,
+
             });
         }
     </script>
