@@ -176,13 +176,22 @@
                                         <div class="col-2" style="border-right:1pt solid;">
                                             Name
                                         </div>
-                                        <div class="col-4" id='get' style="border-right:1pt solid;">
-                                            get
+                                        <div class="col-4"  style="border-right:1pt solid;">
+                                            <div id='get'> get</div>
+                                            
+                                            <div class="row">
+                                            <div class="col">case</div>    
+                                            <div class="col" style="text-align:center;">（百分佔比）</div>    
+                                            </div>
                                         </div>
-                                        <div class="col-4" id='non-get' style="border-right:1pt solid;">
-                                            Non-get
+                                        <div class="col-4"  style="border-right:1pt solid;">
+                                            <div id='non-get'> Non-get</div>
+                                            <div class="row">
+                                                <div class="col">case</div>    
+                                                <div class="col" style="text-align:center;">（百分佔比）</div> 
+                                            </div>
                                         </div>
-                                        <div class="col-2" style="border-right:1pt solid;">
+                                        <div class="col-2" style="">
                                             P-value
                                         </div>
 
@@ -210,7 +219,8 @@
                                         <div class="col mb-3">
                                             <ul class="nav nav-pills d-flex justify-content-center">
                                                 <li class="nav-item">
-                                                    <button class="nav-link active" id="mann-click">Mann–Whitney U test</button>
+                                                    <button class="nav-link active" id="mann-click">Mann–Whitney U
+                                                        test</button>
                                                 </li>
                                                 <li class="nav-item">
                                                     <button class="nav-link " id="histplot-click">histplot</button>
@@ -240,7 +250,7 @@
                                         <select class='form-select' id="attributeSelectMann"></select>
                                         <label class='form-label' for="attributeSelectMann">選擇Attribute:</label>
                                     </div>
-                                    <img id ="histplot_img" class="histplot"src>
+                                    <img id="histplot_img" class="histplot" src>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
@@ -360,7 +370,7 @@
 <script>
 
     $(document).ready(function () {
-        document.getElementById('attributeSelectMann').addEventListener('change' ,function () {
+        document.getElementById('attributeSelectMann').addEventListener('change', function () {
             console.log("change")
             var fileInput = document.getElementById('file');
             var file = fileInput.files[0];
@@ -383,9 +393,9 @@
                     // const imageUrl = URL.createObjectURL(blob);
                     const image = document.createElement('img');
                     $('#histplot_img').attr('src', 'data:image/png;base64,' + response);
-                    
-                
-                    
+
+
+
                 }
             })
         })
@@ -427,7 +437,7 @@
                         html += "<div class='row'>"
                         for (let j = 0; j < response[i].length; j++) {
                             if (j == 2 || j == 4) {
-                                html += '<div class="col" style="text-align:left;border-right:1pt solid;">(' + response[i][j] + '%)</div>'
+                                html += '<div class="col" style="text-align:center;border-right:1pt solid;">(' + response[i][j] + '%)</div>'
 
                             } else if (j == 0) {
 
@@ -518,7 +528,7 @@
             $('#histplot-click').addClass('active')
             $('.mann').hide()
             $('.histplot').show()
-            
+
             var fileInput = document.getElementById('file');
             var file = fileInput.files[0];
             var selectParam = document.getElementById('attributeSelectMann').value;
@@ -540,15 +550,15 @@
                     // const imageUrl = URL.createObjectURL(blob);
                     const image = document.createElement('img');
                     $('#histplot_img').attr('src', 'data:image/png;base64,' + response);
-                    
-                
-                    
+
+
+
                 }
             })
 
         })
-        
-    
+
+
         $('#fold').hide()
         $('#fold-label').hide()
         $('#flexRadioDefault1').click(() => {
