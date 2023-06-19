@@ -43,7 +43,7 @@ if (chartStatus != undefined) {
                      backgroundColor: 'rgba(238,50,30,0)',             //不填滿 全透明
                      pointBackgroundColor: "rgba(255,255,255,1)",     //座標點的顏色，白色
                      borderColor: "rgba(238,50,30,1)",                //邊框紅色不透明
-                     borderWidth: 1,
+                     borderWidth: 3,
                      pointHoverBackgroundColor: "#FBED37",            //滑鼠經過時座標點時 鵝黃色
                      pointBorderWidth: 0.5,                           //座標點的邊框粗細
                      pointRadius: 3,                                  //座標點的半徑
@@ -60,8 +60,8 @@ if (chartStatus != undefined) {
                             , 0.149073328],
                      backgroundColor: 'rgba(238,50,30,0)',             //不填滿 全透明
                      pointBackgroundColor: "rgba(255,255,255,1)",     //座標點的顏色，白色
-                     borderColor: "rgba(33,113,48,1)",                //邊框綠色不透明
-                     borderWidth: 1,
+                     borderColor: "rgba(33,200,48,1)",                //邊框綠色不透明
+                     borderWidth: 3,
                      pointHoverBackgroundColor: "#FBED37",            //滑鼠經過時座標點時 鵝黃色
                      pointBorderWidth: 0.5,                           //座標點的邊框粗細
                      pointRadius: 3,                                  //座標點的半徑
@@ -76,10 +76,10 @@ if (chartStatus != undefined) {
                             (seg -min[2]) /(max[2]-min[2])>1? 1:(seg - min[2]) /(max[2]-min[2]),
                             (band-min[3] ) /(max[3]-min[3])>1? 1:(band - min[3]) /(max[3]-min[3]),
                             (sea -min[4]) /(max[4]-min[4])>1? 1:(sea - min[4]) /(max[4]-min[4])],
-                     backgroundColor: 'rgba(238,50,30,1)',             //不填滿 全透明
+                     backgroundColor: 'rgba(30,50,200,1)',             //不填滿 全透明
                      pointBackgroundColor: "rgba(255,255,255,1)",     //座標點的顏色，白色
-                     borderColor: "rgba(56,99,186,1)",                //邊框藍色不透明
-                     borderWidth: 1,
+                     borderColor: "rgba(56,50,140,1)",                //邊框藍色不透明
+                     borderWidth: 3,
                      pointHoverBackgroundColor: "#FBED37",            //滑鼠經過時座標點時 鵝黃色
                      pointBorderWidth: 1,                           //座標點的邊框粗細
                      pointRadius: 3,                                  //座標點的半徑
