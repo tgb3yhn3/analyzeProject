@@ -441,7 +441,7 @@ def uploadCSV():
             return '沒有選擇檔案'
         
         # 讀取 CSV 檔案
-        df = pd.read_csv(file)
+        df = pd.read_csv(file, encoding='latin1')
         
         try:
             print("SUCCESS")
