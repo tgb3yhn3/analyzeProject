@@ -180,9 +180,9 @@ def deleteModel():
         os.remove("modelData/"+modelVersion+"_NF_logisticregression.pickle")
         os.remove("modelData/"+modelVersion+"_NF_supportVectorMachine.pickle")
     elif(modelType=="Sepsis"):
-        os.remove("modelData/"+modelVersion+"_Sepsis_randomForest.pickle")
-        os.remove("modelData/"+modelVersion+"_Sepsis_logisticregression.pickle")
-        os.remove("modelData/"+modelVersion+"_Sepsis_supportVectorMachine.pickle")
+        os.remove("modelData/"+modelVersion+"_sepsis_randomForest.pickle")
+        os.remove("modelData/"+modelVersion+"_sepsis_logisticregression.pickle")
+        os.remove("modelData/"+modelVersion+"_sepsis_supportVectorMachine.pickle")
     return "200 success"
 
 #replace current model file at static/model from modelData folder
