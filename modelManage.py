@@ -126,14 +126,16 @@ def uploadModel():
                  , 'utf_32_be', 'utf_32_le', 'utf_16', 'utf_16_be', 'utf_16_le', 'utf_7', 'utf_8', 'utf_8_sig']
 
     for encoding in encoding_list:
-        worked = True
+        worked = False
         try:
             df = pd.read_csv(file, encoding=encoding,engine='python')
+            worked=True
         except:
             worked = False
         if worked:
             break
-    df = pd.read_csv(file,engine='python')
+    if not worked:
+        df = pd.read_csv(file,engine='python')
     #get max modelVersion
     data=getData("select seq from sqlite_sequence where name=\"model\" ")
     #if nodata set modelVersion=1
