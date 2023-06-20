@@ -17,16 +17,16 @@ def training(df,filename="",savePath="static/model/",modelType="NF",split=80,fol
     rtn={}
     try:
         if(modelType=="NF"):
-            rtn= {"dt":NF.decisionTree(df,savePath,split,fold),
-            "rf":NF.randomForest(df,savePath,split,fold),
-            "lr":NF.logisticregression(df,savePath,split,fold),
-            "svm":NF.supportVectorMachine(df,savePath,split,fold),
-            "nl":NF.neuralNetwork(df,savePath,split,fold)}
+            rtn= {"Decision Tree":NF.decisionTree(df,savePath,split,fold),
+            "Random Forest":NF.randomForest(df,savePath,split,fold),
+            "Logistic Regression":NF.logisticregression(df,savePath,split,fold),
+            "Support Vector Machine":NF.supportVectorMachine(df,savePath,split,fold),
+            "Neural Network":NF.neuralNetwork(df,savePath,split,fold)}
         #return model
         elif (modelType=="Sepsis"):
-            rtn= {"lr":Sepsis.LR(df,savePath,split,fold),
-            "rf":Sepsis.RF(df,savePath,split,fold),
-            "svm":Sepsis.SVM(df,savePath,split,fold)}
+            rtn= {"Logistic Regression":Sepsis.LR(df,savePath,split,fold),
+            "Random Forest":Sepsis.RF(df,savePath,split,fold),
+            "Support Vector Machine":Sepsis.SVM(df,savePath,split,fold)}
     except Exception as e:
         print(e.with_traceback())
         return None
