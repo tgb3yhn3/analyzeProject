@@ -41,7 +41,32 @@
 			<a class="btn btn-outline-dark  " role="button" href="/singlePlot">單危險因子分析</a>
 			<a class="btn btn-outline-dark  " role="button" href="/plot">雙危險因子分析</a>
 			<a class="btn btn-outline-dark  " role="button" href="/model">模型版本控制</a>
-			
+			<button class="btn btn-outline-dark " id='show_chi' data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">架構圖</button>
+            <div class="modal  fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">預測結果</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                       <img src="static/images/struture.webp" alt="" style="width: 100%;">
+                        </div>
+                        <div class="blockChart row" style="margin-top: 4vmin;">
+                           
+
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
 
 		<h1 class="text-center py-5 col-8 d-flex justify-content-center align-self-center"style="margin:auto;">
