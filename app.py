@@ -540,6 +540,8 @@ def histplot():
     return graphic
     #return ajax imageine to html
     
-
+@app.route('/struture_image',methods=['GET'])
+def struture_image():
+    return send_file('static/images/struture.webp', mimetype='image/webp')
 if __name__ == '__main__':
     app.run(host="localhost",port=5001,debug=True)
