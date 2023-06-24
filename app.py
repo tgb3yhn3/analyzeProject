@@ -543,5 +543,8 @@ def histplot():
 @app.route('/struture_image',methods=['GET'])
 def struture_image():
     return send_file('static/images/struture.webp', mimetype='image/webp')
+@app.route('/function_image',methods=['GET'])
+def function_image():
+    return send_file('static/images/system_function.webp', mimetype='image/webp')
 if __name__ == '__main__':
     app.run(host="localhost",port=5001,debug=True)
